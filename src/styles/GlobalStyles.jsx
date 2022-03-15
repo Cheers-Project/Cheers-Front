@@ -17,13 +17,16 @@ ${reset}
     margin: -1px;
     clip-path: polygon(0 0, 0 0, 0 0);
   }
+  
+  html {
+    font-size: 10px;
+    font-family: 'Roboto', sans-serif;
+  }
 
   body {
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 50px;
-    font-family: 'Roboto', sans-serif;
   }
 
   a {
