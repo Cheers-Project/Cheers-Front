@@ -22,7 +22,7 @@ ${reset}
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 50px;
+    font-size: 10px;
     font-family: 'Roboto', sans-serif;
   }
 
