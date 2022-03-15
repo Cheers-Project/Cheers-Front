@@ -5,9 +5,12 @@ import styled from 'styled-components';
 import ModalWrapper from './ModalWrapper';
 
 const LoginModal = ({ modalState, handleModal }) => {
-  const REST_API_KEY = '8a1357737295493bd1458a6ea479f977';
-  const REDIRECT_URI = 'http://localhost:3000/';
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const {
+    REACT_APP_KAKAO_API_KEY: KAKAO_API_KEY,
+    REACT_APP_REDIRECT_URI: REDIRECT_URI,
+  } = process.env;
+
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   return (
     <ModalWrapper handleModal={handleModal}>

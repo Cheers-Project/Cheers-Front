@@ -14,19 +14,21 @@ const MainPage = () => {
 
   const code = new URL(window.location.href).searchParams.get('code');
 
-  const REST_API_KEY = '8a1357737295493bd1458a6ea479f977';
-  const REDIRECT_URI = 'http://localhost:3000/';
-  const CLIENT_SECRET = 'LhKLJO5mywRKprh5U6eMP5N8t97olIWA';
+  const {
+    REACT_APP_KAKAO_API_KEY: KAKAO_API_KEY,
+    REACT_APP_REDIRECT_URI: REDIRECT_URI,
+    REACT_APP_CLIENT_SECRET: CLIENT_SECRET,
+  } = process.env;
 
   useEffect(() => {
     if (code) {
       const getToken = async () => {
         if (!Kakao.isInitialized()) {
-          Kakao.init(REST_API_KEY);
+          Kakao.init(KAKAO_API_KEY);
         }
         const payload = qs.stringify({
           grant_type: 'authorization_code',
-          client_id: REST_API_KEY,
+          client_id: KAKAO_API_KEY,
           redirect_uri: REDIRECT_URI,
           code: code,
           client_secret: CLIENT_SECRET,
