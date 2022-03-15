@@ -23,6 +23,11 @@ ${reset}
     font-family: 'Roboto', sans-serif;
   }
 
+  html {
+    font-size: 10px;
+    font-family: 'Roboto', sans-serif;
+  }
+
   body {
     margin: 0;
     padding: 0;
