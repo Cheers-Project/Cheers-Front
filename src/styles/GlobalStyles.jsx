@@ -17,6 +17,11 @@ ${reset}
     margin: -1px;
     clip-path: polygon(0 0, 0 0, 0 0);
   }
+  
+  html {
+    font-size: 10px;
+    font-family: 'Roboto', sans-serif;
+  }
 
   html {
     font-size: 10px;
