@@ -1,4 +1,5 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -12,22 +13,67 @@ const LoginModal = ({ modalState, handleModal }) => {
 
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
+  const [userId, setUserId] = useState('');
+  const [userPw, setUserPw] = useState('');
+  const [loginMsg, setLoginMsg] = useState('');
+
+  const changeUserId = (e) => {
+    const value = e.target.value;
+    setUserId(value);
+  };
+  const changeUserPw = (e) => {
+    const value = e.target.value;
+    setUserPw(value);
+  };
+
+  const submitLogin = async (e) => {
+    e.preventDefault();
+
+    if (userId === '') {
+      setLoginMsg('아이디를 입력해주세요');
+      return;
+    }
+
+    if (userPw === '') {
+      setLoginMsg('비밀번호를 입력해주세요');
+      return;
+    }
+
+    const payload = {
+      userId,
+      userPw,
+    };
+
+    console.log(payload);
+    try {
+      const res = await axios.post(
+        'http://localhost:4000/api/user/login',
+        payload,
+      );
+      console.log(res);
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
+
   return (
     <ModalWrapper handleModal={handleModal}>
       <ModalContentWrapper modalState={modalState}>
         <button className="close-btn modal">x</button>
         <h2>Lemon Alcohol</h2>
-        <LoginForm autoComplete="off">
+        <LoginForm autoComplete="off" onSubmit={submitLogin}>
           <div className="login-info">
             <Input
               id="userId"
               type="text"
               placeholder="아이디를 입력해주세요"
+              onChange={changeUserId}
             />
             <Input
               id="userPw"
               type="password"
               placeholder="비밀번호를 입력해주세요"
+              onChange={changeUserPw}
             />
           </div>
           <div className="btn-box">
