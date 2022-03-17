@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { UserOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
-const Avatar = () => {
+const Avatar = ({ register }) => {
   const [profileImg, setProfileImg] = useState(null);
   const [previewImg, setPreviewImg] = useState(null);
 
@@ -34,6 +34,7 @@ const Avatar = () => {
         )}
       </label>
       <input
+        {...register('profile')}
         onChange={changeProfileImg}
         id="profileImg"
         className="a11y-hidden"
@@ -45,7 +46,9 @@ const Avatar = () => {
 };
 
 const AvatarWrapper = styled.div`
-  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 2rem;
   .profile-image {
     width: 100px;
     height: 100px;
