@@ -5,6 +5,7 @@ import qs from 'qs';
 
 import Header from 'components/common/Header';
 import Footer from 'components/common/Footer';
+import styled from 'styled-components';
 
 const { Kakao } = window;
 
@@ -60,7 +61,7 @@ const MainPage = () => {
   }, [code]);
 
   return (
-    <>
+    <MainTemplate>
       <Header />
       <div style={{ fontSize: '100px' }}>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga ullam
@@ -69,8 +70,12 @@ const MainPage = () => {
         facilis!
       </div>
       <Footer />
-    </>
+    </MainTemplate>
   );
 };
+
+const MainTemplate = styled.div`
+  width: 100%;
+`;
 
 export default MainPage;
