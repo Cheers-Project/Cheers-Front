@@ -63,11 +63,9 @@ const RegistForm = () => {
 
 const RegistFormWrapper = styled.div`
   display: flex;
+  justify-content: center;
   flex-direction: column;
   width: 100%;
-  @media screen and (min-width: 768px) {
-    width: 45rem;
-  }
 
   .input-container {
     margin-top: 3rem;

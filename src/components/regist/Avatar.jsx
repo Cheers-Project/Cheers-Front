@@ -45,6 +45,7 @@ const Avatar = () => {
 };
 
 const AvatarWrapper = styled.div`
+  margin-bottom: 2rem;
   .profile-image {
     width: 100px;
     height: 100px;

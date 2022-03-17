@@ -1,15 +1,15 @@
 import React from 'react';
 
+import UserTemplate from 'components/common/UserTemplate';
 import Avatar from 'components/regist/Avatar';
 import RegistForm from 'components/regist/RegistForm';
-import RegistTemplate from 'components/regist/RegistTemplate';
 
 const RegistPage = () => {
   return (
-    <RegistTemplate>
+    <UserTemplate>
       <Avatar />
       <RegistForm />
-    </RegistTemplate>
+    </UserTemplate>
   );
 };
 
