@@ -3,24 +3,21 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import qs from 'qs';
 
-import useModal from 'hooks/useModal';
-
-import LoginModal from 'components/common/LoginModal';
+import Header from 'components/common/Header';
+import Footer from 'components/common/Footer';
 
 const { Kakao } = window;
 
 const MainPage = () => {
-  const [modalState, handleModal] = useModal();
-
   const code = new URL(window.location.href).searchParams.get('code');
 
-  const {
-    REACT_APP_KAKAO_API_KEY: KAKAO_API_KEY,
-    REACT_APP_REDIRECT_URI: REDIRECT_URI,
-    REACT_APP_CLIENT_SECRET: CLIENT_SECRET,
-  } = process.env;
-
   useEffect(() => {
+    const {
+      REACT_APP_KAKAO_API_KEY: KAKAO_API_KEY,
+      REACT_APP_REDIRECT_URI: REDIRECT_URI,
+      REACT_APP_CLIENT_SECRET: CLIENT_SECRET,
+    } = process.env;
+
     if (code) {
       const getToken = async () => {
         if (!Kakao.isInitialized()) {
@@ -63,14 +60,16 @@ const MainPage = () => {
   }, [code]);
 
   return (
-    <div>
-      <div>
-        {modalState && (
-          <LoginModal modalState={modalState} handleModal={handleModal} />
-        )}
+    <>
+      <Header />
+      <div style={{ fontSize: '100px' }}>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga ullam
+        modi, quae nemo quidem ratione est quisquam? Placeat, ab enim!
+        Doloremque saepe adipisci id, unde commodi pariatur aliquam iste
+        facilis!
       </div>
-      <button onClick={handleModal}>로그인</button>
-    </div>
+      <Footer />
+    </>
   );
 };
 
