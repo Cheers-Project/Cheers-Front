@@ -3,26 +3,23 @@ import styled from 'styled-components';
 
 import useModal from 'hooks/useModal';
 
-import LoginModal from './LoginModal';
+import LoginModal from 'components/login/LoginModal';
 import Menu from './Menu';
-import Responsive from './Responsive';
 
 const Header = () => {
   const [modalState, handleModal] = useModal();
 
   return (
-    <Responsive>
-      <HeaderWrapper>
-        <Logo src="https://avatars.githubusercontent.com/u/81244738?v=4" />
-        <RightNav>
-          <Button onClick={handleModal}>로그인</Button>
-        </RightNav>
-        <Menu />
-        {modalState && (
-          <LoginModal modalState={modalState} handleModal={handleModal} />
-        )}
-      </HeaderWrapper>
-    </Responsive>
+    <HeaderWrapper>
+      <Logo src="https://avatars.githubusercontent.com/u/81244738?v=4" />
+      <RightNav>
+        <Button onClick={handleModal}>로그인</Button>
+      </RightNav>
+      <Menu />
+      {modalState && (
+        <LoginModal modalState={modalState} handleModal={handleModal} />
+      )}
+    </HeaderWrapper>
   );
 };
 
@@ -37,12 +34,10 @@ const HeaderWrapper = styled.header`
   right: 0;
   padding: 2rem 2.5rem;
   @media screen and (min-width: 768px) {
-    max-width: 1024px;
     padding: 2rem 5rem;
   }
 
   @media screen and (min-width: 1024px) {
-    max-width: 1280px;
     padding: 2rem 6rem;
   }
 `;

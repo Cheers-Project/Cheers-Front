@@ -1,17 +1,16 @@
-import axios from 'axios';
 import React, { useState } from 'react';
-
+import axios from 'axios';
 import styled from 'styled-components';
 
-import ModalWrapper from './ModalWrapper';
+import ModalWrapper from 'components/common/ModalWrapper';
 
 const LoginModal = ({ modalState, handleModal }) => {
   const {
     REACT_APP_KAKAO_API_KEY: KAKAO_API_KEY,
-    REACT_APP_REDIRECT_URI: REDIRECT_URI,
+    REACT_APP_KAKAO_REDIRECT_URI: KAKAO_REDIRECT_URI,
   } = process.env;
 
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
   const [userId, setUserId] = useState('');
   const [userPw, setUserPw] = useState('');

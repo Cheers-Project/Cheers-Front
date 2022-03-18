@@ -1,35 +1,31 @@
 import React, { useEffect } from 'react';
-
 import axios from 'axios';
 import qs from 'qs';
+import styled from 'styled-components';
 
 import Header from 'components/common/Header';
 import Footer from 'components/common/Footer';
-import styled from 'styled-components';
-
-const { Kakao } = window;
+import { useNavigate } from 'react-router-dom';
 
 const MainPage = () => {
+  const navigate = useNavigate();
+
   const code = new URL(window.location.href).searchParams.get('code');
 
   useEffect(() => {
-    const {
-      REACT_APP_KAKAO_API_KEY: KAKAO_API_KEY,
-      REACT_APP_REDIRECT_URI: REDIRECT_URI,
-      REACT_APP_CLIENT_SECRET: CLIENT_SECRET,
-    } = process.env;
-
     if (code) {
       const getToken = async () => {
-        if (!Kakao.isInitialized()) {
-          Kakao.init(KAKAO_API_KEY);
-        }
+        const {
+          REACT_APP_KAKAO_API_KEY: KAKAO_API_KEY,
+          REACT_APP_KAKAO_REDIRECT_URI: KAKAO_REDIRECT_URI,
+          REACT_APP_KAKAO_CLIENT_SECRET: KAKAO_CLIENT_SECRET,
+        } = process.env;
         const payload = qs.stringify({
           grant_type: 'authorization_code',
           client_id: KAKAO_API_KEY,
-          redirect_uri: REDIRECT_URI,
+          redirect_uri: KAKAO_REDIRECT_URI,
           code: code,
-          client_secret: CLIENT_SECRET,
+          client_secret: KAKAO_CLIENT_SECRET,
         });
 
         try {
@@ -41,22 +37,19 @@ const MainPage = () => {
             },
           });
 
-          Kakao.Auth.setAccessToken(access_token);
-          Kakao.API.request({
-            url: '/v2/user/me',
-            success: ({ kakao_account: { profile } }) => {
-              const { nickname, profile_image_url } = profile;
-              console.log(nickname, profile_image_url);
+          const res = await axios.post(
+            'http://localhost:4000/api/user/login/kakao',
+            {
+              access_token,
             },
-            fail: (err) => {
-              console.log(err);
-            },
-          });
+          );
+          console.log(res);
         } catch (err) {
           console.log(err);
         }
       };
       getToken();
+      navigate('/');
     }
   }, [code]);
 
