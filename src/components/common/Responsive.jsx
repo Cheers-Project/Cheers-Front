@@ -8,6 +8,7 @@ const Responsive = ({ children }) => {
 const ResponsiveWrapper = styled.div`
   width: 100%;
   padding: 0 2.5rem;
+  margin: 0 auto;
   @media screen and (min-width: 768px) {
     max-width: 1024px;
     padding: 0 5rem;
