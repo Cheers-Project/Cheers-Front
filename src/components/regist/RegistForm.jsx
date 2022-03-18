@@ -21,26 +21,41 @@ const RegistForm = () => {
     setVisible(!visible);
   };
 
-  const onSubmit = (data) => {
+  const convertToFormData = (data) => {
     const { userId, userPw, repeatPw, nickname, profile } = data;
     const profileImg = profile[0];
-    const payload = {
-      userId,
-      userPw,
-      repeatPw,
-      nickname,
-      profileImg,
-    };
-    regist(payload);
+
+    const formData = new FormData();
+
+    formData.append('profileImg', profileImg);
+    formData.append('userId', userId);
+    formData.append('userPw', userPw);
+    formData.append('repeatPw', repeatPw);
+    formData.append('nickname', nickname);
+
+    return formData;
+  };
+
+  const onSubmit = (data) => {
+    const formData = convertToFormData(data);
+    regist(formData);
   };
 
   const regist = async (payload) => {
-    console.log(payload);
-    const res = await axios.post(
-      'http://localhost:4000/api/user/regist',
-      payload,
-    );
-    console.log(res);
+    try {
+      const res = await axios.post(
+        'http://localhost:4000/api/user/regist',
+        payload,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
+      console.log(res);
+    } catch (e) {
+      console.log(e.response);
+    }
   };
 
   return (
@@ -55,6 +70,7 @@ const RegistForm = () => {
             {...register('userId')}
             id="idInput"
             className="regist-input"
+            name="userId"
             type="text"
             placeholder="이메일"
           />
@@ -70,6 +86,7 @@ const RegistForm = () => {
             {...register('nickname')}
             id="nickNameInput"
             className="regist-input"
+            name="nickname"
             type="text"
             placeholder="닉네임"
           />
@@ -87,6 +104,7 @@ const RegistForm = () => {
               {...register('userPw')}
               id="pwInput"
               className="regist-input"
+              name="userPw"
               type={visible ? 'text' : 'password'}
               placeholder="비밀번호"
             />
@@ -107,6 +125,7 @@ const RegistForm = () => {
             {...register('repeatPw')}
             id="repeatPw"
             className="regist-input"
+            name="repeatPw"
             type="password"
             placeholder="비밀번호 확인"
           />

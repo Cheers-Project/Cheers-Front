@@ -38,6 +38,7 @@ const Avatar = ({ register }) => {
         onChange={changeProfileImg}
         id="profileImg"
         className="a11y-hidden"
+        name="profileImg"
         type="file"
         accept="image/*"
       />
