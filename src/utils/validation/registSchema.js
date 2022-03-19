@@ -13,7 +13,7 @@ const registSchema = joi.object({
     .required(),
   repeatPw: joi.ref('userPw'),
   nickname: joi.string().min(2).max(10).required(),
-  profile: joi.object(),
+  profileImg: joi.object(),
 });
 
 export default registSchema;

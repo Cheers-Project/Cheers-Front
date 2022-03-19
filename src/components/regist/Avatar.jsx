@@ -34,7 +34,7 @@ const Avatar = ({ register }) => {
         )}
       </label>
       <input
-        {...register('profile')}
+        {...register('profileImg')}
         onChange={changeProfileImg}
         id="profileImg"
         className="a11y-hidden"

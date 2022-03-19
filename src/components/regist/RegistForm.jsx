@@ -22,12 +22,11 @@ const RegistForm = () => {
   };
 
   const convertToFormData = (data) => {
-    const { userId, userPw, repeatPw, nickname, profile } = data;
-    const profileImg = profile[0];
+    const { userId, userPw, repeatPw, nickname, profileImg } = data;
 
     const formData = new FormData();
 
-    formData.append('profileImg', profileImg);
+    formData.append('profileImg', profileImg[0]);
     formData.append('userId', userId);
     formData.append('userPw', userPw);
     formData.append('repeatPw', repeatPw);
