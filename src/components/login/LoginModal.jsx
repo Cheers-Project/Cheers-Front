@@ -1,10 +1,41 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import styled from 'styled-components';
+import { CloseOutlined } from '@ant-design/icons';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import axios from 'axios';
 
 import ModalWrapper from 'components/common/ModalWrapper';
+import StyledInput from 'components/common/StyledInput';
+import loginSchema from 'utils/validation/loginSchema';
 
 const LoginModal = ({ modalState, handleModal }) => {
+  // react-hook-form 사용
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: joiResolver(loginSchema) });
+
+  const onSubmit = (data) => {
+    console.log(data);
+    console.log(errors);
+    // login(data);
+  };
+
+  const login = async (payload) => {
+    try {
+      const res = await axios.post(
+        'http://localhost:4000/api/user/login',
+        payload,
+      );
+      console.log(res);
+    } catch (e) {
+      console.log(e.response);
+    }
+  };
+
+  // 카카오 로그인 페이지 이동
   const {
     REACT_APP_KAKAO_API_KEY: KAKAO_API_KEY,
     REACT_APP_KAKAO_REDIRECT_URI: KAKAO_REDIRECT_URI,
@@ -12,68 +43,41 @@ const LoginModal = ({ modalState, handleModal }) => {
 
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
-  const [userId, setUserId] = useState('');
-  const [userPw, setUserPw] = useState('');
-  const [loginMsg, setLoginMsg] = useState('');
-
-  const changeUserId = (e) => {
-    const value = e.target.value;
-    setUserId(value);
-  };
-  const changeUserPw = (e) => {
-    const value = e.target.value;
-    setUserPw(value);
-  };
-
-  const submitLogin = async (e) => {
-    e.preventDefault();
-
-    if (userId === '') {
-      setLoginMsg('아이디를 입력해주세요');
-      return;
-    }
-
-    if (userPw === '') {
-      setLoginMsg('비밀번호를 입력해주세요');
-      return;
-    }
-
-    const payload = {
-      userId,
-      userPw,
-    };
-
-    console.log(payload);
-    try {
-      const res = await axios.post(
-        'http://localhost:4000/api/user/login',
-        payload,
-      );
-      console.log(res);
-    } catch (err) {
-      console.log(err.response);
-    }
-  };
-
   return (
     <ModalWrapper handleModal={handleModal}>
       <ModalContentWrapper modalState={modalState}>
-        <button className="close-btn modal">x</button>
+        <button className="close-btn modal">
+          <CloseOutlined />
+        </button>
         <h2>Lemon Alcohol</h2>
-        <LoginForm autoComplete="off" onSubmit={submitLogin}>
+        <LoginForm autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
           <div className="login-info">
-            <Input
-              id="userId"
-              type="text"
-              placeholder="아이디를 입력해주세요"
-              onChange={changeUserId}
-            />
-            <Input
-              id="userPw"
-              type="password"
-              placeholder="비밀번호를 입력해주세요"
-              onChange={changeUserPw}
-            />
+            <div className="input-container">
+              <StyledInput
+                {...register('userId')}
+                id="idInput"
+                name="userId"
+                type="text"
+                placeholder="아이디를 입력해 주세요."
+                autoComplete="off"
+              />
+              <ErrorMessage>
+                {errors.userId && '아이디를 확인해주세요'}
+              </ErrorMessage>
+            </div>
+            <div className="input-container">
+              <StyledInput
+                {...register('userPw')}
+                id="pwInput"
+                name="userPw"
+                type="password"
+                placeholder="비밀번호를 입력해 주세요."
+                autoComplete="off"
+              />
+              <ErrorMessage>
+                {errors.userPw && '비밀번호를 입력해주세요'}
+              </ErrorMessage>
+            </div>
           </div>
           <div className="btn-box">
             <button type="submit" className="login-btn">
@@ -100,7 +104,7 @@ const ModalContentWrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 20px;
+  gap: 3rem;
 
   .close-btn {
     background-color: #fff;
@@ -134,6 +138,7 @@ const LoginForm = styled.form`
     flex-direction: column;
     gap: 1rem;
   }
+
   .btn-box {
     display: flex;
     justify-content: center;
@@ -144,11 +149,11 @@ const LoginForm = styled.form`
   }
 `;
 
-const Input = styled.input`
-  border: 1px solid black;
-  font-size: 1.2rem;
-  ::placeholder {
-    font-size: 1rem;
-  }
+const ErrorMessage = styled.p`
+  display: block;
+  height: 2rem;
+  padding-top: 0.5rem;
+  color: red;
+  line-height: 1.1rem;
 `;
 export default LoginModal;
