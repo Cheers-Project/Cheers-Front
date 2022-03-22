@@ -8,12 +8,6 @@ const MainPage = () => {
   return (
     <MainTemplate>
       <Header />
-      <div style={{ fontSize: '100px' }}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga ullam
-        modi, quae nemo quidem ratione est quisquam? Placeat, ab enim!
-        Doloremque saepe adipisci id, unde commodi pariatur aliquam iste
-        facilis!
-      </div>
       <Footer />
     </MainTemplate>
   );

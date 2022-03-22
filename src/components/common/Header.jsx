@@ -10,34 +10,44 @@ const Header = () => {
   const [modalState, handleModal] = useModal();
 
   return (
-    <HeaderWrapper>
-      <Logo src="https://avatars.githubusercontent.com/u/81244738?v=4" />
-      <RightNav>
-        <Button onClick={handleModal}>로그인</Button>
-      </RightNav>
-      <Menu />
-      {modalState && (
-        <LoginModal modalState={modalState} handleModal={handleModal} />
-      )}
-    </HeaderWrapper>
+    <HeaderOuter>
+      <HeaderInner>
+        <Logo src="https://avatars.githubusercontent.com/u/81244738?v=4" />
+        <RightNav>
+          <Button onClick={handleModal}>로그인</Button>
+        </RightNav>
+        <Menu />
+        {modalState && (
+          <LoginModal modalState={modalState} handleModal={handleModal} />
+        )}
+      </HeaderInner>
+    </HeaderOuter>
   );
 };
 
-const HeaderWrapper = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+const HeaderOuter = styled.div`
   background-color: #fff;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+`;
+
+const HeaderInner = styled.header`
+  width: 100%;
+  min-height: 11rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
   padding: 2rem 2.5rem;
   @media screen and (min-width: 768px) {
+    max-width: 1024px;
     padding: 2rem 5rem;
   }
 
   @media screen and (min-width: 1024px) {
+    max-width: 1280px;
     padding: 2rem 6rem;
   }
 `;
