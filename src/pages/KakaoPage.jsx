@@ -13,29 +13,21 @@ const KakaoPage = () => {
     setNickname(e.target.value);
   };
 
-  const getCookie = (name) => {
-    const value = '; ' + document.cookie;
-
-    const parts = value.split('; ' + name + '=');
-
-    if (parts.length === 2) {
-      return parts.pop().split(';').shift();
-    }
-  };
-
   const handleContinueBtn = async () => {
-    const kakaoToken = getCookie('kakaoToken');
+    const kakaoToken = localStorage.getItem('kakaoToken');
 
     const paylaod = {
       kakaoToken,
       nickname,
     };
     try {
-      const res = await axios.post(
+      const { data } = await axios.post(
         'http://localhost:4000/api/user/login/kakao',
         paylaod,
       );
-      console.log(res);
+
+      localStorage.removeItem('kakaoToken');
+      localStorage.setItem('token', data.accessToken);
 
       navigate('/');
     } catch (err) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import useModal from 'hooks/useModal';
@@ -8,13 +8,21 @@ import Menu from './Menu';
 
 const Header = () => {
   const [modalState, handleModal] = useModal();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) setIsLoggedIn(true);
+  }, []);
 
   return (
     <HeaderOuter>
       <HeaderInner>
         <Logo src="https://avatars.githubusercontent.com/u/81244738?v=4" />
         <RightNav>
-          <Button onClick={handleModal}>로그인</Button>
+          <Button onClick={handleModal}>
+            {isLoggedIn ? '로그아웃' : '로그인'}
+          </Button>
         </RightNav>
         <Menu />
         {modalState && (
