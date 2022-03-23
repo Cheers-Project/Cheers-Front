@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import banner from 'assets/images/banner.jpg';
+
 const Banner = () => {
   return (
     <BannerWrapper>
@@ -15,7 +17,7 @@ const Banner = () => {
 const BannerWrapper = styled.div`
   height: 100vh;
   padding-top: 20rem;
-  background-image: url('https://images.unsplash.com/photo-1614118990889-4805ae35a01b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80');
+  background-image: url(${banner});
 `;
 
 const BannerText = styled.p`
