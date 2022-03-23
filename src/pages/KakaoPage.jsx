@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import qs from 'qs';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import StyledInput from 'components/common/StyledInput';
 
 const KakaoPage = () => {
   const navigate = useNavigate();
-
-  const code = new URL(window.location.href).searchParams.get('code');
-  const [token, setToken] = useState(null);
   const [nickname, setNickname] = useState(null);
   const [errMsg, setErrMsg] = useState(null);
 
@@ -17,9 +13,21 @@ const KakaoPage = () => {
     setNickname(e.target.value);
   };
 
+  const getCookie = (name) => {
+    const value = '; ' + document.cookie;
+
+    const parts = value.split('; ' + name + '=');
+
+    if (parts.length === 2) {
+      return parts.pop().split(';').shift();
+    }
+  };
+
   const handleContinueBtn = async () => {
+    const kakaoToken = getCookie('kakaoToken');
+
     const paylaod = {
-      accessToken: token,
+      kakaoToken,
       nickname,
     };
     try {
@@ -28,47 +36,13 @@ const KakaoPage = () => {
         paylaod,
       );
       console.log(res);
-      // navigate('/');
+
+      navigate('/');
     } catch (err) {
       setErrMsg(err.response.data.msg);
     }
   };
 
-  useEffect(() => {
-    if (code) {
-      const getToken = async () => {
-        const {
-          REACT_APP_KAKAO_API_KEY: KAKAO_API_KEY,
-          REACT_APP_KAKAO_REDIRECT_URI: KAKAO_REDIRECT_URI,
-          REACT_APP_KAKAO_CLIENT_SECRET: KAKAO_CLIENT_SECRET,
-        } = process.env;
-        const payload = qs.stringify({
-          grant_type: 'authorization_code',
-          client_id: KAKAO_API_KEY,
-          redirect_uri: KAKAO_REDIRECT_URI,
-          code: code,
-          client_secret: KAKAO_CLIENT_SECRET,
-        });
-
-        try {
-          const {
-            data: { access_token },
-          } = await axios.post(`https://kauth.kakao.com/oauth/token`, payload, {
-            headers: {
-              'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
-            },
-          });
-
-          setToken(access_token);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-
-      getToken();
-      return getToken;
-    }
-  }, [code]);
   return (
     <KakaoLoginPageWrapper>
       <h2>카카오 로그인</h2>
