@@ -27,6 +27,7 @@ const Header = () => {
 
 const HeaderOuter = styled.div`
   background-color: #fff;
+  background-color: #161616;
   position: fixed;
   top: 0;
   left: 0;
@@ -40,7 +41,7 @@ const HeaderInner = styled.header`
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  padding: 2rem 2.5rem;
+  padding: 2rem 2rem;
   @media screen and (min-width: 768px) {
     max-width: 1024px;
     padding: 2rem 5rem;
