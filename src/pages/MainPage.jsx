@@ -1,20 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import Header from 'components/common/Header';
 import Footer from 'components/common/Footer';
+import Responsive from 'components/common/Responsive';
+import Banner from 'components/main/Banner';
 
 const MainPage = () => {
   return (
-    <MainTemplate>
+    <>
       <Header />
+      <Banner />
+      <Responsive>{/* 메인 컨텐츠 영역 */}</Responsive>
       <Footer />
-    </MainTemplate>
+    </>
   );
 };
-
-const MainTemplate = styled.div`
-  width: 100%;
-`;
 
 export default MainPage;
