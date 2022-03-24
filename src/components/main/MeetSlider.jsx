@@ -11,6 +11,7 @@ const MeetSlider = () => {
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
+    autoplay: true,
     arrows: false,
     responsive: [
       {
@@ -23,7 +24,7 @@ const MeetSlider = () => {
         },
       },
       {
-        breakpoint: 768,
+        breakpoint: 767,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
@@ -53,7 +54,8 @@ const MeetSliderWrapper = styled.section`
   position: relative;
   padding: 3rem 0 6rem 0;
   .sub-title {
-    font-size: 1.8rem;
+    font-size: 2rem;
+    font-weight: 600;
     margin: 0 0 1.5rem 1rem;
   }
 `;
@@ -71,6 +73,11 @@ const StyledSlider = styled(Slider)`
     border-radius: 1rem;
     margin: 0 1rem;
     padding: 0.5rem;
+  }
+
+  .slick-dots button::before,
+  .slick-dots .slick-active button::before {
+    color: #c22d77;
   }
 `;
 
