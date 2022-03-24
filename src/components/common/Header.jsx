@@ -1,32 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { UserOutlined } from '@ant-design/icons';
+import { throttle } from 'lodash';
 
+import MenuList from './MenuList';
 import useModal from 'hooks/useModal';
 
-import LoginModal from 'components/login/LoginModal';
-import Menu from './Menu';
-
 const Header = () => {
-  const [modalState, handleModal] = useModal();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [menuState, setMenuState] = useModal();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const onScroll = throttle(() => {
+    if (window.scrollY > 20) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  }, 400);
 
   useEffect(() => {
+    const path = window.location.pathname;
+
     const token = localStorage.getItem('token');
     if (token) setIsLoggedIn(true);
+    if (path === '/') {
+      window.addEventListener('scroll', onScroll);
+    } else {
+      setIsScrolled(true);
+    }
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
   }, []);
 
   return (
-    <HeaderOuter>
+    <HeaderOuter isScrolled={isScrolled}>
       <HeaderInner>
         <Logo src="https://avatars.githubusercontent.com/u/81244738?v=4" />
-        <RightNav>
-          <Button onClick={handleModal}>
-            {isLoggedIn ? '로그아웃' : '로그인'}
-          </Button>
+        <MidNav isScrolled={isScrolled}>
+          <Button>게시판</Button>
+          <Button>모임</Button>
+        </MidNav>
+        <RightNav className="modal" onClick={setMenuState}>
+          <UserOutlined className="user-icon" />
         </RightNav>
-        <Menu />
-        {modalState && (
-          <LoginModal modalState={modalState} handleModal={handleModal} />
+        {menuState && menuState ? (
+          <MenuList
+            isLoggedIn={isLoggedIn}
+            modalState={menuState}
+            handleModal={setMenuState}
+          />
+        ) : (
+          ''
         )}
       </HeaderInner>
     </HeaderOuter>
@@ -34,12 +60,15 @@ const Header = () => {
 };
 
 const HeaderOuter = styled.div`
-  background-color: #fff;
-  background-color: #161616;
+  background-color: ${({ isScrolled }) => {
+    return isScrolled ? '#fff' : 'rgba(25,23,24, 0.5)';
+  }};
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  z-index: 100;
+  transition: 0.1s linear;
 `;
 
 const HeaderInner = styled.header`
@@ -62,10 +91,24 @@ const HeaderInner = styled.header`
 `;
 
 const RightNav = styled.nav`
-  gap: 1.5rem;
-  display: none;
+  display: flex;
+  padding: 0.5rem 1rem;
+  border-radius: 1.2rem;
+  gap: 0.5rem;
+  background-color: #c22d77;
+  cursor: pointer;
+  * {
+    pointer-events: none;
+  }
   @media (min-width: 768px) {
     display: flex;
+  }
+  .user-icon {
+    padding: 0.5rem;
+    font-size: 2rem;
+    color: #fff;
+    border-radius: 50%;
+    border: 1.5px solid #fff;
   }
 `;
 
@@ -74,13 +117,36 @@ const Logo = styled.img`
   border-radius: 50%;
 `;
 
+const MidNav = styled.nav`
+  display: flex;
+  padding: 0.5rem 1rem;
+  border-radius: 1.2rem;
+  gap: 3rem;
+  cursor: pointer;
+  color: ${({ isScrolled }) => {
+    return isScrolled ? '#191718' : '#fff';
+  }};
+`;
+
 const Button = styled.button`
-  background-color: #fff;
+  color: inherit;
+  background-color: inherit;
   padding: 1rem;
-  border: 2px solid #fff47d;
-  border-radius: 0.5rem;
   font-size: 1.5rem;
   letter-spacing: 0.1rem;
+  display: flex;
+  flex-direction: column;
+  &::after {
+    transition: 0.2s;
+    margin-top: 0.5rem;
+    width: 0;
+    content: '';
+    height: 2px;
+    background-color: #c22d77;
+  }
+  &:hover::after {
+    width: 100%;
+  }
 `;
 
 export default Header;
