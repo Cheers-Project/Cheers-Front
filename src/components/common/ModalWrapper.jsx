@@ -22,7 +22,7 @@ const Overlay = styled.div`
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.1);
-  z-index: 1;
+  z-index: 200;
 
   display: flex;
   justify-content: center;
