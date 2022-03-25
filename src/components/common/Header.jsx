@@ -18,6 +18,7 @@ const Header = () => {
       setIsScrolled(false);
     }
   }, 400);
+  console.log(menuState);
 
   useEffect(() => {
     const path = window.location.pathname;
@@ -35,29 +36,44 @@ const Header = () => {
   }, []);
 
   return (
-    <HeaderOuter isScrolled={isScrolled}>
-      <HeaderInner>
-        <Logo src="https://avatars.githubusercontent.com/u/81244738?v=4" />
-        <MidNav isScrolled={isScrolled}>
-          <Button>게시판</Button>
-          <Button>모임</Button>
-        </MidNav>
-        <RightNav className="modal" onClick={setMenuState}>
-          <UserOutlined className="user-icon" />
-        </RightNav>
-        {menuState && menuState ? (
-          <MenuList
-            isLoggedIn={isLoggedIn}
-            modalState={menuState}
-            handleModal={setMenuState}
-          />
-        ) : (
-          ''
+    <>
+      <HeaderOuter isScrolled={isScrolled}>
+        <HeaderInner>
+          <Logo src="https://avatars.githubusercontent.com/u/81244738?v=4" />
+          <MidNav isScrolled={isScrolled}>
+            <Button>게시판</Button>
+            <Button>모임</Button>
+          </MidNav>
+          <RightNav className="modal" onClick={setMenuState}>
+            <UserOutlined className="user-icon" />
+          </RightNav>
+          {menuState && menuState ? (
+            <MenuList
+              isLoggedIn={isLoggedIn}
+              modalState={menuState}
+              handleModal={setMenuState}
+            />
+          ) : (
+            ''
+          )}
+        </HeaderInner>
+        {menuState && (
+          <MunuListOuter className="modal" onClick={setMenuState} />
         )}
-      </HeaderInner>
-    </HeaderOuter>
+      </HeaderOuter>
+    </>
   );
 };
+
+const MunuListOuter = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
+  z-index: 200;
+`;
 
 const HeaderOuter = styled.div`
   background-color: ${({ isScrolled }) => {
@@ -72,6 +88,7 @@ const HeaderOuter = styled.div`
 `;
 
 const HeaderInner = styled.header`
+  position: relative;
   width: 100%;
   min-height: 11rem;
   display: flex;
@@ -97,6 +114,7 @@ const RightNav = styled.nav`
   gap: 0.5rem;
   background-color: #c22d77;
   cursor: pointer;
+  z-index: 300;
   * {
     pointer-events: none;
   }
