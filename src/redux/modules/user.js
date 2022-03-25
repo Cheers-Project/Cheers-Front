@@ -36,10 +36,18 @@ const userSlice = createSlice({
       state.errMsg = errMsg;
       state.error = e;
     },
+    checkLogin(state) {
+      state.isLoggedIn = true;
+    },
   },
 });
 
-export const { initializeError, login, loginSuccess, loginFailure } =
-  userSlice.actions;
+export const {
+  initializeError,
+  login,
+  loginSuccess,
+  loginFailure,
+  checkLogin,
+} = userSlice.actions;
 
 export default userSlice.reducer;

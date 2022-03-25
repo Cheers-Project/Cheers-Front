@@ -2,12 +2,19 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { UserOutlined } from '@ant-design/icons';
 import { throttle } from 'lodash';
+import { useDispatch, useSelector } from 'react-redux';
 
 import MenuList from './MenuList';
 import useModal from 'hooks/useModal';
+import { checkLogin } from 'redux/modules/user';
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(({ user }) => {
+    const { isLoggedIn } = user;
+    return isLoggedIn;
+  });
+
   const [menuState, setMenuState] = useModal();
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -20,10 +27,10 @@ const Header = () => {
   }, 400);
 
   useEffect(() => {
-    const path = window.location.pathname;
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) dispatch(checkLogin());
 
-    const token = localStorage.getItem('token');
-    if (token) setIsLoggedIn(true);
+    const path = window.location.pathname;
     if (path === '/') {
       window.addEventListener('scroll', onScroll);
     } else {
