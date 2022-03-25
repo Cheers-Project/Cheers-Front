@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { CloseOutlined } from '@ant-design/icons';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import * as userAPI from 'api/user';
 
 import ModalWrapper from 'components/common/ModalWrapper';
 import StyledInput from 'components/common/StyledInput';
@@ -20,19 +20,7 @@ const LoginModal = ({ modalState, handleModal }) => {
   } = useForm({ resolver: joiResolver(loginSchema) });
 
   const onSubmit = (data) => {
-    login(data);
-  };
-
-  const login = async (payload) => {
-    try {
-      const res = await axios.post(
-        'http://localhost:4000/api/user/login',
-        payload,
-      );
-      console.log(res);
-    } catch (e) {
-      console.log(e.response);
-    }
+    userAPI.login(data);
   };
 
   // 카카오 로그인 페이지 이동
