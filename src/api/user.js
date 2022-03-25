@@ -6,7 +6,7 @@ export const login = async (payload) => {
     console.log(res);
     return res;
   } catch (e) {
-    console.log(e.response);
+    return e.response;
   }
 };
 
