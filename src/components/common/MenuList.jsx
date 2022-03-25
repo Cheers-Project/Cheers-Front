@@ -9,34 +9,30 @@ import ModalWrapper from './ModalWrapper';
 const MenuList = ({ isLoggedIn, modalState, handleModal }) => {
   const navigate = useNavigate();
   const [loginModal, handleloginModal] = useModal();
-
   const handleRegist = () => {
     navigate('/regist');
   };
   return (
-    <ModalWrapper handleModal={handleModal}>
-      <MenuListWrapper modalState={modalState}>
-        {!isLoggedIn ? (
-          <>
-            <MenuItem onClick={handleloginModal}>로그인</MenuItem>
-            <MenuItem onClick={handleRegist}>회원가입</MenuItem>
-          </>
-        ) : (
-          <>
-            <MenuItem>마이페이지</MenuItem>
-            <MenuItem>로그아웃</MenuItem>
-          </>
-        )}
-        {loginModal && (
-          <LoginModal modalState={loginModal} handleModal={handleloginModal} />
-        )}
-      </MenuListWrapper>
-    </ModalWrapper>
+    <MenuListWrapper modalState={modalState}>
+      {!isLoggedIn ? (
+        <>
+          <MenuItem onClick={handleloginModal}>로그인</MenuItem>
+          <MenuItem onClick={handleRegist}>회원가입</MenuItem>
+        </>
+      ) : (
+        <>
+          <MenuItem>마이페이지</MenuItem>
+          <MenuItem>로그아웃</MenuItem>
+        </>
+      )}
+      {loginModal && (
+        <LoginModal modalState={loginModal} handleModal={handleloginModal} />
+      )}
+    </MenuListWrapper>
   );
 };
 
 const MenuListWrapper = styled.ul`
-  padding: 1rem;
   position: absolute;
   top: 8rem;
   right: 2rem;
@@ -45,6 +41,9 @@ const MenuListWrapper = styled.ul`
   border-radius: 1rem;
   border: 1px solid #c22d77;
   animation: dropdown 0.3s ease-in-out;
+
+  z-index: 300;
+
   @media screen and (min-width: 768px) {
     right: 5rem;
   }
@@ -66,6 +65,7 @@ const MenuListWrapper = styled.ul`
 `;
 
 const MenuItem = styled.li`
+  margin: 1rem;
   padding: 1rem;
   border-radius: 0.5rem;
   font-size: 1.5rem;
