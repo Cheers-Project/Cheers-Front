@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import axios from 'axios';
+import * as userAPI from 'api/user';
 
 import Avatar from 'components/regist/Avatar';
 import StyledInput from 'components/common/StyledInput';
@@ -37,24 +37,7 @@ const RegistForm = () => {
 
   const onSubmit = (data) => {
     const formData = convertToFormData(data);
-    regist(formData);
-  };
-
-  const regist = async (payload) => {
-    try {
-      const res = await axios.post(
-        'http://localhost:4000/api/user/regist',
-        payload,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        },
-      );
-      console.log(res);
-    } catch (e) {
-      console.log(e.response);
-    }
+    userAPI.regist(formData);
   };
 
   return (

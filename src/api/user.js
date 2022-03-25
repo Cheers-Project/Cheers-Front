@@ -9,3 +9,16 @@ export const login = async (payload) => {
     console.log(e.response);
   }
 };
+
+export const regist = async (payload) => {
+  try {
+    const res = await client.post('/api/user/regist', payload, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log(res);
+  } catch (e) {
+    console.log(e.response);
+  }
+};
