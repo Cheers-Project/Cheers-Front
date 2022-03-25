@@ -1,40 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CloseOutlined } from '@ant-design/icons';
-import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import axios from 'axios';
+
 import { Link } from 'react-router-dom';
 
 import ModalWrapper from 'components/common/ModalWrapper';
-import StyledInput from 'components/common/StyledInput';
-import loginSchema from 'utils/validation/loginSchema';
+
 import kakaoIcon from 'assets/images/ico_kakao.png';
+import LoginForm from './LoginForm';
 
 const LoginModal = ({ modalState, handleModal }) => {
-  // react-hook-form 사용
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ resolver: joiResolver(loginSchema) });
-
-  const onSubmit = (data) => {
-    login(data);
-  };
-
-  const login = async (payload) => {
-    try {
-      const res = await axios.post(
-        'http://localhost:4000/api/user/login',
-        payload,
-      );
-      console.log(res);
-    } catch (e) {
-      console.log(e.response);
-    }
-  };
-
   // 카카오 로그인 페이지 이동
   const {
     REACT_APP_KAKAO_API_KEY: KAKAO_API_KEY,
@@ -47,41 +22,8 @@ const LoginModal = ({ modalState, handleModal }) => {
     <ModalWrapper handleModal={handleModal}>
       <ModalContentWrapper modalState={modalState}>
         <CloseOutlined className="close-btn modal" />
-
         <h2>로그인</h2>
-
-        <LoginForm autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-          <div className="input-container">
-            <StyledInput
-              {...register('userId')}
-              id="idInput"
-              name="userId"
-              type="text"
-              placeholder="아이디를 입력해 주세요."
-              autoComplete="off"
-            />
-            <ErrorMessage>
-              {errors.userId && '아이디를 확인해주세요'}
-            </ErrorMessage>
-          </div>
-          <div className="input-container">
-            <StyledInput
-              {...register('userPw')}
-              id="pwInput"
-              name="userPw"
-              type="password"
-              placeholder="비밀번호를 입력해 주세요."
-              autoComplete="off"
-            />
-            <ErrorMessage>
-              {errors.userPw && '비밀번호를 입력해주세요'}
-            </ErrorMessage>
-          </div>
-          <button type="submit" className="login-btn">
-            로그인
-          </button>
-        </LoginForm>
-
+        <LoginForm />
         <div className="guide-container">
           <p>
             회원이 아니신가요?{' '}
@@ -90,7 +32,6 @@ const LoginModal = ({ modalState, handleModal }) => {
             </Link>
           </p>
         </div>
-
         <a href={`${KAKAO_AUTH_URL}`} className="social-login-container">
           <img src={kakaoIcon} alt="icon" className="kakao-icon" />
           <p>카카오 로그인</p>
@@ -175,30 +116,4 @@ const ModalContentWrapper = styled.div`
   }
 `;
 
-const LoginForm = styled.form`
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  margin-top: 2rem;
-
-  .input-container {
-    width: 100%;
-  }
-
-  .login-btn {
-    width: 100%;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    font-size: 1.5rem;
-    letter-spacing: 0.1rem;
-  }
-`;
-
-const ErrorMessage = styled.p`
-  display: block;
-  height: 2rem;
-  padding-top: 0.5rem;
-  color: red;
-  line-height: 1.1rem;
-`;
 export default LoginModal;

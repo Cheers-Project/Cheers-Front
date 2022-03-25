@@ -18,7 +18,6 @@ const Header = () => {
       setIsScrolled(false);
     }
   }, 400);
-  console.log(menuState);
 
   useEffect(() => {
     const path = window.location.pathname;
