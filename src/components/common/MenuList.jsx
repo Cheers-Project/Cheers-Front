@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import useModal from 'hooks/useModal';
 import LoginModal from 'components/login/LoginModal';
 import { useNavigate } from 'react-router-dom';
-import ModalWrapper from './ModalWrapper';
 
 const MenuList = ({ isLoggedIn, modalState, handleModal }) => {
   const navigate = useNavigate();
