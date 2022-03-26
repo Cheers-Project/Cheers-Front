@@ -27,9 +27,6 @@ const Header = () => {
   }, 400);
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) dispatch(checkLogin());
-
     const path = window.location.pathname;
     if (path === '/') {
       window.addEventListener('scroll', onScroll);
@@ -39,7 +36,12 @@ const Header = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, []);
+  }, [onScroll]);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) dispatch(checkLogin());
+  }, [dispatch]);
 
   return (
     <>
