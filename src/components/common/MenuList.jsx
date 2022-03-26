@@ -5,17 +5,17 @@ import useModal from 'hooks/useModal';
 import LoginModal from 'components/login/LoginModal';
 import { useNavigate } from 'react-router-dom';
 
-const MenuList = ({ isLoggedIn, modalState, handleModal }) => {
+const MenuList = ({ isLoggedIn, menuModalState }) => {
   const navigate = useNavigate();
-  const [loginModal, handleloginModal] = useModal();
+  const [loginModalState, handleLoginModal, setLoginModalState] = useModal();
   const handleRegist = () => {
     navigate('/regist');
   };
   return (
-    <MenuListWrapper modalState={modalState}>
+    <MenuListWrapper modalState={menuModalState}>
       {!isLoggedIn ? (
         <>
-          <MenuItem onClick={handleloginModal}>로그인</MenuItem>
+          <MenuItem onClick={handleLoginModal}>로그인</MenuItem>
           <MenuItem onClick={handleRegist}>회원가입</MenuItem>
         </>
       ) : (
@@ -24,8 +24,12 @@ const MenuList = ({ isLoggedIn, modalState, handleModal }) => {
           <MenuItem>로그아웃</MenuItem>
         </>
       )}
-      {loginModal && (
-        <LoginModal modalState={loginModal} handleModal={handleloginModal} />
+      {loginModalState && (
+        <LoginModal
+          loginModalState={loginModalState}
+          handleLoginModal={handleLoginModal}
+          setLoginModalState={setLoginModalState}
+        />
       )}
     </MenuListWrapper>
   );

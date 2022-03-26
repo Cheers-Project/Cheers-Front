@@ -8,7 +8,7 @@ import StyledInput from 'components/common/StyledInput';
 import loginSchema from 'utils/validation/loginSchema';
 import { initializeError, login } from 'redux/modules/user';
 
-const LoginForm = () => {
+const LoginForm = ({ setLoginModalState }) => {
   const dispatch = useDispatch();
 
   const errMsg = useSelector(({ user }) => {
@@ -26,9 +26,13 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm({ resolver: joiResolver(loginSchema) });
 
-  const onSubmit = (data) => {
-    dispatch(login(data));
+  const onSubmit = async (data) => {
+    await dispatch(login(data));
+    if (errMsg) {
+      setLoginModalState(false);
+    }
   };
+
   return (
     <LoginFormWrapper autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
       <div className="input-container">

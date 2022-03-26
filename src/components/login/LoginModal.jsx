@@ -9,7 +9,11 @@ import ModalWrapper from 'components/common/ModalWrapper';
 import kakaoIcon from 'assets/images/ico_kakao.png';
 import LoginForm from './LoginForm';
 
-const LoginModal = ({ modalState, handleModal }) => {
+const LoginModal = ({
+  loginModalState,
+  handleLoginModal,
+  setLoginModalState,
+}) => {
   // 카카오 로그인 페이지 이동
   const {
     REACT_APP_KAKAO_API_KEY: KAKAO_API_KEY,
@@ -19,11 +23,11 @@ const LoginModal = ({ modalState, handleModal }) => {
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
   return (
-    <ModalWrapper handleModal={handleModal}>
-      <ModalContentWrapper modalState={modalState}>
+    <ModalWrapper handleLoginModal={handleLoginModal}>
+      <ModalContentWrapper loginModalState={loginModalState}>
         <CloseOutlined className="close-btn modal" />
         <h2>로그인</h2>
-        <LoginForm />
+        <LoginForm setLoginModalState={setLoginModalState} />
         <div className="guide-container">
           <p>
             회원이 아니신가요?{' '}

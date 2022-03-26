@@ -15,7 +15,7 @@ const Header = () => {
     return isLoggedIn;
   });
 
-  const [menuState, setMenuState] = useModal();
+  const [menuModalState, handleMenuModal] = useModal();
   const [isScrolled, setIsScrolled] = useState(false);
 
   const onScroll = throttle(() => {
@@ -52,21 +52,17 @@ const Header = () => {
             <Button>게시판</Button>
             <Button>모임</Button>
           </MidNav>
-          <RightNav className="modal" onClick={setMenuState}>
+          <RightNav className="modal" onClick={handleMenuModal}>
             <UserOutlined className="user-icon" />
           </RightNav>
-          {menuState && menuState ? (
-            <MenuList
-              isLoggedIn={isLoggedIn}
-              modalState={menuState}
-              handleModal={setMenuState}
-            />
+          {menuModalState && menuModalState ? (
+            <MenuList isLoggedIn={isLoggedIn} menuModalState={menuModalState} />
           ) : (
             ''
           )}
         </HeaderInner>
-        {menuState && (
-          <MunuListOuter className="modal" onClick={setMenuState} />
+        {menuModalState && (
+          <MunuListOuter className="modal" onClick={handleMenuModal} />
         )}
       </HeaderOuter>
     </>
