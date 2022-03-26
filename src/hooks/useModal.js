@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-const useModal = () => {
-  const [modalState, setModalState] = useState(false);
+const useModal = (initialState = false) => {
+  const [modalState, setModalState] = useState(initialState);
 
   const handleModal = (e) => {
     if (e.target.classList.contains('modal') || !modalState) {
