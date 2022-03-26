@@ -2,13 +2,20 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { UserOutlined } from '@ant-design/icons';
 import { throttle } from 'lodash';
+import { useDispatch, useSelector } from 'react-redux';
 
 import MenuList from './MenuList';
 import useModal from 'hooks/useModal';
+import { checkLogin } from 'redux/modules/user';
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [menuState, setMenuState] = useModal();
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(({ user }) => {
+    const { isLoggedIn } = user;
+    return isLoggedIn;
+  });
+
+  const [menuModalState, handleMenuModal] = useModal();
   const [isScrolled, setIsScrolled] = useState(false);
 
   const onScroll = throttle(() => {
@@ -21,9 +28,6 @@ const Header = () => {
 
   useEffect(() => {
     const path = window.location.pathname;
-
-    const token = localStorage.getItem('token');
-    if (token) setIsLoggedIn(true);
     if (path === '/') {
       window.addEventListener('scroll', onScroll);
     } else {
@@ -32,7 +36,12 @@ const Header = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, []);
+  }, [onScroll]);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) dispatch(checkLogin());
+  }, [dispatch]);
 
   return (
     <>
@@ -43,21 +52,17 @@ const Header = () => {
             <Button>게시판</Button>
             <Button>모임</Button>
           </MidNav>
-          <RightNav className="modal" onClick={setMenuState}>
+          <RightNav className="modal" onClick={handleMenuModal}>
             <UserOutlined className="user-icon" />
           </RightNav>
-          {menuState && menuState ? (
-            <MenuList
-              isLoggedIn={isLoggedIn}
-              modalState={menuState}
-              handleModal={setMenuState}
-            />
+          {menuModalState && menuModalState ? (
+            <MenuList isLoggedIn={isLoggedIn} menuModalState={menuModalState} />
           ) : (
             ''
           )}
         </HeaderInner>
-        {menuState && (
-          <MunuListOuter className="modal" onClick={setMenuState} />
+        {menuModalState && (
+          <MunuListOuter className="modal" onClick={handleMenuModal} />
         )}
       </HeaderOuter>
     </>

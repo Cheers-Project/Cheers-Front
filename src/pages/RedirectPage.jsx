@@ -1,33 +1,43 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { loginFailure, loginSuccess } from 'redux/modules/user';
+
+import * as userAPI from 'api/user';
 
 const RedirectPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const code = new URL(window.location.href).searchParams.get('code');
 
-  const getToken = async () => {
-    const res = await axios.get(
-      `http://localhost:4000/api/auth/kakao/callback?code=${code}`,
-    );
-
-    const { data } = res;
-
-    if (data.accessToken) {
-      localStorage.setItem('token', data.accessToken);
-      navigate('/');
-      return;
-    } else {
-      localStorage.setItem('kakaoToken', data.kakaoToken);
-      navigate('/oauth/kakao');
-    }
-  };
-
   useEffect(() => {
+    const getToken = async () => {
+      const { data } = await userAPI.kakaoCallback(code);
+
+      try {
+        if (data.accessToken) {
+          localStorage.setItem('token', data.accessToken);
+          // 성공
+          dispatch(loginSuccess(data.accessToken));
+          navigate('/');
+          return;
+        } else {
+          localStorage.setItem('kakaoToken', data.kakaoToken);
+          navigate('/oauth/kakao');
+        }
+      } catch (e) {
+        // 실패
+        const errInfo = {
+          errMsg: data.msg,
+          e,
+        };
+        dispatch(loginFailure(errInfo));
+      }
+    };
     getToken();
-  }, []);
+  }, [code, dispatch, navigate]);
 
   return (
     <RedirectWrapper>

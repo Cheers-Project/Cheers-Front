@@ -9,7 +9,7 @@ const useModal = () => {
     }
   };
 
-  return [modalState, handleModal];
+  return [modalState, handleModal, setModalState];
 };
 
 export default useModal;

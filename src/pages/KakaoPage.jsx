@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import * as userAPI from 'api/user';
+import {
+  initializeError,
+  loginFailure,
+  loginSuccess,
+} from 'redux/modules/user';
+
 import StyledInput from 'components/common/StyledInput';
 
 const KakaoPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [nickname, setNickname] = useState(null);
-  const [errMsg, setErrMsg] = useState(null);
+
+  const errMsg = useSelector(({ user }) => {
+    const { errMsg } = user;
+    return errMsg;
+  });
 
   const changeNicnkName = (e) => {
     setNickname(e.target.value);
@@ -16,24 +28,29 @@ const KakaoPage = () => {
   const handleContinueBtn = async () => {
     const kakaoToken = localStorage.getItem('kakaoToken');
 
-    const paylaod = {
+    const payload = {
       kakaoToken,
       nickname,
     };
-    try {
-      const { data } = await axios.post(
-        'http://localhost:4000/api/user/login/kakao',
-        paylaod,
-      );
+    const { data } = await userAPI.kakaoLogin(payload);
 
+    try {
       localStorage.removeItem('kakaoToken');
       localStorage.setItem('token', data.accessToken);
-
+      dispatch(loginSuccess(data.accessToken));
       navigate('/');
-    } catch (err) {
-      setErrMsg(err.response.data.msg);
+    } catch (e) {
+      const errInfo = {
+        errMsg: data.msg,
+        e,
+      };
+      dispatch(loginFailure(errInfo));
     }
   };
+
+  useEffect(() => {
+    dispatch(initializeError());
+  }, [dispatch]);
 
   return (
     <KakaoLoginPageWrapper>
@@ -48,7 +65,7 @@ const KakaoPage = () => {
           autoComplete="off"
           onChange={changeNicnkName}
         />
-        <ErrorMessage>{errMsg && errMsg}</ErrorMessage>
+        <ErrorMessage>{errMsg}</ErrorMessage>
       </div>
       <button className="continue-btn" onClick={handleContinueBtn}>
         계속하기

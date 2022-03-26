@@ -1,5 +1,4 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import jwt from 'jwt-decode';
 
 import { login } from 'redux/modules/user';
 import * as userAPI from 'api/user';
@@ -7,9 +6,9 @@ import * as userAPI from 'api/user';
 function* loginSaga(action) {
   const { data } = yield call(() => userAPI.login(action.payload));
   try {
-    localStorage.setItem('accessToken', data.accessToken);
-    const userInfo = jwt(data.accessToken);
-    yield put({ type: `${action.type}Success`, payload: userInfo });
+    if (data.accessToken) localStorage.setItem('accessToken', data.accessToken);
+
+    yield put({ type: `${action.type}Success`, payload: data.accessToken });
   } catch (e) {
     const errInfo = {
       errMsg: data.msg,
