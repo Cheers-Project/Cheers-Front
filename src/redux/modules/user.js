@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import jwt from 'jwt-decode';
 
 const initialState = {
   user: {
@@ -24,8 +25,9 @@ const userSlice = createSlice({
       state.error = null;
     },
     loginSuccess(state, action) {
-      const { nickname } = action.payload;
-      state.user = { ...state.user, nickname };
+      const userInfo = jwt(action.payload);
+      const { nickname, profileImg } = userInfo;
+      state.user = { ...state.user, nickname, profileImg };
       state.isLoggedIn = true;
       state.errMsg = null;
       state.error = null;
