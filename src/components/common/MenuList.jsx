@@ -4,12 +4,19 @@ import styled from 'styled-components';
 import useModal from 'hooks/useModal';
 import LoginModal from 'components/login/LoginModal';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from 'redux/modules/user';
 
 const MenuList = ({ isLoggedIn, menuModalState }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loginModalState, handleLoginModal, setLoginModalState] = useModal();
   const handleRegist = () => {
     navigate('/regist');
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
   };
   return (
     <MenuListWrapper modalState={menuModalState}>
@@ -21,7 +28,7 @@ const MenuList = ({ isLoggedIn, menuModalState }) => {
       ) : (
         <>
           <MenuItem>마이페이지</MenuItem>
-          <MenuItem>로그아웃</MenuItem>
+          <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
         </>
       )}
       {loginModalState && (
