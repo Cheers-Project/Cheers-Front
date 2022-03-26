@@ -38,6 +38,21 @@ const userSlice = createSlice({
       state.errMsg = errMsg;
       state.error = e;
     },
+    logout(state) {
+      state.errMsg = null;
+      state.error = null;
+    },
+    logoutSuccess(state) {
+      state.user = null;
+      state.isLoggedIn = false;
+      state.errMsg = null;
+      state.error = null;
+    },
+    logoutFailure(state, action) {
+      const { errMsg, e } = action.payload;
+      state.errMsg = errMsg;
+      state.error = e;
+    },
     checkLogin(state) {
       state.isLoggedIn = true;
     },
@@ -49,6 +64,9 @@ export const {
   login,
   loginSuccess,
   loginFailure,
+  logout,
+  logoutSuccess,
+  logoutFailure,
   checkLogin,
 } = userSlice.actions;
 

@@ -26,6 +26,15 @@ export const kakaoLogin = async (payload) => {
   }
 };
 
+export const logout = async (payload) => {
+  try {
+    const res = await client.get('/user/logout');
+    return res;
+  } catch (e) {
+    return e.response;
+  }
+};
+
 export const regist = async (payload) => {
   try {
     const res = await client.post('/user/regist', payload, {

@@ -1,10 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { logout } from 'redux/modules/user';
 
 import useModal from 'hooks/useModal';
 import UserModal from 'components/user/UserModal';
 
 const MenuList = ({ isLoggedIn, menuModalState }) => {
+  const dispatch = useDispatch();
+
   const [userModalState, handleUserModal, setUserModalState] = useModal({
     login: false,
     regist: false,
@@ -20,6 +24,10 @@ const MenuList = ({ isLoggedIn, menuModalState }) => {
     setUserModalState({ ...userModalState, regist: true, isOpen: true });
   };
 
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <MenuListWrapper modalState={menuModalState}>
       {!isLoggedIn ? (
@@ -30,7 +38,7 @@ const MenuList = ({ isLoggedIn, menuModalState }) => {
       ) : (
         <>
           <MenuItem>마이페이지</MenuItem>
-          <MenuItem>로그아웃</MenuItem>
+          <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
         </>
       )}
       {isOpen && (
