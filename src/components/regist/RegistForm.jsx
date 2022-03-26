@@ -4,12 +4,14 @@ import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import * as userAPI from 'api/user';
+import { useNavigate } from 'react-router-dom';
 
 import Avatar from 'components/regist/Avatar';
 import StyledInput from 'components/common/StyledInput';
 import registSchema from 'utils/validation/registSchema';
 
 const RegistForm = () => {
+  const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const {
     register,
@@ -38,6 +40,7 @@ const RegistForm = () => {
   const onSubmit = (data) => {
     const formData = convertToFormData(data);
     userAPI.regist(formData);
+    navigate(-1);
   };
 
   return (
