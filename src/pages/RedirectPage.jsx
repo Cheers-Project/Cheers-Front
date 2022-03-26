@@ -18,7 +18,7 @@ const RedirectPage = () => {
 
       try {
         if (data.accessToken) {
-          localStorage.setItem('token', data.accessToken);
+          localStorage.setItem('accessToken', data.accessToken);
           // 성공
           dispatch(loginSuccess(data.accessToken));
           navigate('/');

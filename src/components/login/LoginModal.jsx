@@ -23,7 +23,7 @@ const LoginModal = ({
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
   return (
-    <ModalWrapper handleLoginModal={handleLoginModal}>
+    <ModalWrapper handleModal={handleLoginModal}>
       <ModalContentWrapper loginModalState={loginModalState}>
         <CloseOutlined className="close-btn modal" />
         <h2>로그인</h2>

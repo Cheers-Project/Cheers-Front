@@ -36,7 +36,7 @@ const KakaoPage = () => {
 
     try {
       localStorage.removeItem('kakaoToken');
-      localStorage.setItem('token', data.accessToken);
+      localStorage.setItem('accessToken', data.accessToken);
       dispatch(loginSuccess(data.accessToken));
       navigate('/');
     } catch (e) {
