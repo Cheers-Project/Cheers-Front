@@ -1,29 +1,39 @@
 import React from 'react';
 import styled from 'styled-components';
-
-import useModal from 'hooks/useModal';
-import LoginModal from 'components/login/LoginModal';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from 'redux/modules/user';
 
+import useModal from 'hooks/useModal';
+import UserModal from 'components/user/UserModal';
+
 const MenuList = ({ isLoggedIn, menuModalState }) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [loginModalState, handleLoginModal, setLoginModalState] = useModal();
-  const handleRegist = () => {
-    navigate('/regist');
+
+  const [userModalState, handleUserModal, setUserModalState] = useModal({
+    login: false,
+    regist: false,
+    isOpen: false,
+  });
+
+  const { isOpen } = userModalState;
+
+  const loginModal = () => {
+    setUserModalState({ ...userModalState, login: true, isOpen: true });
+  };
+  const registModal = () => {
+    setUserModalState({ ...userModalState, regist: true, isOpen: true });
   };
 
   const handleLogout = () => {
     dispatch(logout());
   };
+
   return (
     <MenuListWrapper modalState={menuModalState}>
       {!isLoggedIn ? (
         <>
-          <MenuItem onClick={handleLoginModal}>로그인</MenuItem>
-          <MenuItem onClick={handleRegist}>회원가입</MenuItem>
+          <MenuItem onClick={loginModal}>로그인</MenuItem>
+          <MenuItem onClick={registModal}>회원가입</MenuItem>
         </>
       ) : (
         <>
@@ -31,11 +41,11 @@ const MenuList = ({ isLoggedIn, menuModalState }) => {
           <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
         </>
       )}
-      {loginModalState && (
-        <LoginModal
-          loginModalState={loginModalState}
-          handleLoginModal={handleLoginModal}
-          setLoginModalState={setLoginModalState}
+      {isOpen && (
+        <UserModal
+          userModalState={userModalState}
+          handleUserModal={handleUserModal}
+          setUserModalState={setUserModalState}
         />
       )}
     </MenuListWrapper>
