@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <FooterOuter>
       <FooterInner>
-        <p>Copyright ⓒ2022 LemonAlcohol. All rights reserved.</p>
+        <p>Copyright ⓒ2022 CherryAlcohol. All rights reserved.</p>
         <div className="github-wrapper">
           <p>Github</p>
           <a href={'https://github.com/LemonAlcohol'}>
