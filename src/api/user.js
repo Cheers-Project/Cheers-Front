@@ -26,9 +26,14 @@ export const kakaoLogin = async (payload) => {
   }
 };
 
-export const logout = async (payload) => {
+export const logout = async () => {
+  const accessToken = localStorage.getItem('accessToken');
   try {
-    const res = await client.get('/user/logout');
+    const res = await client.get('/user/logout', {
+      headers: {
+        Authorization: accessToken,
+      },
+    });
     return res;
   } catch (e) {
     return e.response;

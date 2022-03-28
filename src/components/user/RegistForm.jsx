@@ -4,18 +4,20 @@ import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import * as userAPI from 'api/user';
-import { useNavigate } from 'react-router-dom';
 
 import Avatar from 'components/user/Avatar';
 import StyledInput from 'components/common/StyledInput';
 import registSchema from 'utils/validation/registSchema';
+import { useDispatch } from 'react-redux';
+import { openUserModal } from 'redux/modules/modal';
 
-const RegistForm = ({ userModalState, setUserModalState }) => {
+const RegistForm = () => {
+  const dispatch = useDispatch();
+
   const changeModal = () => {
-    setUserModalState({ ...userModalState, login: true, regist: false });
+    dispatch(openUserModal({ modal: 'loginModal' }));
   };
 
-  const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const {
     register,
@@ -44,7 +46,7 @@ const RegistForm = ({ userModalState, setUserModalState }) => {
   const onSubmit = (data) => {
     const formData = convertToFormData(data);
     userAPI.regist(formData);
-    navigate(-1);
+    changeModal();
   };
 
   return (

@@ -4,8 +4,9 @@ import { all } from 'redux-saga/effects';
 
 import user from 'redux/modules/user';
 import userSaga from 'sagas/userSaga';
+import modal from 'redux/modules/modal';
 
-const reducer = combineReducers({ user });
+const reducer = combineReducers({ user, modal });
 
 const sagaMiddleware = createSagaMiddleware();
 

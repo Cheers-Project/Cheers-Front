@@ -1,27 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from 'redux/modules/user';
 
-import useModal from 'hooks/useModal';
 import UserModal from 'components/user/UserModal';
+import { openUserModal } from 'redux/modules/modal';
 
-const MenuList = ({ isLoggedIn, menuModalState }) => {
+const MenuList = ({ isLoggedIn }) => {
   const dispatch = useDispatch();
 
-  const [userModalState, handleUserModal, setUserModalState] = useModal({
-    login: false,
-    regist: false,
-    isOpen: false,
+  const userModal = useSelector(({ modal }) => {
+    return modal.userModal.isOpen;
   });
 
-  const { isOpen } = userModalState;
-
-  const loginModal = () => {
-    setUserModalState({ ...userModalState, login: true, isOpen: true });
+  const handleLoginModal = () => {
+    dispatch(openUserModal({ modal: 'loginModal' }));
   };
-  const registModal = () => {
-    setUserModalState({ ...userModalState, regist: true, isOpen: true });
+  const handleRegistModal = () => {
+    dispatch(openUserModal({ modal: 'registModal' }));
   };
 
   const handleLogout = () => {
@@ -29,11 +25,11 @@ const MenuList = ({ isLoggedIn, menuModalState }) => {
   };
 
   return (
-    <MenuListWrapper modalState={menuModalState}>
+    <MenuListWrapper>
       {!isLoggedIn ? (
         <>
-          <MenuItem onClick={loginModal}>로그인</MenuItem>
-          <MenuItem onClick={registModal}>회원가입</MenuItem>
+          <MenuItem onClick={handleLoginModal}>로그인</MenuItem>
+          <MenuItem onClick={handleRegistModal}>회원가입</MenuItem>
         </>
       ) : (
         <>
@@ -41,13 +37,7 @@ const MenuList = ({ isLoggedIn, menuModalState }) => {
           <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
         </>
       )}
-      {isOpen && (
-        <UserModal
-          userModalState={userModalState}
-          handleUserModal={handleUserModal}
-          setUserModalState={setUserModalState}
-        />
-      )}
+      {userModal && <UserModal />}
     </MenuListWrapper>
   );
 };
