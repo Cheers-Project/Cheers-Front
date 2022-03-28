@@ -5,18 +5,26 @@ import { throttle } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 
 import MenuList from './MenuList';
-import useModal from 'hooks/useModal';
 import { checkLogin } from 'redux/modules/user';
+import { toggleMenuModal } from 'redux/modules/modal';
 
 const Header = () => {
   const dispatch = useDispatch();
+
+  const [isScrolled, setIsScrolled] = useState(false);
+
   const isLoggedIn = useSelector(({ user }) => {
     const { isLoggedIn } = user;
     return isLoggedIn;
   });
 
-  const [menuModalState, handleMenuModal] = useModal();
-  const [isScrolled, setIsScrolled] = useState(false);
+  const menuModal = useSelector(({ modal }) => {
+    return modal.menuModal;
+  });
+
+  const handleMenuModal = () => {
+    dispatch(toggleMenuModal(!menuModal));
+  };
 
   const onScroll = throttle(() => {
     if (window.scrollY > 20) {
@@ -52,18 +60,12 @@ const Header = () => {
             <Button>게시판</Button>
             <Button>모임</Button>
           </MidNav>
-          <RightNav className="modal" onClick={handleMenuModal}>
+          <RightNav onClick={handleMenuModal}>
             <UserOutlined className="user-icon" />
           </RightNav>
-          {menuModalState && menuModalState ? (
-            <MenuList isLoggedIn={isLoggedIn} menuModalState={menuModalState} />
-          ) : (
-            ''
-          )}
+          {menuModal && menuModal ? <MenuList isLoggedIn={isLoggedIn} /> : ''}
         </HeaderInner>
-        {menuModalState && (
-          <MunuListOuter className="modal" onClick={handleMenuModal} />
-        )}
+        {menuModal && <MunuListOuter onClick={handleMenuModal} />}
       </HeaderOuter>
     </>
   );

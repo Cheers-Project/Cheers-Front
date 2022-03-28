@@ -5,30 +5,34 @@ import { CloseOutlined } from '@ant-design/icons';
 import ModalWrapper from 'components/common/ModalWrapper';
 import LoginForm from 'components/user/LoginForm';
 import RegistForm from 'components/user/RegistForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { initializeModal } from 'redux/modules/modal';
 
-const UserModal = ({ userModalState, handleUserModal, setUserModalState }) => {
-  const { login, regist } = userModalState;
+const UserModal = () => {
+  const dispatch = useDispatch();
+
+  const userModal = useSelector(({ modal }) => {
+    return modal.userModal;
+  });
+
+  const closeModal = () => {
+    dispatch(initializeModal());
+  };
   return (
-    <ModalWrapper handleModal={handleUserModal}>
+    <ModalWrapper>
       <ModalContentWrapper>
-        <CloseOutlined className="close-btn modal" />
-        {login && (
+        <CloseOutlined className="close-btn" onClick={closeModal} />
+        {userModal.loginModal && (
           <>
             <h2 className="modal-title">로그인</h2>
-            <LoginForm
-              userModalState={userModalState}
-              setUserModalState={setUserModalState}
-            />
+            <LoginForm />
           </>
         )}
 
-        {regist && (
+        {userModal.registModal && (
           <>
             <h2 className="modal-title">회원가입</h2>
-            <RegistForm
-              userModalState={userModalState}
-              setUserModalState={setUserModalState}
-            />
+            <RegistForm />
           </>
         )}
       </ModalContentWrapper>

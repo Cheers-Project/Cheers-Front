@@ -8,10 +8,11 @@ import kakaoIcon from 'assets/images/ico_kakao.png';
 import StyledInput from 'components/common/StyledInput';
 import loginSchema from 'utils/validation/loginSchema';
 import { initializeError, login } from 'redux/modules/user';
+import { initializeModal, openUserModal } from 'redux/modules/modal';
 
-const LoginForm = ({ userModalState, setUserModalState }) => {
+const LoginForm = () => {
   const changeModal = () => {
-    setUserModalState({ ...userModalState, login: false, regist: true });
+    dispatch(openUserModal({ modal: 'registModal' }));
   };
 
   // 카카오 로그인 페이지 이동
@@ -41,8 +42,8 @@ const LoginForm = ({ userModalState, setUserModalState }) => {
 
   const onSubmit = async (data) => {
     await dispatch(login(data));
-    if (errMsg) {
-      setUserModalState(false);
+    if (!errMsg) {
+      dispatch(initializeModal());
     }
   };
 

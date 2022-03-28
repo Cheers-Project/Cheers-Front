@@ -1,15 +1,22 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { initializeModal } from 'redux/modules/modal';
 
 import styled from 'styled-components';
 
 import Modal from './Modal';
 
-const ModalWrapper = ({ children, handleModal }) => {
+const ModalWrapper = ({ children }) => {
+  const dispatch = useDispatch();
+
+  const closeModal = (e) => {
+    if (e.target === e.currentTarget) {
+      dispatch(initializeModal());
+    }
+  };
   return (
     <Modal>
-      <Overlay className="modal" onClick={handleModal}>
-        {children}
-      </Overlay>
+      <Overlay onClick={closeModal}>{children}</Overlay>
     </Modal>
   );
 };
