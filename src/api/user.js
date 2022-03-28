@@ -1,26 +1,23 @@
 import client from 'api/index';
 
-export const login = async (payload) => {
+export const login = (payload) => {
   try {
-    const res = await client.post('/user/login', payload);
-    return res;
+    return client.post('/user/login', payload);
   } catch (e) {
     return e.response;
   }
 };
-export const kakaoCallback = async (code) => {
+export const kakaoCallback = (code) => {
   try {
-    const res = await client.get(`/auth/kakao/callback?code=${code}`);
-    return res;
+    return client.get(`/auth/kakao/callback?code=${code}`);
   } catch (e) {
     return e.response;
   }
 };
 
-export const kakaoLogin = async (payload) => {
+export const kakaoLogin = (payload) => {
   try {
-    const res = await client.post('/user/login/kakao', payload);
-    return res;
+    return client.post('/user/login/kakao', payload);
   } catch (e) {
     return e.response;
   }
