@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { loginFailure, loginSuccess } from 'redux/modules/user';
 import * as userAPI from 'api/user';
 
-import Spinner from './Spinner';
+import Spinner from 'components/auth/Spinner';
 
 const KakaoRedirect = () => {
   const dispatch = useDispatch();
