@@ -37,14 +37,13 @@ export const logout = async () => {
   }
 };
 
-export const regist = async (payload) => {
+export const regist = (payload) => {
   try {
-    const res = await client.post('/user/regist', payload, {
+    return client.post('/user/regist', payload, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
-    return res;
   } catch (e) {
     return e.response;
   }

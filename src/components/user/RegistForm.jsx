@@ -4,26 +4,41 @@ import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import * as userAPI from 'api/user';
+import { useMutation } from 'react-query';
+import { useDispatch } from 'react-redux';
 
 import Avatar from 'components/user/Avatar';
 import StyledInput from 'components/common/StyledInput';
 import registSchema from 'utils/validation/registSchema';
-import { useDispatch } from 'react-redux';
 import { openUserModal } from 'redux/modules/modal';
 
 const RegistForm = () => {
   const dispatch = useDispatch();
-
-  const changeModal = () => {
-    dispatch(openUserModal({ modal: 'loginModal' }));
-  };
-
   const [visible, setVisible] = useState(false);
+
+  const mutation = useMutation(
+    (payload) => {
+      userAPI.regist(payload);
+    },
+    {
+      onSuccess: () => {
+        changeModal();
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: joiResolver(registSchema) });
+
+  const changeModal = () => {
+    dispatch(openUserModal({ modal: 'loginModal' }));
+  };
 
   const handleVisible = () => {
     setVisible(!visible);
@@ -45,8 +60,8 @@ const RegistForm = () => {
 
   const onSubmit = (data) => {
     const formData = convertToFormData(data);
-    userAPI.regist(formData);
-    changeModal();
+    mutation.mutate(formData);
+    // changeModal();
   };
 
   return (
