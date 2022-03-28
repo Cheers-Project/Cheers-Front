@@ -5,9 +5,11 @@ import { logout } from 'redux/modules/user';
 
 import UserModal from 'components/user/UserModal';
 import { openUserModal } from 'redux/modules/modal';
+import { useNavigate } from 'react-router-dom';
 
 const MenuList = ({ isLoggedIn }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const userModal = useSelector(({ modal }) => {
     return modal.userModal.isOpen;
@@ -24,6 +26,10 @@ const MenuList = ({ isLoggedIn }) => {
     dispatch(logout());
   };
 
+  const handleRouter = () => {
+    navigate('/mypage');
+  };
+
   return (
     <MenuListWrapper>
       {!isLoggedIn ? (
@@ -33,7 +39,7 @@ const MenuList = ({ isLoggedIn }) => {
         </>
       ) : (
         <>
-          <MenuItem>마이페이지</MenuItem>
+          <MenuItem onClick={handleRouter}>마이페이지</MenuItem>
           <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
         </>
       )}
