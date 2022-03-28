@@ -3,13 +3,10 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as userAPI from 'api/user';
-import {
-  initializeError,
-  loginFailure,
-  loginSuccess,
-} from 'redux/modules/user';
+import { initializeError } from 'redux/modules/user';
 
 import StyledInput from 'components/common/StyledInput';
+import { useMutation } from 'react-query';
 
 const KakaoLogin = () => {
   const dispatch = useDispatch();
@@ -25,27 +22,30 @@ const KakaoLogin = () => {
     setNickname(e.target.value);
   };
 
-  const handleContinueBtn = async () => {
+  const mutation = useMutation(
+    (payload) => {
+      return userAPI.kakaoLogin(payload);
+    },
+    {
+      onSuccess: (data) => {
+        localStorage.removeItem('kakaoToken');
+        localStorage.setItem('accessToken', data.data.accessToken);
+        navigate('/');
+      },
+      onError: () => {
+        console.log('에러처리하기');
+      },
+    },
+  );
+
+  const handleContinueBtn = () => {
     const kakaoToken = localStorage.getItem('kakaoToken');
 
     const payload = {
       kakaoToken,
       nickname,
     };
-    const { data } = await userAPI.kakaoLogin(payload);
-
-    try {
-      localStorage.removeItem('kakaoToken');
-      localStorage.setItem('accessToken', data.accessToken);
-      dispatch(loginSuccess(data.accessToken));
-      navigate('/');
-    } catch (e) {
-      const errInfo = {
-        errMsg: data.msg,
-        e,
-      };
-      dispatch(loginFailure(errInfo));
-    }
+    mutation.mutate(payload);
   };
 
   useEffect(() => {

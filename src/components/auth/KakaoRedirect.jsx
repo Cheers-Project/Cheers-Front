@@ -1,42 +1,36 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { loginFailure, loginSuccess } from 'redux/modules/user';
 import * as userAPI from 'api/user';
 
 import Spinner from 'components/auth/Spinner';
+import { useQuery } from 'react-query';
 
 const KakaoRedirect = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const code = new URL(window.location.href).searchParams.get('code');
 
-  useEffect(() => {
-    const getToken = async () => {
-      const { data } = await userAPI.kakaoCallback(code);
-
-      try {
-        if (data.accessToken) {
-          localStorage.setItem('accessToken', data.accessToken);
-          dispatch(loginSuccess(data.accessToken));
+  useQuery(
+    ['code', code],
+    () => {
+      return userAPI.kakaoCallback(code);
+    },
+    {
+      onSuccess: (data) => {
+        if (data.data.accessToken) {
+          localStorage.setItem('accessToken', data.data.accessToken);
           navigate('/');
-          return;
         } else {
-          localStorage.setItem('kakaoToken', data.kakaoToken);
+          localStorage.setItem('kakaoToken', data.data.kakaoToken);
           navigate('/oauth/kakao');
         }
-      } catch (e) {
-        const errInfo = {
-          errMsg: data.msg,
-          e,
-        };
-        dispatch(loginFailure(errInfo));
-      }
-    };
-    getToken();
-  }, [code, dispatch, navigate]);
+      },
+      onError: () => {
+        console.log('에러처리');
+      },
+    },
+  );
   return (
     <RedirectWrapper>
       <Spinner />

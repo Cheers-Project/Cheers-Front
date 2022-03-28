@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -13,6 +13,10 @@ import { useMutation } from 'react-query';
 import * as userAPI from 'api/user';
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+
+  const [errMsg, setErrMsg] = useState('');
+
   const changeModal = () => {
     dispatch(openUserModal({ modal: 'registModal' }));
   };
@@ -25,12 +29,10 @@ const LoginForm = () => {
 
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
-  const dispatch = useDispatch();
-
-  const errMsg = useSelector(({ user }) => {
-    const { errMsg } = user;
-    return errMsg;
-  });
+  // const errMsg = useSelector(({ user }) => {
+  //   const { errMsg } = user;
+  //   return errMsg;
+  // });
 
   useEffect(() => {
     dispatch(initializeError());
@@ -42,19 +44,24 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm({ resolver: joiResolver(loginSchema) });
 
-  const mutation = useMutation((data) => {
-    return userAPI.login(data);
-  });
+  const mutation = useMutation(
+    (data) => {
+      return userAPI.login(data);
+    },
+    {
+      onSuccess: (data) => {
+        const { accessToken } = data.data;
+        localStorage.setItem('accessToken', accessToken);
+        dispatch(initializeModal());
+      },
+      onError: (error) => {
+        setErrMsg(error.response.data.msg);
+      },
+    },
+  );
+
   const onSubmit = (data) => {
-    // await dispatch(login(data));
     mutation.mutate(data);
-    if (mutation.isSuccess) {
-      const { accessToken } = mutation.data.data;
-      localStorage.setItem('accessToken', accessToken);
-      dispatch(initializeModal());
-    }
-    if (mutation.isError) {
-    }
   };
 
   return (
