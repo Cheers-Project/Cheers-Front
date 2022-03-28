@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { UserOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
-const Avatar = ({ register }) => {
+const Avatar = ({ register, preview = null }) => {
   const [profileImg, setProfileImg] = useState(null);
-  const [previewImg, setPreviewImg] = useState(null);
+  const [previewImg, setPreviewImg] = useState(preview);
 
   const changeProfileImg = (e) => {
     setProfileImg(e.target.files[0]);

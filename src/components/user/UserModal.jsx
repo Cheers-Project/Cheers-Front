@@ -43,7 +43,7 @@ const UserModal = () => {
 const ModalContentWrapper = styled.div`
   width: 400px;
   padding: 2rem;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
 
   position: relative;
 

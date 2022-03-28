@@ -90,7 +90,7 @@ const LoginForm = () => {
       <div className="guide-container">
         <p>
           회원이 아니신가요?{' '}
-          <button onClick={changeModal} className="regist-btn">
+          <button onClick={changeModal} errors={errors} className="regist-btn">
             회원 가입
           </button>
         </p>
@@ -121,7 +121,13 @@ const LoginFormWrapper = styled.form`
     padding: 1rem;
     border-radius: 0.5rem;
     font-size: 1.5rem;
+    color: #fff;
     letter-spacing: 0.1rem;
+    transition: 0.2s;
+    background-color: #db428e;
+    &:hover {
+      background-color: #c22d77;
+    }
   }
 
   .guide-container {
