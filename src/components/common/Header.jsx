@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { UserOutlined } from '@ant-design/icons';
-import { throttle } from 'lodash';
+import { size, throttle } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 
 import MenuList from './MenuList';
@@ -55,7 +55,10 @@ const Header = () => {
     <>
       <HeaderOuter isScrolled={isScrolled}>
         <HeaderInner>
-          <Logo src="https://avatars.githubusercontent.com/u/81244738?v=4" />
+          <Logo>
+            Cherry
+            <br /> Alcohol
+          </Logo>
           <MidNav isScrolled={isScrolled}>
             <Button>게시판</Button>
             <Button>모임</Button>
@@ -129,34 +132,43 @@ const RightNav = styled.nav`
   }
   .user-icon {
     padding: 0.5rem;
-    font-size: 2rem;
+    font-size: 1.2rem;
     color: #fff;
     border-radius: 50%;
     border: 1.5px solid #fff;
+    @media screen and (min-width: 768px) {
+      font-size: 2rem;
+    }
   }
 `;
 
-const Logo = styled.img`
-  width: 7rem;
-  border-radius: 50%;
+const Logo = styled.div`
+  font-size: 2rem;
+  color: #c22d77;
+  font-weight: 600;
+  letter-spacing: 0.2rem;
 `;
 
 const MidNav = styled.nav`
   display: flex;
   padding: 0.5rem 1rem;
   border-radius: 1.2rem;
-  gap: 3rem;
+  gap: 0.5rem;
   cursor: pointer;
   color: ${({ isScrolled }) => {
     return isScrolled ? '#191718' : '#fff';
   }};
+  @media screen and (min-width: 768px) {
+    gap: 10rem;
+  }
 `;
 
 const Button = styled.button`
   color: inherit;
   background-color: inherit;
   padding: 1rem;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
+  font-weight: 500;
   letter-spacing: 0.1rem;
   display: flex;
   flex-direction: column;
@@ -170,6 +182,9 @@ const Button = styled.button`
   }
   &:hover::after {
     width: 100%;
+  }
+  @media screen and (min-width: 768px) {
+    font-size: 1.6rem;
   }
 `;
 
