@@ -7,8 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import kakaoIcon from 'assets/images/ico_kakao.png';
 import StyledInput from 'components/common/StyledInput';
 import loginSchema from 'utils/validation/loginSchema';
-import { initializeError, login } from 'redux/modules/user';
+import { initializeError } from 'redux/modules/user';
 import { initializeModal, openUserModal } from 'redux/modules/modal';
+import { useMutation } from 'react-query';
+import * as userAPI from 'api/user';
 
 const LoginForm = () => {
   const changeModal = () => {
@@ -40,10 +42,18 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm({ resolver: joiResolver(loginSchema) });
 
-  const onSubmit = async (data) => {
-    await dispatch(login(data));
-    if (!errMsg) {
+  const mutation = useMutation((data) => {
+    return userAPI.login(data);
+  });
+  const onSubmit = (data) => {
+    // await dispatch(login(data));
+    mutation.mutate(data);
+    if (mutation.isSuccess) {
+      const { accessToken } = mutation.data.data;
+      localStorage.setItem('accessToken', accessToken);
       dispatch(initializeModal());
+    }
+    if (mutation.isError) {
     }
   };
 
