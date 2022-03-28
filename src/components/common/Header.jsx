@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { UserOutlined } from '@ant-design/icons';
-import { size, throttle } from 'lodash';
+import { throttle } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 
 import MenuList from './MenuList';
