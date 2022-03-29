@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import MenuList from './MenuList';
-import { checkLogin } from 'redux/modules/user';
 import { toggleMenuModal } from 'redux/modules/modal';
 
 const Header = () => {
@@ -14,11 +13,6 @@ const Header = () => {
   const navigate = useNavigate();
 
   const [isScrolled, setIsScrolled] = useState(false);
-
-  const isLoggedIn = useSelector(({ user }) => {
-    const { isLoggedIn } = user;
-    return isLoggedIn;
-  });
 
   const menuModal = useSelector(({ modal }) => {
     return modal.menuModal;
@@ -52,11 +46,6 @@ const Header = () => {
     };
   }, [onScroll]);
 
-  useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) dispatch(checkLogin(accessToken));
-  }, [dispatch]);
-
   return (
     <>
       <HeaderOuter isScrolled={isScrolled}>
@@ -72,7 +61,7 @@ const Header = () => {
           <RightNav onClick={handleMenuModal}>
             <UserOutlined className="user-icon" />
           </RightNav>
-          {menuModal && menuModal ? <MenuList isLoggedIn={isLoggedIn} /> : ''}
+          {menuModal && <MenuList />}
         </HeaderInner>
         {menuModal && <MunuListOuter onClick={handleMenuModal} />}
       </HeaderOuter>

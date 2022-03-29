@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useMutation, useQueryClient } from 'react-query';
+
 import * as userAPI from 'api/user';
 import { initializeError } from 'redux/modules/user';
-
 import StyledInput from 'components/common/StyledInput';
-import { useMutation } from 'react-query';
 
 const KakaoLogin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
   const [nickname, setNickname] = useState(null);
 
   const errMsg = useSelector(({ user }) => {
@@ -22,21 +24,20 @@ const KakaoLogin = () => {
     setNickname(e.target.value);
   };
 
-  const mutation = useMutation(
-    (payload) => {
-      return userAPI.kakaoLogin(payload);
+  const mutation = useMutation('user', userAPI.kakaoLogin, {
+    onSuccess: (data) => {
+      const { accessToken, userInfo } = data;
+
+      localStorage.removeItem('kakaoToken');
+
+      queryClient.setQueryData('user', userInfo);
+      localStorage.setItem('accessToken', accessToken);
+      navigate('/');
     },
-    {
-      onSuccess: (data) => {
-        localStorage.removeItem('kakaoToken');
-        localStorage.setItem('accessToken', data.data.accessToken);
-        navigate('/');
-      },
-      onError: () => {
-        console.log('에러처리하기');
-      },
+    onError: () => {
+      console.log('에러처리하기');
     },
-  );
+  });
 
   const handleContinueBtn = () => {
     const kakaoToken = localStorage.getItem('kakaoToken');
