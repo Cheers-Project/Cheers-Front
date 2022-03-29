@@ -1,15 +1,32 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from 'redux/modules/user';
+import { useNavigate } from 'react-router-dom';
+import { useQuery, useQueryClient } from 'react-query';
 
+import * as userAPI from 'api/user';
 import UserModal from 'components/user/UserModal';
 import { openUserModal } from 'redux/modules/modal';
-import { useNavigate } from 'react-router-dom';
 
-const MenuList = ({ isLoggedIn }) => {
+const MenuList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const { data: userInfo } = useQuery('user', userAPI.getUser, {
+    onSuccess: () => {},
+  });
+
+  const { refetch } = useQuery('logout', userAPI.logout, {
+    enabled: false,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+
+    onSuccess: () => {
+      queryClient.setQueryData('user', null);
+      localStorage.removeItem('accessToken');
+    },
+  });
 
   const userModal = useSelector(({ modal }) => {
     return modal.userModal.isOpen;
@@ -23,7 +40,7 @@ const MenuList = ({ isLoggedIn }) => {
   };
 
   const handleLogout = () => {
-    dispatch(logout());
+    refetch();
   };
 
   const handleRouter = () => {
@@ -32,7 +49,7 @@ const MenuList = ({ isLoggedIn }) => {
 
   return (
     <MenuListWrapper>
-      {!isLoggedIn ? (
+      {!userInfo ? (
         <>
           <MenuItem onClick={handleLoginModal}>로그인</MenuItem>
           <MenuItem onClick={handleRegistModal}>회원가입</MenuItem>

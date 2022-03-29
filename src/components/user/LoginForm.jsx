@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useMutation, useQueryClient } from 'react-query';
 
 import kakaoIcon from 'assets/images/ico_kakao.png';
 import StyledInput from 'components/common/StyledInput';
 import loginSchema from 'utils/validation/loginSchema';
-import { initializeError } from 'redux/modules/user';
 import { initializeModal, openUserModal } from 'redux/modules/modal';
-import { useMutation } from 'react-query';
+
 import * as userAPI from 'api/user';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   const [errMsg, setErrMsg] = useState('');
 
@@ -29,36 +30,24 @@ const LoginForm = () => {
 
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
-  // const errMsg = useSelector(({ user }) => {
-  //   const { errMsg } = user;
-  //   return errMsg;
-  // });
-
-  useEffect(() => {
-    dispatch(initializeError());
-  }, [dispatch]);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: joiResolver(loginSchema) });
 
-  const mutation = useMutation(
-    (data) => {
-      return userAPI.login(data);
+  const mutation = useMutation('user', userAPI.login, {
+    onSuccess: (data) => {
+      const { accessToken, userInfo } = data;
+
+      queryClient.setQueryData(['user'], userInfo);
+      localStorage.setItem('accessToken', accessToken);
+      dispatch(initializeModal());
     },
-    {
-      onSuccess: (data) => {
-        const { accessToken } = data.data;
-        localStorage.setItem('accessToken', accessToken);
-        dispatch(initializeModal());
-      },
-      onError: (error) => {
-        setErrMsg(error.response.data.msg);
-      },
+    onError: (error) => {
+      setErrMsg(error.response.data.msg);
     },
-  );
+  });
 
   const onSubmit = (data) => {
     mutation.mutate(data);

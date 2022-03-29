@@ -1,12 +1,21 @@
 import client from 'api/index';
 
-export const login = (payload) => {
-  try {
-    return client.post('/user/login', payload);
-  } catch (e) {
-    return e.response;
-  }
+export const getUser = () => {
+  const accessToken = localStorage.getItem('accessToken');
+
+  return client
+    .get('/user', {
+      headers: {
+        Authorization: `${accessToken}`,
+      },
+    })
+    .then((res) => res.data);
 };
+
+export const login = (payload) => {
+  return client.post('/user/login', payload).then((res) => res.data);
+};
+
 export const kakaoCallback = (code) => {
   try {
     return client.get(`/auth/kakao/callback?code=${code}`);
@@ -16,35 +25,26 @@ export const kakaoCallback = (code) => {
 };
 
 export const kakaoLogin = (payload) => {
-  try {
-    return client.post('/user/login/kakao', payload);
-  } catch (e) {
-    return e.response;
-  }
+  return client.post('/user/login/kakao', payload).then((res) => res.data);
 };
 
-export const logout = async () => {
+export const logout = () => {
   const accessToken = localStorage.getItem('accessToken');
-  try {
-    const res = await client.get('/user/logout', {
-      headers: {
-        Authorization: accessToken,
-      },
-    });
-    return res;
-  } catch (e) {
-    return e.response;
-  }
+
+  return client.get('/user/logout', {
+    headers: {
+      Authorization: accessToken,
+    },
+  });
 };
 
-export const regist = async (payload) => {
+export const regist = (payload) => {
   try {
-    const res = await client.post('/user/regist', payload, {
+    return client.post('/user/regist', payload, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
-    return res;
   } catch (e) {
     return e.response;
   }
