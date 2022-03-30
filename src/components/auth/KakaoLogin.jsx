@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useMutation, useQueryClient } from 'react-query';
 
 import * as userAPI from 'api/user';
-import { initializeError } from 'redux/modules/user';
 import StyledInput from 'components/common/StyledInput';
 
 const KakaoLogin = () => {
@@ -48,9 +47,6 @@ const KakaoLogin = () => {
     mutation.mutate(payload);
   };
 
-  useEffect(() => {
-    dispatch(initializeError());
-  }, [dispatch]);
   return (
     <KakaoLoginWrapper>
       <h2>카카오 로그인</h2>
