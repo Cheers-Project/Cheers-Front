@@ -6,7 +6,7 @@ export const fetchUser = () => {
   return client
     .get('/user', {
       headers: {
-        Authorization: accessToken ? accessToken : '',
+        Authorization: accessToken,
       },
     })
     .then((res) => res.data);
