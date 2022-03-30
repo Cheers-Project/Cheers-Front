@@ -10,8 +10,7 @@ import * as meetAPI from 'api/meet';
 import * as userAPI from 'api/user';
 
 const MainPage = () => {
-  useQuery(['user'], userAPI.getUser, {
-    onSuccess: (userInfo) => {},
+  useQuery(['user'], userAPI.fetchUser, {
     refetchOnWindowFocus: false,
   });
 
