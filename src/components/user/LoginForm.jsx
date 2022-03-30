@@ -36,7 +36,7 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm({ resolver: joiResolver(loginSchema) });
 
-  const mutation = useMutation('user', userAPI.login, {
+  const mutation = useMutation(['user'], userAPI.login, {
     onSuccess: (data) => {
       const { accessToken, userInfo } = data;
 

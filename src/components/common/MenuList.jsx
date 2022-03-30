@@ -13,9 +13,7 @@ const MenuList = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { data: userInfo } = useQuery('user', userAPI.getUser, {
-    onSuccess: () => {},
-  });
+  const userInfo = queryClient.getQueryData(['user']);
 
   const { refetch } = useQuery('logout', userAPI.logout, {
     enabled: false,
@@ -23,7 +21,7 @@ const MenuList = () => {
     refetchOnMount: false,
 
     onSuccess: () => {
-      queryClient.setQueryData('user', null);
+      queryClient.setQueryData(['user'], null);
       localStorage.removeItem('accessToken');
     },
   });

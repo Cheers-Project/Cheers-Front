@@ -30,7 +30,7 @@ const KakaoLogin = () => {
 
       localStorage.removeItem('kakaoToken');
 
-      queryClient.setQueryData('user', userInfo);
+      queryClient.setQueryData(['user'], userInfo);
       localStorage.setItem('accessToken', accessToken);
       navigate('/');
     },

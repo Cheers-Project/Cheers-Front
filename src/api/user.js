@@ -1,12 +1,12 @@
 import client from 'api/index';
 
-export const getUser = () => {
+export const fetchUser = () => {
   const accessToken = localStorage.getItem('accessToken');
 
   return client
     .get('/user', {
       headers: {
-        Authorization: `${accessToken}`,
+        Authorization: accessToken ? accessToken : '',
       },
     })
     .then((res) => res.data);
