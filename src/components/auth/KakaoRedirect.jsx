@@ -4,30 +4,34 @@ import { useNavigate } from 'react-router-dom';
 import * as userAPI from 'api/user';
 
 import Spinner from 'components/auth/Spinner';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 
 const KakaoRedirect = () => {
   const navigate = useNavigate();
 
+  const queryClient = useQueryClient();
+
   const code = new URL(window.location.href).searchParams.get('code');
 
   useQuery(
-    ['code', code],
+    ['kakaoCallback'],
     () => {
       return userAPI.kakaoCallback(code);
     },
     {
       onSuccess: (data) => {
-        if (data.data.accessToken) {
-          localStorage.setItem('accessToken', data.data.accessToken);
+        if (data.accessToken) {
+          localStorage.setItem('accessToken', data.accessToken);
+
+          queryClient.removeQueries('kakaoCallback');
+
           navigate('/');
         } else {
-          localStorage.setItem('kakaoToken', data.data.kakaoToken);
           navigate('/oauth/kakao');
         }
       },
-      onError: () => {
-        console.log('에러처리');
+      onError: (error) => {
+        console.log(error);
       },
     },
   );

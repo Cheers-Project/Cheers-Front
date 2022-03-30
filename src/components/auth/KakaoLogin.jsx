@@ -28,8 +28,6 @@ const KakaoLogin = () => {
     onSuccess: (data) => {
       const { accessToken, userInfo } = data;
 
-      localStorage.removeItem('kakaoToken');
-
       queryClient.setQueryData(['user'], userInfo);
       localStorage.setItem('accessToken', accessToken);
       navigate('/');
@@ -40,7 +38,8 @@ const KakaoLogin = () => {
   });
 
   const handleContinueBtn = () => {
-    const kakaoToken = localStorage.getItem('kakaoToken');
+    const { kakaoToken } = queryClient.getQueryData('kakaoCallback');
+    queryClient.removeQueries('kakaoCallback');
 
     const payload = {
       kakaoToken,
