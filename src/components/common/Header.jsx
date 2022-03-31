@@ -23,6 +23,7 @@ const Header = () => {
   const { data } = useQuery(['user'], userAPI.fetchUser, {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
+    staleTime: Infinity,
   });
 
   const routeMain = () => {
@@ -140,9 +141,10 @@ const RightNav = styled.nav`
   }
   .user-icon {
     padding: 0.5rem;
+    font-size: 1.2rem;
     color: #fff;
     border-radius: 50%;
-    background-color: #eee;
+    border: 1.5px solid #fff;
     @media screen and (min-width: 768px) {
       font-size: 2rem;
     }
