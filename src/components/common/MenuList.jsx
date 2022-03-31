@@ -22,6 +22,7 @@ const MenuList = ({ userInfo }) => {
       queryClient.setQueryData(['user'], null);
       localStorage.removeItem('accessToken');
       dispatch(initializeModal());
+      navigate('/');
     },
   });
 
