@@ -1,25 +1,40 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useQuery } from 'react-query';
+import styled from 'styled-components';
 
-import Avatar from 'components/user/Avatar';
+import Avatar from 'components/my/Avatar';
+import * as userAPI from 'api/user';
 
 const MyInfo = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { data: userInfo } = useQuery(['user'], userAPI.fetchUser, {
+    refetchOnWindowFocus: false,
+    // staleTime: Infinity,
+  });
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  console.log(userInfo);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Avatar register={register} preview />
-      <button>프로필 변경</button>
-    </form>
+    <InfoWrapper>
+      <Avatar preview={userInfo?.profileImg} />
+    </InfoWrapper>
   );
 };
+
+const InfoWrapper = styled.div`
+  .profile-change-btn {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.6rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+    color: #fff;
+    letter-spacing: 0.1rem;
+    transition: 0.2s;
+    background-color: #db428e;
+    &:hover {
+      background-color: #c22d77;
+    }
+  }
+`;
 
 export default MyInfo;

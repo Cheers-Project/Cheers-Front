@@ -7,7 +7,6 @@ import * as userAPI from 'api/user';
 import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 
-import Avatar from 'components/user/Avatar';
 import StyledInput from 'components/common/StyledInput';
 import registSchema from 'utils/validation/registSchema';
 import { openUserModal } from 'redux/modules/modal';
@@ -44,29 +43,12 @@ const RegistForm = () => {
     setVisible(!visible);
   };
 
-  const convertToFormData = (data) => {
-    const { userId, userPw, repeatPw, nickname, profileImg } = data;
-
-    const formData = new FormData();
-
-    formData.append('profileImg', profileImg[0]);
-    formData.append('userId', userId);
-    formData.append('userPw', userPw);
-    formData.append('repeatPw', repeatPw);
-    formData.append('nickname', nickname);
-
-    return formData;
-  };
-
   const onSubmit = (data) => {
-    const formData = convertToFormData(data);
-    mutation.mutate(formData);
-    // changeModal();
+    mutation.mutate(data);
   };
 
   return (
     <RegistFormWrapper autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-      <Avatar register={register} />
       <div className="input-container">
         <label className="over-text" htmlFor="idInput">
           이메일(아이디)

@@ -6,7 +6,7 @@ export const fetchUser = () => {
   return client
     .get('/user', {
       headers: {
-        Authorization: accessToken ? accessToken : '',
+        Authorization: accessToken,
       },
     })
     .then((res) => res.data);
@@ -37,13 +37,13 @@ export const logout = () => {
 };
 
 export const regist = (payload) => {
-  try {
-    return client.post('/user/regist', payload, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-  } catch (e) {
-    return e.response;
-  }
+  return client.post('/user/regist', payload);
+};
+
+export const profile = (payload) => {
+  return client.post('/user/profile', payload, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 };
