@@ -38,9 +38,9 @@ const LoginForm = () => {
 
   const mutation = useMutation(['user'], userAPI.login, {
     onSuccess: (data) => {
-      const { accessToken, userInfo } = data;
+      const { accessToken } = data;
 
-      queryClient.setQueryData(['user'], userInfo);
+      queryClient.setQueryData(['user'], data);
       localStorage.setItem('accessToken', accessToken);
       dispatch(initializeModal());
     },
