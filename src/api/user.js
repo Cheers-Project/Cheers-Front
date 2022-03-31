@@ -17,11 +17,9 @@ export const login = (payload) => {
 };
 
 export const kakaoCallback = (code) => {
-  try {
-    return client.get(`/auth/kakao/callback?code=${code}`);
-  } catch (e) {
-    return e.response;
-  }
+  return client
+    .get(`/auth/kakao/callback?code=${code}`)
+    .then((res) => res.data);
 };
 
 export const kakaoLogin = (payload) => {

@@ -1,24 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { useMutation, useQueryClient } from 'react-query';
 
 import * as userAPI from 'api/user';
-import { initializeError } from 'redux/modules/user';
 import StyledInput from 'components/common/StyledInput';
 
 const KakaoLogin = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const [nickname, setNickname] = useState(null);
-
-  const errMsg = useSelector(({ user }) => {
-    const { errMsg } = user;
-    return errMsg;
-  });
+  const [errMsg, setErrMsg] = useState('');
 
   const changeNicnkName = (e) => {
     setNickname(e.target.value);
@@ -27,15 +20,15 @@ const KakaoLogin = () => {
   const mutation = useMutation('user', userAPI.kakaoLogin, {
     onSuccess: (data) => {
       const { accessToken, userInfo } = data;
-
-      localStorage.removeItem('kakaoToken');
-
+      setErrMsg('');
       queryClient.setQueryData(['user'], userInfo);
+      queryClient.removeQueries('kakaoCallback');
       localStorage.setItem('accessToken', accessToken);
+      localStorage.removeItem('kakaoToken');
       navigate('/');
     },
-    onError: () => {
-      console.log('에러처리하기');
+    onError: (error) => {
+      setErrMsg(error.response.data.msg);
     },
   });
 
@@ -49,9 +42,6 @@ const KakaoLogin = () => {
     mutation.mutate(payload);
   };
 
-  useEffect(() => {
-    dispatch(initializeError());
-  }, [dispatch]);
   return (
     <KakaoLoginWrapper>
       <h2>카카오 로그인</h2>
