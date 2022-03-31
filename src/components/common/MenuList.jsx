@@ -6,14 +6,12 @@ import { useQuery, useQueryClient } from 'react-query';
 
 import * as userAPI from 'api/user';
 import UserModal from 'components/user/UserModal';
-import { openUserModal } from 'redux/modules/modal';
+import { initializeModal, openUserModal } from 'redux/modules/modal';
 
-const MenuList = () => {
+const MenuList = ({ userInfo }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-
-  const userInfo = queryClient.getQueryData(['user']);
 
   const { refetch } = useQuery('logout', userAPI.logout, {
     enabled: false,
@@ -23,6 +21,7 @@ const MenuList = () => {
     onSuccess: () => {
       queryClient.setQueryData(['user'], null);
       localStorage.removeItem('accessToken');
+      dispatch(initializeModal());
     },
   });
 
@@ -42,6 +41,7 @@ const MenuList = () => {
   };
 
   const handleRouter = () => {
+    dispatch(initializeModal());
     navigate('/mypage');
   };
 
