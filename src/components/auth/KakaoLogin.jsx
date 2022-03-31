@@ -19,9 +19,9 @@ const KakaoLogin = () => {
 
   const mutation = useMutation('user', userAPI.kakaoLogin, {
     onSuccess: (data) => {
-      const { accessToken, userInfo } = data;
+      const { accessToken } = data;
       setErrMsg('');
-      queryClient.setQueryData(['user'], userInfo);
+      queryClient.setQueryData(['user'], data);
       queryClient.removeQueries('kakaoCallback');
       localStorage.setItem('accessToken', accessToken);
       localStorage.removeItem('kakaoToken');
