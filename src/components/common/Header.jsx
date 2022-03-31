@@ -4,9 +4,11 @@ import { UserOutlined } from '@ant-design/icons';
 import { throttle } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
 
 import MenuList from './MenuList';
 import { toggleMenuModal } from 'redux/modules/modal';
+import * as userAPI from 'api/user';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -18,7 +20,12 @@ const Header = () => {
     return modal.menuModal;
   });
 
-  const handleRouter = () => {
+  const { data } = useQuery(['user'], userAPI.fetchUser, {
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+  });
+
+  const routeMain = () => {
     navigate('/');
   };
 
@@ -45,12 +52,11 @@ const Header = () => {
       window.removeEventListener('scroll', onScroll);
     };
   }, [onScroll]);
-
   return (
     <>
       <HeaderOuter isScrolled={isScrolled}>
         <HeaderInner>
-          <Logo onClick={handleRouter}>
+          <Logo onClick={routeMain}>
             Cherry
             <br /> Alcohol
           </Logo>
@@ -59,9 +65,13 @@ const Header = () => {
             <Button>모임</Button>
           </MidNav>
           <RightNav onClick={handleMenuModal}>
-            <UserOutlined className="user-icon" />
+            {data ? (
+              <img src={data.userInfo.profileImg} className="profileImg" />
+            ) : (
+              <UserOutlined className="user-icon" />
+            )}
           </RightNav>
-          {menuModal && <MenuList />}
+          {menuModal && <MenuList userInfo={data?.userInfo} />}
         </HeaderInner>
         {menuModal && <MunuListOuter onClick={handleMenuModal} />}
       </HeaderOuter>
@@ -113,12 +123,15 @@ const HeaderInner = styled.header`
 
 const RightNav = styled.nav`
   display: flex;
+  align-items: center;
   padding: 0.5rem 1rem;
   border-radius: 1.2rem;
   gap: 0.5rem;
+  color: #fff;
   background-color: #c22d77;
   cursor: pointer;
   z-index: 300;
+  font-size: 1.2rem;
   * {
     pointer-events: none;
   }
@@ -127,13 +140,17 @@ const RightNav = styled.nav`
   }
   .user-icon {
     padding: 0.5rem;
-    font-size: 1.2rem;
     color: #fff;
     border-radius: 50%;
     border: 1.5px solid #fff;
     @media screen and (min-width: 768px) {
       font-size: 2rem;
     }
+  }
+
+  .profileImg {
+    width: 3rem;
+    border-radius: 50%;
   }
 `;
 
