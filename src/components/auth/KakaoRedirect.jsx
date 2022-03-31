@@ -27,6 +27,7 @@ const KakaoRedirect = () => {
 
           navigate('/');
         } else {
+          localStorage.setItem('kakaoToken', data.kakaoToken);
           navigate('/oauth/kakao');
         }
       },
