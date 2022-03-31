@@ -40,10 +40,27 @@ export const regist = (payload) => {
   return client.post('/user/regist', payload);
 };
 
-export const profile = (payload) => {
-  return client.post('/user/profile', payload, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+export const updateProfileImg = (payload) => {
+  const accessToken = localStorage.getItem('accessToken');
+
+  return client
+    .post('/user/profile', payload, {
+      headers: {
+        Authorization: accessToken,
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then((res) => res.data);
+};
+
+export const removeProfileImg = () => {
+  const accessToken = localStorage.getItem('accessToken');
+
+  return client
+    .delete('/user/profile', {
+      headers: {
+        Authorization: accessToken,
+      },
+    })
+    .then((res) => res.data);
 };
