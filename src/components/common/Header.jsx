@@ -65,7 +65,7 @@ const Header = () => {
             <Button>모임</Button>
           </MidNav>
           <RightNav onClick={handleMenuModal}>
-            {data ? (
+            {data?.userInfo?.profileImg ? (
               <img src={data.userInfo.profileImg} className="profileImg" />
             ) : (
               <UserOutlined className="user-icon" />
@@ -142,7 +142,7 @@ const RightNav = styled.nav`
     padding: 0.5rem;
     color: #fff;
     border-radius: 50%;
-    border: 1.5px solid #fff;
+    background-color: #eee;
     @media screen and (min-width: 768px) {
       font-size: 2rem;
     }
