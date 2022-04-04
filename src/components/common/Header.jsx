@@ -175,7 +175,7 @@ const MidNav = styled.nav`
   gap: 0.5rem;
   cursor: pointer;
   color: ${({ isScrolled }) => {
-    return isScrolled ? '#191718' : '#fff';
+    return isScrolled ? '#000' : '#fff';
   }};
   @media screen and (min-width: 768px) {
     gap: 10rem;
