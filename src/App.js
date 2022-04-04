@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+import BoardWritePage from 'pages/BoardWritePage';
 import KakaoPage from 'pages/KakaoPage';
 import MyPage from 'pages/MyPage';
 import RedirectPage from 'pages/RedirectPage';
@@ -13,6 +14,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/board/write" element={<BoardWritePage />} />
         <Route path="/oauth/kakao" element={<KakaoPage />} />
         <Route path="/redirect" element={<RedirectPage />} />
         <Route path="/mypage" element={<MyPage />}>
