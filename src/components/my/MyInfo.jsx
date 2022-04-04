@@ -1,16 +1,16 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import Avatar from 'components/my/Avatar';
+import InfoTemplate from './InfoTemplate';
+import NicknameForm from './NicknameForm';
 
 const MyInfo = () => {
   return (
-    <InfoWrapper>
+    <InfoTemplate>
       <Avatar />
-    </InfoWrapper>
+      <NicknameForm />
+    </InfoTemplate>
   );
 };
-
-const InfoWrapper = styled.div``;
 
 export default MyInfo;
