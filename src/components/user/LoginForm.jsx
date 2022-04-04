@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from 'react-query';
 
 import kakaoIcon from 'assets/images/ico_kakao.png';
 import StyledInput from 'components/common/StyledInput';
+import ErrorMessage from 'components/common/ErrorMessage';
 import loginSchema from 'utils/validation/loginSchema';
 import { initializeModal, openUserModal } from 'redux/modules/modal';
 
@@ -36,7 +37,8 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm({ resolver: joiResolver(loginSchema) });
 
-  const mutation = useMutation(['user'], userAPI.login, {
+  const mutation = useMutation(userAPI.login, {
+    mutationKey: ['user'],
     onSuccess: (data) => {
       const { accessToken } = data;
 
@@ -165,14 +167,6 @@ const LoginFormWrapper = styled.form`
       margin-right: 0.5rem;
     }
   }
-`;
-
-const ErrorMessage = styled.p`
-  display: block;
-  height: 2rem;
-  padding-top: 0.5rem;
-  color: red;
-  line-height: 1.1rem;
 `;
 
 export default LoginForm;

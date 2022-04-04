@@ -17,7 +17,8 @@ const KakaoLogin = () => {
     setNickname(e.target.value);
   };
 
-  const mutation = useMutation('user', userAPI.kakaoLogin, {
+  const mutation = useMutation(userAPI.kakaoLogin, {
+    mutationKey: ['user'],
     onSuccess: (data) => {
       const { accessToken } = data;
       setErrMsg('');

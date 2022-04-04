@@ -13,7 +13,8 @@ const Avatar = () => {
     staleTime: Infinity,
   });
 
-  const updateMutation = useMutation(['user'], userAPI.updateProfileImg, {
+  const updateMutation = useMutation(userAPI.updateProfileImg, {
+    mutationKey: ['user'],
     onSuccess: (userInfo) => {
       queryClient.setQueryData(['user'], userInfo);
     },
@@ -22,7 +23,8 @@ const Avatar = () => {
     },
   });
 
-  const removeMutation = useMutation(['user'], userAPI.removeProfileImg, {
+  const removeMutation = useMutation(userAPI.removeProfileImg, {
+    mutationKey: ['user'],
     onSuccess: (userInfo) => {
       queryClient.setQueryData(['user'], userInfo);
     },
@@ -51,8 +53,8 @@ const Avatar = () => {
   };
 
   return (
-    <AvatarWrapper>
-      <form className="profile-form">
+    <>
+      <AvatarForm className="profile-form">
         {userInfo ? (
           <img
             className="profile-image"
@@ -70,28 +72,36 @@ const Avatar = () => {
           type="file"
           accept="image/*"
         />
-        <label htmlFor="profileImg" className="profile-img-btn">
+        <label htmlFor="profileImg" className="profile-img-btn change-btn">
           프로필 변경
         </label>
-        <button onClick={removeProfileImg} className="profile-img-btn">
+        <button
+          onClick={removeProfileImg}
+          className="profile-img-btn remove-btn"
+        >
           프로필 제거
         </button>
-      </form>
-    </AvatarWrapper>
+      </AvatarForm>
+    </>
   );
 };
 
-const AvatarWrapper = styled.div`
+const AvatarForm = styled.form`
+  width: 100%;
   display: flex;
-  justify-content: center;
-  padding-bottom: 2rem;
-  .profile-form {
-    display: flex;
-    flex-direction: column;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 0 3rem 0;
+  border-bottom: 1px solid #e4e4e4;
+  @media screen and (min-width: 768px) {
+    padding: 0 3rem 0 0;
+    border-bottom: none;
+    border-right: 1px solid #e4e4e4;
   }
+
   .profile-image {
-    width: 100px;
-    height: 100px;
+    width: 12rem;
+    height: 12rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -101,17 +111,32 @@ const AvatarWrapper = styled.div`
     cursor: pointer;
   }
   .profile-img-btn {
-    width: 100%;
-    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 12rem;
+    height: 3.5rem;
+    margin-top: 2rem;
     padding: 0.6rem 1rem;
     border-radius: 0.5rem;
     font-size: 1.5rem;
     color: #fff;
     letter-spacing: 0.1rem;
     transition: 0.2s;
+  }
+
+  .change-btn {
+    cursor: pointer;
+
     background-color: #db428e;
     &:hover {
       background-color: #c22d77;
+    }
+  }
+  .remove-btn {
+    background-color: #ccc;
+    &:hover {
+      background-color: #aaa;
     }
   }
 `;
