@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import BoardWritePage from 'pages/BoardWritePage';
+import BoardListPage from 'pages/BoardListPage';
 import KakaoPage from 'pages/KakaoPage';
 import MyPage from 'pages/MyPage';
 import RedirectPage from 'pages/RedirectPage';
@@ -14,7 +15,10 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/board/write" element={<BoardWritePage />} />
+        <Route path="/board">
+          <Route index element={<BoardListPage />} />
+          <Route path="write" element={<BoardWritePage />} />
+        </Route>
         <Route path="/oauth/kakao" element={<KakaoPage />} />
         <Route path="/redirect" element={<RedirectPage />} />
         <Route path="/mypage" element={<MyPage />}>
