@@ -105,7 +105,6 @@ const AvatarForm = styled.form`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #eee;
     font-size: 3.5rem;
     border-radius: 50%;
     cursor: pointer;
