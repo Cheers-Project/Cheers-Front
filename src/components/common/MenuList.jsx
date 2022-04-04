@@ -41,9 +41,9 @@ const MenuList = ({ userInfo }) => {
     refetch();
   };
 
-  const handleRouter = () => {
+  const handleRouter = (routePage) => {
     dispatch(initializeModal());
-    navigate('/mypage');
+    navigate(routePage);
   };
 
   return (
@@ -55,7 +55,12 @@ const MenuList = ({ userInfo }) => {
         </>
       ) : (
         <>
-          <MenuItem onClick={handleRouter}>마이페이지</MenuItem>
+          <MenuItem onClick={() => handleRouter('/board/write')}>
+            게시물 작성
+          </MenuItem>
+          <MenuItem onClick={() => handleRouter('/mypage')}>
+            마이페이지
+          </MenuItem>
           <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
         </>
       )}
