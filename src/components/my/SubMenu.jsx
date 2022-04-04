@@ -49,18 +49,18 @@ const SubMenuWrapper = styled.div`
     position: relative;
   }
   .sub-menu {
-    width: 8rem;
+    width: 9rem;
     height: 5rem;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 600;
     letter-spacing: 0.1rem;
     color: #aaa;
     @media screen and (min-width: 768px) {
       width: 10rem;
-      font-size: 1.8rem;
+      font-size: 2rem;
     }
   }
   .active {
@@ -69,7 +69,7 @@ const SubMenuWrapper = styled.div`
 `;
 
 const HighlightBar = styled.div`
-  width: 8rem;
+  width: 9rem;
   height: 0.2rem;
   transition: 0.3s all ease-in-out;
   position: absolute;

@@ -64,3 +64,15 @@ export const removeProfileImg = () => {
     })
     .then((res) => res.data);
 };
+
+export const updateUserInfo = (payload) => {
+  const accessToken = localStorage.getItem('accessToken');
+
+  return client
+    .patch('/user', payload, {
+      headers: {
+        Authorization: accessToken,
+      },
+    })
+    .then((res) => res.data);
+};

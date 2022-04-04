@@ -8,6 +8,7 @@ import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 
 import StyledInput from 'components/common/StyledInput';
+import ErrorMessage from 'components/common/ErrorMessage';
 import registSchema from 'utils/validation/registSchema';
 import { openUserModal } from 'redux/modules/modal';
 
@@ -15,19 +16,15 @@ const RegistForm = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
 
-  const mutation = useMutation(
-    (payload) => {
-      userAPI.regist(payload);
+  const mutation = useMutation(userAPI.regist, {
+    mutationKey: ['user'],
+    onSuccess: () => {
+      changeModal();
     },
-    {
-      onSuccess: () => {
-        changeModal();
-      },
-      onError: (error) => {
-        console.log(error);
-      },
+    onError: (error) => {
+      console.log(error);
     },
-  );
+  });
 
   const {
     register,
@@ -66,12 +63,12 @@ const RegistForm = () => {
         </ErrorMessage>
       </div>
       <div className="input-container">
-        <label className="over-text" htmlFor="nickNameInput">
+        <label className="over-text" htmlFor="nicknameInput">
           닉네임
         </label>
         <StyledInput
           {...register('nickname')}
-          id="nickNameInput"
+          id="nicknameInput"
           className="regist-input"
           name="nickname"
           type="text"
@@ -192,14 +189,6 @@ const RegistFormWrapper = styled.form`
     color: #ccc;
     background-color: inherit;
   }
-`;
-
-const ErrorMessage = styled.p`
-  display: block;
-  height: 2rem;
-  padding-top: 0.5rem;
-  color: red;
-  line-height: 1.1rem;
 `;
 
 export default RegistForm;
