@@ -21,7 +21,10 @@ const NicknameForm = () => {
   const { mutate, isError, error } = useMutation(userAPI.updateUserInfo, {
     mutationKey: ['user'],
     onSuccess: (data) => {
+      const { accessToken } = data;
+
       queryClient.setQueryData(['user'], data);
+      localStorage.setItem('accessToken', accessToken);
       setIsClicked(false);
     },
   });
