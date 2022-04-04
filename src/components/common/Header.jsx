@@ -42,6 +42,10 @@ const Header = () => {
     }
   }, 400);
 
+  const handleRouter = (routePage) => {
+    navigate(routePage);
+  };
+
   useEffect(() => {
     const path = window.location.pathname;
     if (path === '/') {
@@ -62,7 +66,7 @@ const Header = () => {
             <br /> Alcohol
           </Logo>
           <MidNav isScrolled={isScrolled}>
-            <Button>게시판</Button>
+            <Button onClick={() => handleRouter('/board/')}>게시판</Button>
             <Button>모임</Button>
           </MidNav>
           <RightNav onClick={handleMenuModal}>
@@ -185,8 +189,6 @@ const Button = styled.button`
   font-size: 1.4rem;
   font-weight: 500;
   letter-spacing: 0.1rem;
-  display: flex;
-  flex-direction: column;
   &::after {
     transition: 0.2s;
     margin-top: 0.5rem;
