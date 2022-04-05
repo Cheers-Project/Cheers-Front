@@ -24,6 +24,7 @@ const NicknameForm = () => {
       const { accessToken } = data;
 
       queryClient.setQueryData(['user'], data);
+      queryClient.invalidateQueries(['boards']);
       localStorage.setItem('accessToken', accessToken);
       setIsClicked(false);
     },
