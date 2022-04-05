@@ -42,14 +42,25 @@ ${reset}
     list-style: none;
   }
 
-  input, button {
+  input, button, textarea {
     border: none;
     outline: none;
+    padding: 0;
+    margin: 0;
+    background-color: inherit;
+  }
+
+  textarea {
+    resize: none;
   }
   
   button {
     cursor: pointer;
   }    
+
+  input,textarea {
+    font-family: 'Roboto', sans-serif;
+  }
 `;
 
 export default GlobalStyles;
