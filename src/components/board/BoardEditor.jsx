@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { Editor, Viewer } from '@toast-ui/react-editor';
-
+import { Editor } from '@toast-ui/react-editor';
 import * as boardAPI from 'api/board';
 import StyledInput from 'components/common/StyledInput';
 
@@ -24,7 +23,6 @@ const BoardEditor = () => {
         formData.append('image', blob);
 
         const res = await boardAPI.uploadImg(formData);
-        console.log(res);
 
         callback(res.data.imgUrl, 'image');
       });
@@ -32,8 +30,6 @@ const BoardEditor = () => {
 
   const onClick = async () => {
     const contents = editor.current.getInstance().getHTML();
-
-    console.log(contents);
     const payload = {
       title,
       contents,
@@ -66,7 +62,6 @@ const BoardEditor = () => {
           ref={editor}
         />
       </div>
-      {/* <Viewer initialValue={'# markdown'} /> */}
       <ButtonWrapper>
         <button onClick={onClick} className="upload-btn">
           업로드
