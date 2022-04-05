@@ -2,6 +2,8 @@ import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const GlobalStyles = createGlobalStyle`
 ${reset}
