@@ -2,6 +2,9 @@ import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import 'react-day-picker/dist/style.css';
 
 const GlobalStyles = createGlobalStyle`
 ${reset}
@@ -42,14 +45,25 @@ ${reset}
     list-style: none;
   }
 
-  input, button {
+  input, button, textarea {
     border: none;
     outline: none;
+    padding: 0;
+    margin: 0;
+    background-color: inherit;
+  }
+
+  textarea {
+    resize: none;
   }
   
   button {
     cursor: pointer;
   }    
+
+  input,textarea {
+    font-family: 'Roboto', sans-serif;
+  }
 `;
 
 export default GlobalStyles;
