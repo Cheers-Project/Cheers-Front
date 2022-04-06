@@ -4,6 +4,7 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import 'react-day-picker/dist/style.css';
 
 const GlobalStyles = createGlobalStyle`
 ${reset}
