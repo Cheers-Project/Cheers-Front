@@ -1,5 +1,9 @@
 import client from 'api/index';
 
+export const getBoards = () => {
+  return client.get('/board').then((res) => res.data);
+};
+
 export const write = async (payload) => {
   const accessToken = localStorage.getItem('accessToken');
 
