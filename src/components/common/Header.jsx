@@ -66,7 +66,9 @@ const Header = () => {
             <br /> Alcohol
           </Logo>
           <MidNav isScrolled={isScrolled}>
-            <Button onClick={() => handleRouter('/board/')}>게시판</Button>
+            <Button onClick={() => handleRouter('/board?sort=recent&page=1')}>
+              게시판
+            </Button>
             <Button>모임</Button>
           </MidNav>
           <RightNav onClick={handleMenuModal}>
