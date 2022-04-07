@@ -37,6 +37,7 @@ const CounterWrapper = styled.div`
   align-items: center;
   .label-text {
     font-size: ${({ theme }) => theme.fontSize.md};
+    font-weight: 600;
   }
 `;
 

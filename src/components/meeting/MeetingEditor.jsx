@@ -4,14 +4,14 @@ import styled from 'styled-components';
 const MeetingEditor = () => {
   return (
     <EditorWrapper>
-      <div className="input-container">
+      <div className="title-container">
         <input
           className="title-input"
           type="text"
           placeholder="제목을 입력하세요"
         />
       </div>
-      <div className="input-container">
+      <div className="contents-container">
         <textarea className="contents-input"></textarea>
       </div>
     </EditorWrapper>
@@ -21,14 +21,8 @@ const MeetingEditor = () => {
 const EditorWrapper = styled.section`
   display: flex;
   flex-direction: column;
-
-  @media screen and (min-width: 768px) {
-    width: 50%;
-  }
-
-  .input-container + .input-container {
-    margin-top: 1.5rem;
-  }
+  gap: 2rem;
+  flex: 1;
 
   .title-input {
     width: 100%;
@@ -40,9 +34,13 @@ const EditorWrapper = styled.section`
     }
   }
 
+  .contents-container {
+    min-height: 30rem;
+    flex: 1;
+  }
   .contents-input {
     width: 100%;
-    min-height: 45rem;
+    height: 100%;
     padding: 1rem;
     border: 1px solid ${({ theme }) => theme.color.lightGray};
     border-radius: 0.3rem;
