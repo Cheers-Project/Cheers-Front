@@ -6,7 +6,7 @@ const Spacer = () => {
 };
 
 const SpacerWrapper = styled.div`
-  height: 11rem;
+  min-height: 11rem;
 `;
 
 export default Spacer;
