@@ -173,7 +173,6 @@ const MidNav = styled.nav`
   padding: 0.5rem 1rem;
   border-radius: 1.2rem;
   gap: 0.5rem;
-  cursor: pointer;
   color: ${({ isScrolled }) => {
     return isScrolled ? '#000' : '#fff';
   }};
