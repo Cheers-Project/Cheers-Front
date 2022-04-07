@@ -10,6 +10,7 @@ const theme = {
     kakao: '#ffea27',
   },
   fontSize: {
+    xsm: '1.2rem',
     sm: '1.4rem',
     md: '1.6rem',
     lg: '1.8rem',

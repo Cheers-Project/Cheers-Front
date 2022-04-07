@@ -17,6 +17,7 @@ const Avatar = () => {
     mutationKey: ['user'],
     onSuccess: (userInfo) => {
       queryClient.setQueryData(['user'], userInfo);
+      queryClient.invalidateQueries(['boards']);
     },
     onError: (error) => {
       console.log('fail');
@@ -27,6 +28,7 @@ const Avatar = () => {
     mutationKey: ['user'],
     onSuccess: (userInfo) => {
       queryClient.setQueryData(['user'], userInfo);
+      queryClient.invalidateQueries(['boards']);
     },
     onError: (error) => {
       console.log('fail');

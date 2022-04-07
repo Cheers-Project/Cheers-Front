@@ -19,6 +19,4 @@ const BoardWritePage = () => {
   );
 };
 
-const BoardWritePageWrapper = styled.div``;
-
 export default BoardWritePage;
