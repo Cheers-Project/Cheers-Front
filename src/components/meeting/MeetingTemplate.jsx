@@ -6,10 +6,11 @@ const MeetingTemplate = ({ children }) => {
 };
 
 const MeetingWrapper = styled.main`
+  height: 100%;
   padding: 3rem 0;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 3rem;
 
   @media screen and (min-width: 768px) {
     flex-direction: row;

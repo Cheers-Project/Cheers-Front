@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import BoardWritePage from 'pages/BoardWritePage';
+import BoardListPage from 'pages/BoardListPage';
 import KakaoPage from 'pages/KakaoPage';
 import RedirectPage from 'pages/RedirectPage';
 import MainPage from 'pages/MainPage';
@@ -19,10 +20,13 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/board">
+          <Route index element={<BoardListPage />} />
+          <Route path="write" element={<BoardWritePage />} />
+        </Route>
         <Route path="/meeting" element={<MeetingPage />} />
         <Route path="/meeting/:id" element={<MeetingDetailPage />} />
         <Route path="/meeting/write" element={<MeetingWritePage />} />
-        <Route path="/board/write" element={<BoardWritePage />} />
         <Route path="/oauth/kakao" element={<KakaoPage />} />
         <Route path="/redirect" element={<RedirectPage />} />
         <Route path="/mypage" element={<MyPage />}>
