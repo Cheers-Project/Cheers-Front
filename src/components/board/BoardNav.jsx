@@ -47,20 +47,30 @@ const BoardNav = () => {
 
 const BoardNavWrapper = styled.nav`
   display: flex;
-  padding-top: 3rem;
+  justify-content: center;
+  padding: 3rem 0;
 `;
 
 const NavList = styled.ul`
   display: flex;
+  align-items: center;
   gap: 2rem;
-  padding: 1rem 1rem 0 1rem;
-  background-color: #fff;
 
   .nav-item {
-    font-size: ${({ theme }) => theme.fontSize.lg};
+    font-size: ${({ theme }) => theme.fontSize.md};
+    padding: 1rem;
+    background-color: ${({ theme }) => theme.color.white};
+    border-radius: 2rem;
+  }
+  .nav-item:hover {
+    border-radius: 2rem;
+    color: ${({ theme }) => theme.color.white};
+    background-color: ${({ theme }) => theme.color.lightCherry};
   }
   .active {
-    border-bottom: 1px solid ${({ theme }) => theme.color.lightCherry};
+    border-radius: 2rem;
+    color: ${({ theme }) => theme.color.white};
+    background-color: ${({ theme }) => theme.color.lightCherry};
   }
 `;
 
