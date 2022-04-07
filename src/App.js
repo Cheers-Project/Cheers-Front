@@ -4,12 +4,17 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import BoardWritePage from 'pages/BoardWritePage';
 import BoardListPage from 'pages/BoardListPage';
 import KakaoPage from 'pages/KakaoPage';
-import MyPage from 'pages/MyPage';
 import RedirectPage from 'pages/RedirectPage';
 import MainPage from 'pages/MainPage';
-import MyMeeting from 'components/my/MyMeeting';
-import MyBoard from 'components/my/MyBoard';
+
+import MyPage from 'pages/MyPage';
 import MyInfo from 'components/my/MyInfo';
+import MyBoard from 'components/my/MyBoard';
+import MyMeeting from 'components/my/MyMeeting';
+
+import MeetingDetailPage from 'pages/MeetingDetailPage';
+import MeetingPage from 'pages/MeetingPage';
+import MeetingWritePage from 'pages/MeetingWritePage';
 
 const App = () => {
   return (
@@ -19,6 +24,9 @@ const App = () => {
           <Route index element={<BoardListPage />} />
           <Route path="write" element={<BoardWritePage />} />
         </Route>
+        <Route path="/meeting" element={<MeetingPage />} />
+        <Route path="/meeting/:id" element={<MeetingDetailPage />} />
+        <Route path="/meeting/write" element={<MeetingWritePage />} />
         <Route path="/oauth/kakao" element={<KakaoPage />} />
         <Route path="/redirect" element={<RedirectPage />} />
         <Route path="/mypage" element={<MyPage />}>
