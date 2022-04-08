@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const MeetingEditor = () => {
+import MeetingTime from './MeetingTime';
+import MemberCounter from './MemberCounter';
+
+const LeftEditor = () => {
   return (
-    <EditorWrapper>
+    <LeftEditorWrapper>
       <div className="title-container">
         <input
           className="title-input"
@@ -12,22 +15,27 @@ const MeetingEditor = () => {
         />
       </div>
       <div className="contents-container">
-        <textarea className="contents-input"></textarea>
+        <textarea
+          className="contents-input"
+          placeholder="내용을 입력하세요"
+        ></textarea>
       </div>
-    </EditorWrapper>
+      <MemberCounter />
+      <MeetingTime />
+    </LeftEditorWrapper>
   );
 };
 
-const EditorWrapper = styled.section`
+const LeftEditorWrapper = styled.section`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
   flex: 1;
 
   .title-input {
     width: 100%;
     padding-bottom: 1rem;
-    border-bottom: 1px solid ${({ theme }) => theme.color.lightGray};
+    border-bottom: 1px solid ${({ theme }) => theme.color.divider};
     font-size: ${({ theme }) => theme.fontSize.lgTitle};
     &::placeholder {
       font-size: ${({ theme }) => theme.fontSize.lgTitle};
@@ -42,10 +50,10 @@ const EditorWrapper = styled.section`
     width: 100%;
     height: 100%;
     padding: 1rem;
-    border: 1px solid ${({ theme }) => theme.color.lightGray};
+    border: 1px solid ${({ theme }) => theme.color.divider};
     border-radius: 0.3rem;
     font-size: ${({ theme }) => theme.fontSize.sm};
   }
 `;
 
-export default MeetingEditor;
+export default LeftEditor;

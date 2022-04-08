@@ -6,7 +6,7 @@ const theme = {
     lightGray: '#ccc',
     white: '#fff',
     black: '#000',
-    divider: '#e4e4e4',
+    divider: '#e0e0e0',
     kakao: '#ffea27',
   },
   fontSize: {

@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SearchOutlined } from '@ant-design/icons';
-import axios from 'axios';
 
-import SearchMap from 'components/meeting/SearchMap';
+import MeetingMap from 'components/meeting/MeetingMap';
 
 const MeetingLocation = () => {
-  const { REACT_APP_KAKAO_API_KEY } = process.env;
+  const [inputValue, setInputValue] = useState('');
   const [keyword, setKeyword] = useState('');
 
   const onChange = (e) => {
-    setKeyword(e.target.value);
+    setInputValue(e.target.value);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
+    setKeyword(inputValue);
+    setInputValue('');
   };
 
   return (
@@ -26,23 +27,27 @@ const MeetingLocation = () => {
           type="text"
           placeholder="모임 장소를 검색하세요"
           onChange={onChange}
+          value={inputValue}
         />
         <button className="search-btn">
           <SearchOutlined />
         </button>
       </form>
-      <SearchMap keyword={keyword} />
+      <MeetingMap keyword={keyword} />
     </LocationWrapper>
   );
 };
 
 const LocationWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   .label-text {
     font-size: ${({ theme }) => theme.fontSize.md};
     font-weight: 600;
   }
   .location-form {
-    border-bottom: 1px solid ${({ theme }) => theme.color.lightGray};
+    border-bottom: 1px solid ${({ theme }) => theme.color.divider};
     display: flex;
     align-items: center;
     justify-content: space-between;
