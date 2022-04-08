@@ -1,16 +1,16 @@
 import React from 'react';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const BoardNav = () => {
-  const location = useLocation();
-  const [searchParams, setSearchParmas] = useSearchParams();
+  const location = window.location;
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const isActive = searchParams.get('sort');
 
   const onClick = (e) => {
     if (!e.target.classList.contains('nav-item')) return;
-    setSearchParmas(`sort=${e.target.classList[0]}&page=${1}`);
+    setSearchParams({ sort: e.target.classList[0], page: 1 });
   };
 
   return (
@@ -48,7 +48,10 @@ const BoardNav = () => {
 const BoardNavWrapper = styled.nav`
   display: flex;
   justify-content: center;
-  padding: 3rem 0;
+  padding: 1rem 0;
+  @media screen and (min-width: 768px) {
+    padding: 3rem 0;
+  }
 `;
 
 const NavList = styled.ul`
@@ -61,11 +64,12 @@ const NavList = styled.ul`
     padding: 1rem;
     background-color: ${({ theme }) => theme.color.white};
     border-radius: 2rem;
-  }
-  .nav-item:hover {
-    border-radius: 2rem;
-    color: ${({ theme }) => theme.color.white};
-    background-color: ${({ theme }) => theme.color.lightCherry};
+    transition: 0.2s;
+    &:hover {
+      border-radius: 2rem;
+      color: ${({ theme }) => theme.color.white};
+      background-color: ${({ theme }) => theme.color.lightCherry};
+    }
   }
   .active {
     border-radius: 2rem;

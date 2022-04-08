@@ -1,27 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
 import { EyeFilled, LikeFilled, CommentOutlined } from '@ant-design/icons';
+import { format } from 'date-fns';
 
 const BoardItem = ({ boardInfo }) => {
-  const createdDate = new Date(boardInfo.createdDate);
-  const year = createdDate.getFullYear();
-  const month = createdDate.getMonth() + 1;
-  const day = createdDate.getDate();
+  const createdDate = format(new Date(boardInfo.createdDate), 'yyyy-MM-dd');
+
+  format;
 
   return (
     <BoardItemWrapper>
       <LeftWrapper>
         <Title>{boardInfo.title}</Title>
         <UserInfoWrapper>
-          <img className="user-profile-img" src={boardInfo.writer.profileImg} />
+          <img
+            className="user-profile-img"
+            src={boardInfo.writer.profileImg}
+            alt="user-profileImg"
+          />
           <p className="user-profile-nickname">{boardInfo.writer.nickname}</p>
         </UserInfoWrapper>
       </LeftWrapper>
 
       <RightWrapper>
-        <DateInfoWrapper>
-          <p>{`${year}-${month}-${day}`}</p>
-        </DateInfoWrapper>
         <BoardSubInfoWrapper>
           <div className="subinfo-item">
             <LikeFilled />
@@ -36,6 +37,9 @@ const BoardItem = ({ boardInfo }) => {
             <p>{boardInfo.comment}</p>
           </div>
         </BoardSubInfoWrapper>
+        <DateInfoWrapper>
+          <p>{createdDate}</p>
+        </DateInfoWrapper>
       </RightWrapper>
     </BoardItemWrapper>
   );
@@ -49,11 +53,13 @@ const BoardItemWrapper = styled.li`
 `;
 
 const LeftWrapper = styled.div`
-  width: 70%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 0 2rem;
+  @media screen and (min-width: 768px) {
+    width: 70%;
+  }
 `;
 
 const Title = styled.h2`
@@ -76,7 +82,6 @@ const UserInfoWrapper = styled.div`
     border-radius: 50%;
   }
   .user-profile-nickname {
-    /* font-size: ${({ theme }) => theme.fontSize.xsm}; */
     @media screen and (min-width: 768px) {
       font-size: ${({ theme }) => theme.fontSize.md};
     }
@@ -88,12 +93,9 @@ const RightWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-`;
-
-const DateInfoWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  font-size: ${({ theme }) => theme.fontSize.md};
+  @media screen and (min-width: 768px) {
+    width: 30%;
+  }
 `;
 
 const BoardSubInfoWrapper = styled.div`
@@ -111,6 +113,15 @@ const BoardSubInfoWrapper = styled.div`
     p {
       font-size: 1rem;
     }
+  }
+`;
+
+const DateInfoWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  font-size: ${({ theme }) => theme.fontSize.xsm};
+  @media screen and (min-width: 768px) {
+    font-size: ${({ theme }) => theme.fontSize.md};
   }
 `;
 
