@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { DayPicker } from 'react-day-picker';
+import { differenceInCalendarDays, format } from 'date-fns';
 import ko from 'date-fns/locale/ko';
 
 const MeetingCalendar = () => {
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState(new Date());
+
+  console.log(format(selected, 'yyyy-MM-dd'));
+
+  // 오늘 이전 날짜 선택 불가
+  const isPastDate = (date) => {
+    return differenceInCalendarDays(date, new Date()) < 0;
+  };
 
   return (
     <CalendarWrapper>
@@ -19,6 +27,7 @@ const MeetingCalendar = () => {
         locale={ko}
         fromYear={2022}
         toYear={2026}
+        disabled={isPastDate}
         captionLayout="dropdown"
         modifiersClassNames={{
           selected: 'selected',
@@ -107,6 +116,11 @@ const CalendarWrapper = styled.div`
   }
   .selected {
     border: 1px solid ${({ theme }) => theme.color.lightCherry};
+  }
+  // 오늘 날짜
+  .today {
+    font-size: ${({ theme }) => theme.fontSize.md};
+    font-weight: 600;
   }
 `;
 
