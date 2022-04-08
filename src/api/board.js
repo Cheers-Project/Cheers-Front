@@ -1,7 +1,7 @@
 import client from 'api/index';
 
-export const getBoards = () => {
-  return client.get('/board').then((res) => res.data);
+export const getBoards = (payload) => {
+  return client.get('/board', { params: payload }).then((res) => res.data);
 };
 
 export const write = async (payload) => {
