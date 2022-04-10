@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import theme from 'styles/theme';
+
 const StyledButton = ({ children, ...rest }) => {
   return <Button {...rest}>{children}</Button>;
 };
@@ -12,11 +14,11 @@ const Button = styled.button`
   color: #fff;
   border-radius: 0.5rem;
   transition: 0.2s background-color;
-  background-color: ${({ color, theme }) =>
-    color ? theme.lightCherry : '#ccc'};
+  background-color: ${({ color }) =>
+    color ? theme.color.lightCherry : '#ccc'};
   &:hover {
-    background-color: ${({ color, theme }) =>
-      color ? theme.darkCherry : '#aaa'};
+    background-color: ${({ color }) =>
+      color ? theme.color.darkCherry : '#aaa'};
   }
   @media screen and (min-width: 768px) {
     width: 8rem;

@@ -58,6 +58,9 @@ const MenuList = ({ userInfo }) => {
           <MenuItem onClick={() => handleRouter('/board/write')}>
             게시물 작성
           </MenuItem>
+          <MenuItem onClick={() => handleRouter('/meeting/write')}>
+            모임 생성
+          </MenuItem>
           <MenuItem onClick={() => handleRouter('/mypage')}>
             마이페이지
           </MenuItem>
