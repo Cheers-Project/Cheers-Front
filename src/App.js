@@ -15,6 +15,7 @@ import MyMeeting from 'components/my/MyMeeting';
 import MeetingDetailPage from 'pages/MeetingDetailPage';
 import MeetingPage from 'pages/MeetingPage';
 import MeetingWritePage from 'pages/MeetingWritePage';
+import BoardDetailPage from 'pages/BoardDetailPage';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/board">
           <Route index element={<BoardListPage />} />
           <Route path="write" element={<BoardWritePage />} />
+          <Route path=":id" element={<BoardDetailPage />} />
         </Route>
         <Route path="/meeting" element={<MeetingPage />} />
         <Route path="/meeting/:id" element={<MeetingDetailPage />} />
