@@ -4,15 +4,16 @@ export const getBoards = (payload) => {
   return client.get('/board', { params: payload }).then((res) => res.data);
 };
 
-export const write = async (payload) => {
+export const write = (payload) => {
   const accessToken = localStorage.getItem('accessToken');
 
-  const res = await client.post('/board', payload, {
-    headers: {
-      Authorization: accessToken,
-    },
-  });
-  return res;
+  return client
+    .post('/board', payload, {
+      headers: {
+        Authorization: accessToken,
+      },
+    })
+    .then((res) => res.data);
 };
 
 export const uploadImg = async (payload) => {
