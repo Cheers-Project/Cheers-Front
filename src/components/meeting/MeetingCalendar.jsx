@@ -3,11 +3,20 @@ import styled from 'styled-components';
 import { DayPicker } from 'react-day-picker';
 import { differenceInCalendarDays, format } from 'date-fns';
 import ko from 'date-fns/locale/ko';
+import { useDispatch } from 'react-redux';
+
+import { changeDate } from 'redux/modules/meeting';
 
 const MeetingCalendar = () => {
-  const [selected, setSelected] = useState(new Date());
+  const dispatch = useDispatch();
+  const [selected, setSelected] = useState();
 
-  console.log(format(selected, 'yyyy-MM-dd'));
+  const handleDate = (day, selectedDay) => {
+    const convertedDate = format(selectedDay, 'yyyy-MM-dd');
+
+    dispatch(changeDate(convertedDate));
+    setSelected(selectedDay);
+  };
 
   // 오늘 이전 날짜 선택 불가
   const isPastDate = (date) => {
@@ -22,7 +31,7 @@ const MeetingCalendar = () => {
 
       <DayPicker
         selected={selected}
-        onSelect={setSelected}
+        onSelect={handleDate}
         mode="single"
         locale={ko}
         fromYear={2022}

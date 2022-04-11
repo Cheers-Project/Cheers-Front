@@ -1,7 +1,12 @@
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
+import { changeLocation } from 'redux/modules/meeting';
+
 const MeetingMap = ({ keyword }) => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const { kakao } = window;
 
@@ -62,7 +67,13 @@ const MeetingMap = ({ keyword }) => {
           }
 
           selectedMarker = marker;
-          console.log(place.x, place.y, place.place_name, place.address_name);
+
+          const location = {
+            placeName: place.place_name,
+            addressName: place.address_name,
+            coordinates: [place.x, place.y],
+          };
+          dispatch(changeLocation(location));
         });
       };
 
@@ -97,7 +108,7 @@ const MeetingMap = ({ keyword }) => {
         });
       },
     );
-  }, [keyword]);
+  }, [keyword, dispatch]);
 
   return <MapWrapper id="map"></MapWrapper>;
 };
