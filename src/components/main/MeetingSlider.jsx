@@ -1,8 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 import Slider from 'react-slick';
+import { useQuery } from 'react-query';
 
-const MeetSlider = () => {
+import * as meetingAPI from 'api/meeting';
+
+import MeetingItem from 'components/main/MeetingItem';
+
+const MeetingSlider = () => {
+  const { data: meetingList } = useQuery(
+    ['meeting'],
+    meetingAPI.searchRecentMeeting,
+    {
+      refetchOnWindowFocus: false,
+    },
+  );
+
   const settings = {
     dots: true,
     infinite: true,
@@ -32,23 +45,20 @@ const MeetSlider = () => {
   };
 
   return (
-    <MeetSliderWrapper>
+    <MeetingSliderWrapper>
       <div>
-        <h3 className="sub-title">내 주변 모임</h3>
+        <h3 className="sub-title">최신 모임</h3>
       </div>
       <StyledSlider {...settings}>
-        {/* SliderItem 영역 */}
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
-        <div>4</div>
-        <div>5</div>
+        {meetingList?.meeting.map((meeting) => {
+          return <MeetingItem meeting={meeting} key={meeting._id} />;
+        })}
       </StyledSlider>
-    </MeetSliderWrapper>
+    </MeetingSliderWrapper>
   );
 };
 
-const MeetSliderWrapper = styled.section`
+const MeetingSliderWrapper = styled.section`
   position: relative;
   padding: 3rem 0 6rem 0;
   .sub-title {
@@ -64,13 +74,19 @@ const StyledSlider = styled(Slider)`
     display: flex;
     padding: 1rem 0;
   }
-
   .slick-slide {
+    display: flex;
+    flex-direction: column;
     background-color: #fff;
     box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.1);
     border-radius: 1rem;
     margin: 0 1rem;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
+    > * {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
   }
 
   .slick-dots button::before,
@@ -79,4 +95,4 @@ const StyledSlider = styled(Slider)`
   }
 `;
 
-export default MeetSlider;
+export default MeetingSlider;

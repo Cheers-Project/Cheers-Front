@@ -1,15 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
-import { format } from 'date-fns';
+import { useDispatch } from 'react-redux';
+
+import { changeTime } from 'redux/modules/meeting';
 
 const MeetingTime = () => {
-  const currentTime = format(new Date(), 'kk:mm');
+  const dispatch = useDispatch();
+
+  const handleTime = (e) => {
+    dispatch(changeTime(e.target.value));
+  };
+
   return (
     <TimeWrapper>
       <p className="label-text">모임 시간</p>
       <div className="input-container">
         <div className="info-text">모임 시간을 선택하세요</div>
-        <input className="time-input" type="time" />
+        <input onChange={handleTime} className="time-input" type="time" />
       </div>
     </TimeWrapper>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -12,6 +12,12 @@ const BoardNav = () => {
     if (!e.target.classList.contains('nav-item')) return;
     setSearchParams({ sort: e.target.classList[0], page: 1 });
   };
+
+  useEffect(() => {
+    if (isActive !== 'recent' || isActive !== 'like' || isActive !== 'view') {
+      setSearchParams({ sort: 'recent', page: 1 });
+    }
+  }, []);
 
   return (
     <BoardNavWrapper>

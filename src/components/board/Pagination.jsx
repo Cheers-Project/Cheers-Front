@@ -1,51 +1,59 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { CaretLeftOutlined, CaretRightOutlined } from '@ant-design/icons';
 
-const Pagination = ({ searchParams, setSearchParams }) => {
+const Pagination = ({ maxPage, pageNums, searchParams, setSearchParams }) => {
   const page = searchParams.get('page');
 
-  const onClick = (e) => {
+  const changePage = (e) => {
     if (!e.target.value) return;
     setSearchParams({ sort: searchParams.get('sort'), page: e.target.value });
   };
 
+  const clickPrevBtn = () => {
+    if (page === '1') return;
+    setSearchParams({ sort: searchParams.get('sort'), page: +page - 1 });
+  };
+
+  const clickNextBtn = () => {
+    if (page > maxPage) return;
+    setSearchParams({ sort: searchParams.get('sort'), page: +page + 1 });
+  };
+
+  useEffect(() => {
+    if (page > maxPage) {
+      setSearchParams({ sort: searchParams.get('sort'), page: 1 });
+    }
+  }, []);
+
   return (
     <PaginationWrapper>
-      <button className={page === '1' ? 'btn prev-btn hide' : 'btn prev-btn'}>
+      <button
+        onClick={clickPrevBtn}
+        className={page === '1' ? 'btn prev-btn hide' : 'btn prev-btn'}
+      >
         <CaretLeftOutlined />
       </button>
-      <PageNumberList onClick={onClick}>
-        <PageNumber page={page} value={1}>
-          {1}
-        </PageNumber>
-        <PageNumber page={page} value={2}>
-          {2}
-        </PageNumber>
-        <PageNumber page={page} value={3}>
-          {3}
-        </PageNumber>
+      <PageNumberList onClick={changePage}>
+        {pageNums.map((pageNum) => {
+          if (maxPage >= pageNum) {
+            return (
+              <PageNumber key={pageNum} page={page} value={pageNum}>
+                {pageNum}
+              </PageNumber>
+            );
+          }
+        })}
       </PageNumberList>
-      <button className="btn next-btn">
+      <button
+        onClick={clickNextBtn}
+        className={page === `${maxPage}` ? 'btn next-btn hide' : 'btn next-btn'}
+      >
         <CaretRightOutlined />
       </button>
     </PaginationWrapper>
   );
 };
-
-const PageNumber = styled.li`
-  padding: 1rem 1rem 0.7rem 1rem;
-  font-size: ${({ theme }) => theme.fontSize.smTitle};
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-  color: ${({ theme, page, value }) => {
-    return page === `${value}` ? theme.color.lightCherry : theme.color.black;
-  }};
-  &:hover {
-    color: ${({ theme }) => theme.color.lightCherry};
-  }
-`;
 
 const PaginationWrapper = styled.div`
   padding: 3rem 0;
@@ -55,13 +63,14 @@ const PaginationWrapper = styled.div`
   font-size: 1.8rem;
   position: relative;
   .btn {
-    padding: 1rem 0;
+    padding: 1rem;
     display: flex;
     align-items: center;
     height: 100%;
     font-size: ${({ theme }) => theme.fontSize.mdTitle};
     cursor: pointer;
     transition: 0.2s;
+
     &:hover {
       color: ${({ theme }) => theme.color.lightCherry};
     }
@@ -69,6 +78,7 @@ const PaginationWrapper = styled.div`
 
   .hide {
     opacity: 0;
+    cursor: unset;
   }
 `;
 
@@ -77,7 +87,18 @@ const PageNumberList = styled.ul`
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  margin: 0 1rem;
+`;
+
+const PageNumber = styled.button`
+  font-size: ${({ theme }) => theme.fontSize.smTitle};
+  cursor: pointer;
+  transition: 0.2s;
+  color: ${({ theme, page, value }) => {
+    return page === `${value}` ? theme.color.lightCherry : theme.color.black;
+  }};
+  &:hover {
+    color: ${({ theme }) => theme.color.lightCherry};
+  }
 `;
 
 export default Pagination;

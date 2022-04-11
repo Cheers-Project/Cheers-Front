@@ -1,17 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { Editor } from '@toast-ui/react-editor';
+import { useMutation, useQueryClient } from 'react-query';
+
 import * as boardAPI from 'api/board';
 import StyledInput from 'components/common/StyledInput';
 
 const BoardEditor = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState(null);
+  const queryClient = useQueryClient();
 
   const editor = useRef(null);
 
   const changeTitle = (e) => {
     setTitle(e.target.value);
   };
+
+  const wrtieBoard = useMutation(boardAPI.write, {
+    mutationKey: ['boards'],
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['boards']);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   useEffect(() => {
     if (!editor) return;
@@ -28,14 +43,15 @@ const BoardEditor = () => {
       });
   }, [editor]);
 
-  const onClick = async () => {
+  const onClick = () => {
     const contents = editor.current.getInstance().getHTML();
     const payload = {
       title,
       contents,
     };
     console.log(payload);
-    await boardAPI.write(payload);
+    wrtieBoard.mutate(payload);
+    navigate('/board?sort=recent&page=1');
   };
   return (
     <BoardEditorWrapper>
@@ -72,7 +88,7 @@ const BoardEditor = () => {
   );
 };
 
-const BoardEditorWrapper = styled.div`
+const BoardEditorWrapper = styled.section`
   padding: 2rem 0;
   display: flex;
   align-items: center;
