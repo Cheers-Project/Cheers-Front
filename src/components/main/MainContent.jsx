@@ -3,12 +3,12 @@ import styled from 'styled-components';
 
 import BoardBanner from 'assets/images/board-banner.jpeg';
 import MeetBanner from 'assets/images/meet-banner.jpg';
-import MeetSlider from 'components/main/MeetSlider';
+import MeetingSlider from 'components/main/MeetingSlider';
 
 const MainContent = () => {
   return (
     <MainTemplate>
-      <MeetSlider />
+      <MeetingSlider />
       <Outer>
         <Inner bg={MeetBanner}>
           <h3 className="sub-title">다양한 모임에 참여하세요.</h3>
