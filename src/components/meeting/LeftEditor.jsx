@@ -1,14 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 
-import MeetingTime from './MeetingTime';
-import MemberCounter from './MemberCounter';
+import { changeTitle, changeContents } from 'redux/modules/meeting';
+import MeetingTime from 'components/meeting/MeetingTime';
+import MemberCounter from 'components/meeting/MemberCounter';
 
 const LeftEditor = () => {
+  const dispatch = useDispatch();
+
+  const handleTitle = (e) => {
+    dispatch(changeTitle(e.target.value));
+  };
+
+  const handleContents = (e) => {
+    dispatch(changeContents(e.target.value));
+  };
+
   return (
     <LeftEditorWrapper>
       <div className="title-container">
         <input
+          onChange={handleTitle}
           className="title-input"
           type="text"
           placeholder="제목을 입력하세요"
@@ -16,6 +29,7 @@ const LeftEditor = () => {
       </div>
       <div className="contents-container">
         <textarea
+          onChange={handleContents}
           className="contents-input"
           placeholder="내용을 입력하세요"
         ></textarea>
