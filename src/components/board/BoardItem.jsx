@@ -6,10 +6,8 @@ import { format } from 'date-fns';
 const BoardItem = ({ boardInfo }) => {
   const createdDate = format(new Date(boardInfo.createdDate), 'yyyy-MM-dd');
 
-  format;
-
   return (
-    <BoardItemWrapper>
+    <BoardItemWrapper id={boardInfo._id}>
       <LeftWrapper>
         <Title>{boardInfo.title}</Title>
         <UserInfoWrapper>
@@ -50,6 +48,11 @@ const BoardItemWrapper = styled.li`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
+
+  * {
+    pointer-events: none;
+  }
 `;
 
 const LeftWrapper = styled.div`

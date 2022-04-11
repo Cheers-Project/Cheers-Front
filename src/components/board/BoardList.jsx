@@ -1,13 +1,14 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import * as boardAPI from 'api/board';
 import BoardItem from 'components/board/BoardItem';
-import Pagination from './Pagination';
-import { useSearchParams } from 'react-router-dom';
+import Pagination from 'components/board/Pagination';
 
 const BoardList = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const query = {
@@ -15,30 +16,47 @@ const BoardList = () => {
     page: searchParams.get('page'),
   };
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError } = useQuery(
     ['boards', query],
     () => boardAPI.getBoards(query),
     {
       refetchOnWindowFocus: false,
       staleTime: Infinity,
-      keepPreviousData: true,
     },
   );
 
+  const handleRouter = (e) => {
+    if (e.target.id) {
+      console.log(e.target);
+      navigate(`/board/${e.target.id}`);
+    }
+  };
+
   return (
-    <BoardListWrapper>
+    <BoardListOuter>
       {isLoading && '로딩'}
-      {data?.boards &&
-        data.boards.map((board) => (
-          <BoardItem key={board._id} boardInfo={board} />
+      {isError && '에러'}
+      <BoardListWrapper onClick={handleRouter}>
+        {data?.boards.map((board) => (
+          <BoardItem key={board._id} boardInfo={board} className="board-item" />
         ))}
-      <Pagination
-        searchParams={searchParams}
-        setSearchParams={setSearchParams}
-      />
-    </BoardListWrapper>
+      </BoardListWrapper>
+      {data?.maxPage && (
+        <Pagination
+          maxPage={data.maxPage}
+          pageNums={data.pageNums}
+          searchParams={searchParams}
+          setSearchParams={setSearchParams}
+        />
+      )}
+    </BoardListOuter>
   );
 };
+
+const BoardListOuter = styled.section`
+  display: flex;
+  flex-direction: column;
+`;
 
 const BoardListWrapper = styled.ul`
   display: flex;

@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import Spacer from 'components/common/Spacer';
 import BoardEditor from 'components/board/BoardEditor';
@@ -11,7 +10,6 @@ const BoardWritePage = () => {
     <>
       <Header />
       <Spacer />
-      {/* 게시물 작성 영역 */}
       <Responsive>
         <BoardEditor />
       </Responsive>
