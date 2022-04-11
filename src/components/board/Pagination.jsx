@@ -45,7 +45,10 @@ const Pagination = ({ maxPage, pageNums, searchParams, setSearchParams }) => {
           }
         })}
       </PageNumberList>
-      <button onClick={clickNextBtn} className="btn next-btn">
+      <button
+        onClick={clickNextBtn}
+        className={page === `${maxPage}` ? 'btn next-btn hide' : 'btn next-btn'}
+      >
         <CaretRightOutlined />
       </button>
     </PaginationWrapper>
