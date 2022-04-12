@@ -4,8 +4,9 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 
-import nicknameSchema from 'utils/validation/nicknameSchema';
 import * as userAPI from 'api/user';
+import * as myAPI from 'api/my';
+import nicknameSchema from 'utils/validation/nicknameSchema';
 import StyledInput from 'components/common/StyledInput';
 import ErrorMessage from 'components/common/ErrorMessage';
 
@@ -18,13 +19,14 @@ const NicknameForm = () => {
     staleTime: Infinity,
   });
 
-  const { mutate, isError, error } = useMutation(userAPI.updateUserInfo, {
-    mutationKey: ['user'],
+  const { mutate, isError, error } = useMutation(myAPI.updateNickname, {
+    mutationKey: ['my/nickname'],
     onSuccess: (data) => {
       const { accessToken } = data;
 
       queryClient.setQueryData(['user'], data);
       queryClient.invalidateQueries(['boards']);
+      queryClient.invalidateQueries(['meeting']);
       localStorage.setItem('accessToken', accessToken);
       setIsClicked(false);
     },
