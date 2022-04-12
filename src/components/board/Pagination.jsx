@@ -20,8 +20,15 @@ const Pagination = ({ maxPage, pageNums, searchParams, setSearchParams }) => {
     setSearchParams({ sort: searchParams.get('sort'), page: +page + 1 });
   };
 
+  // maxPage 예외처리 확인
   useEffect(() => {
     if (page > maxPage) {
+      setSearchParams({ sort: searchParams.get('sort'), page: 1 });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!page) {
       setSearchParams({ sort: searchParams.get('sort'), page: 1 });
     }
   }, []);
