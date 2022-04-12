@@ -26,9 +26,11 @@ const App = () => {
           <Route path="write" element={<BoardWritePage />} />
           <Route path=":id" element={<BoardDetailPage />} />
         </Route>
-        <Route path="/meeting" element={<MeetingPage />} />
-        <Route path="/meeting/:id" element={<MeetingDetailPage />} />
-        <Route path="/meeting/write" element={<MeetingWritePage />} />
+        <Route path="/meeting">
+          <Route index element={<MeetingPage />} />
+          <Route path=":id" element={<MeetingDetailPage />} />
+          <Route path="write" element={<MeetingWritePage />} />
+        </Route>
         <Route path="/oauth/kakao" element={<KakaoPage />} />
         <Route path="/redirect" element={<RedirectPage />} />
         <Route path="/mypage" element={<MyPage />}>
