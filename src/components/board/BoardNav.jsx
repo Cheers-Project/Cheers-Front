@@ -6,16 +6,23 @@ const BoardNav = () => {
   const location = window.location;
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const isActive = searchParams.get('sort');
+  const sort = searchParams.get('sort');
+  const page = searchParams.get('page');
 
   const onClick = (e) => {
     if (!e.target.classList.contains('nav-item')) return;
-    setSearchParams({ sort: e.target.classList[0], page: 1 });
+    setSearchParams({ sort: e.target.classList[0], page: page });
   };
 
   useEffect(() => {
-    if (isActive !== 'recent' || isActive !== 'like' || isActive !== 'view') {
-      setSearchParams({ sort: 'recent', page: 1 });
+    if (sort !== 'recent' && sort !== 'like' && sort !== 'view') {
+      setSearchParams({ sort: 'recent', page: page });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!sort) {
+      setSearchParams({ sort: 'recent', page: page });
     }
   }, []);
 
@@ -25,24 +32,20 @@ const BoardNav = () => {
         <Link
           to={`/board?${location.search}`}
           className={
-            isActive === 'recent' ? 'recent nav-item active' : 'recent nav-item'
+            sort === 'recent' ? 'recent nav-item active' : 'recent nav-item'
           }
         >
           최신순
         </Link>
         <Link
           to={`/board?${location.search}`}
-          className={
-            isActive === 'like' ? 'like nav-item active' : 'like nav-item'
-          }
+          className={sort === 'like' ? 'like nav-item active' : 'like nav-item'}
         >
           인기순
         </Link>
         <Link
           to={`/board?${location.search}`}
-          className={
-            isActive === 'view' ? 'like nav-item active' : 'view nav-item'
-          }
+          className={sort === 'view' ? 'like nav-item active' : 'view nav-item'}
         >
           조회순
         </Link>
