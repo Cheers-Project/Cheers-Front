@@ -101,6 +101,16 @@ const BoardEditorWrapper = styled.section`
   .toastui-editor-defaultUI {
     width: 100%;
   }
+
+  .toastui-editor-dropdown-toolbar {
+    right: -2.1rem !important;
+  }
+  .toastui-editor-popup {
+    left: 50% !important;
+  }
+  .toastui-editor-popup-add-table {
+    left: 25rem !important;
+  }
 `;
 
 const Input = styled(StyledInput)`
