@@ -69,7 +69,7 @@ const Header = () => {
             <Button onClick={() => handleRouter('/board?sort=recent&page=1')}>
               게시판
             </Button>
-            <Button>모임</Button>
+            <Button onClick={() => handleRouter('/meeting')}>모임</Button>
           </MidNav>
           <RightNav onClick={handleMenuModal}>
             {data?.userInfo?.profileImg ? (
