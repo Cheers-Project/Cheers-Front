@@ -33,7 +33,7 @@ ${reset}
     margin: 0;
     padding: 0;
     border: 0;
-    background-color: #f8f8f8;
+    background-color: #f5f5f5;
   }
 
   body, html, #root {
