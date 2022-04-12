@@ -30,8 +30,6 @@ const MeetingSlider = () => {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
-          infinite: true,
-          dots: true,
         },
       },
       {
@@ -47,7 +45,7 @@ const MeetingSlider = () => {
   return (
     <MeetingSliderWrapper>
       <div>
-        <h3 className="sub-title">최신 모임</h3>
+        <h3 className="sub-title">최신 등록 모임</h3>
       </div>
       <StyledSlider {...settings}>
         {meetingList?.meeting.map((meeting) => {
