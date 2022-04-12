@@ -27,7 +27,6 @@ const BoardList = () => {
 
   const handleRouter = (e) => {
     if (e.target.id) {
-      console.log(e.target);
       navigate(`/board/${e.target.id}`);
     }
   };
