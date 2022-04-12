@@ -43,16 +43,25 @@ const BoardEditor = () => {
       });
   }, [editor]);
 
-  const onClick = () => {
+  const onSubmit = () => {
     const contents = editor.current.getInstance().getHTML();
+    if (!title) {
+      alert('제목을 입력해주세요');
+      return;
+    }
+
     const payload = {
       title,
       contents,
     };
-    console.log(payload);
     wrtieBoard.mutate(payload);
     navigate('/board?sort=recent&page=1');
   };
+
+  const handleCancelBtn = () => {
+    navigate(-1);
+  };
+
   return (
     <BoardEditorWrapper>
       <Input
@@ -79,10 +88,12 @@ const BoardEditor = () => {
         />
       </div>
       <ButtonWrapper>
-        <button onClick={onClick} className="upload-btn">
+        <button onClick={onSubmit} className="upload-btn">
           업로드
         </button>
-        <button className="cancle-btn">취소</button>
+        <button onClick={handleCancelBtn} className="cancle-btn">
+          취소
+        </button>
       </ButtonWrapper>
     </BoardEditorWrapper>
   );
@@ -100,6 +111,16 @@ const BoardEditorWrapper = styled.section`
 
   .toastui-editor-defaultUI {
     width: 100%;
+  }
+
+  .toastui-editor-dropdown-toolbar {
+    right: -2.1rem !important;
+  }
+  .toastui-editor-popup {
+    left: 50% !important;
+  }
+  .toastui-editor-popup-add-table {
+    left: 25rem !important;
   }
 `;
 

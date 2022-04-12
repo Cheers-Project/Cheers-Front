@@ -1,25 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import { EyeFilled, LikeFilled, CommentOutlined } from '@ant-design/icons';
-import { format } from 'date-fns';
+
+import UserInfo from './UserInfo';
+import DateInfo from './DateInfo';
 
 const BoardItem = ({ boardInfo }) => {
-  const createdDate = format(new Date(boardInfo.createdDate), 'yyyy-MM-dd');
-
   return (
     <BoardItemWrapper id={boardInfo._id}>
       <LeftWrapper>
         <Title>{boardInfo.title}</Title>
-        <UserInfoWrapper>
-          <img
-            className="user-profile-img"
-            src={boardInfo.writer.profileImg}
-            alt="user-profileImg"
-          />
-          <p className="user-profile-nickname">{boardInfo.writer.nickname}</p>
-        </UserInfoWrapper>
+        <UserInfo boardInfo={boardInfo} />
       </LeftWrapper>
-
       <RightWrapper>
         <BoardSubInfoWrapper>
           <div className="subinfo-item">
@@ -28,16 +20,14 @@ const BoardItem = ({ boardInfo }) => {
           </div>
           <div className="subinfo-item">
             <EyeFilled />
-            <p>{boardInfo.visit}</p>
+            <p>{boardInfo.view}</p>
           </div>
           <div className="subinfo-item">
             <CommentOutlined />
             <p>{boardInfo.comment}</p>
           </div>
         </BoardSubInfoWrapper>
-        <DateInfoWrapper>
-          <p>{createdDate}</p>
-        </DateInfoWrapper>
+        <DateInfo boardInfo={boardInfo} flex="flex-end" />
       </RightWrapper>
     </BoardItemWrapper>
   );
@@ -75,22 +65,6 @@ const Title = styled.h2`
   }
 `;
 
-const UserInfoWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  .user-profile-img {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-  }
-  .user-profile-nickname {
-    @media screen and (min-width: 768px) {
-      font-size: ${({ theme }) => theme.fontSize.md};
-    }
-  }
-`;
-
 const RightWrapper = styled.div`
   width: 30%;
   display: flex;
@@ -116,15 +90,6 @@ const BoardSubInfoWrapper = styled.div`
     p {
       font-size: 1rem;
     }
-  }
-`;
-
-const DateInfoWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  font-size: ${({ theme }) => theme.fontSize.xsm};
-  @media screen and (min-width: 768px) {
-    font-size: ${({ theme }) => theme.fontSize.md};
   }
 `;
 
