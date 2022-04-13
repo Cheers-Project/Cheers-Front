@@ -18,13 +18,13 @@ const BoardNav = () => {
     if (sort !== 'recent' && sort !== 'like' && sort !== 'view') {
       setSearchParams({ sort: 'recent', page: page });
     }
-  }, []);
+  }, [sort, page, setSearchParams]);
 
   useEffect(() => {
     if (!sort) {
       setSearchParams({ sort: 'recent', page: page });
     }
-  }, []);
+  }, [sort, page, setSearchParams]);
 
   return (
     <BoardNavWrapper>
