@@ -25,13 +25,13 @@ const Pagination = ({ maxPage, pageNums, searchParams, setSearchParams }) => {
     if (page > maxPage) {
       setSearchParams({ sort: searchParams.get('sort'), page: 1 });
     }
-  }, []);
+  }, [maxPage, page, searchParams, setSearchParams]);
 
   useEffect(() => {
     if (!page) {
       setSearchParams({ sort: searchParams.get('sort'), page: 1 });
     }
-  }, []);
+  }, [page, searchParams, setSearchParams]);
 
   return (
     <PaginationWrapper>
@@ -43,13 +43,12 @@ const Pagination = ({ maxPage, pageNums, searchParams, setSearchParams }) => {
       </button>
       <PageNumberList onClick={changePage}>
         {pageNums.map((pageNum) => {
-          if (maxPage >= pageNum) {
-            return (
-              <PageNumber key={pageNum} page={page} value={pageNum}>
-                {pageNum}
-              </PageNumber>
-            );
-          }
+          if (maxPage >= pageNum) return <></>;
+          return (
+            <PageNumber key={pageNum} page={page} value={pageNum}>
+              {pageNum}
+            </PageNumber>
+          );
         })}
       </PageNumberList>
       <button
