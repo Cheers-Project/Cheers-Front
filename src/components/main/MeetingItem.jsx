@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { EyeFilled } from '@ant-design/icons';
 
 const MeetingItem = ({ meeting }) => {
   return (
     <ItemWrapper>
-      <h3 className="meeting-title ">{meeting.title}</h3>
-      <div className="meeting-contents">{meeting.contents}</div>
+      <h4 className="meeting-title ">{meeting.title}</h4>
+      <p className="meeting-contents">{meeting.contents}</p>
       <div className="meeting-location">
         <span>모임 장소 &#58;</span>
         <p className="meeting-text">{meeting.location.placeName}</p>
@@ -20,31 +21,56 @@ const MeetingItem = ({ meeting }) => {
           {meeting.attendMember.length} / {meeting.totalNumber}
         </p>
       </div>
+      <div className="meeting-sub-info">
+        <div className="meeting-writer">
+          <img
+            className="meeting-user-profile"
+            src={meeting.writer.profileImg}
+            alt="유저 프로필"
+          />
+          <p className="meeting-text">{meeting.writer.nickname}</p>
+        </div>
+        <div className="meeting-view">
+          <EyeFilled />
+          <div>{meeting.view}</div>
+        </div>
+      </div>
     </ItemWrapper>
   );
 };
 
-const ItemWrapper = styled.div`
+const ItemWrapper = styled.li`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   flex: 1 1 0%;
+  gap: 1rem;
+  padding: 1rem 0;
+  cursor: pointer;
 
   .meeting-title {
-    font-size: ${({ theme }) => theme.fontSize.lg};
-    padding: 1rem 0;
+    font-size: ${({ theme }) => theme.fontSize.md};
+    font-weight: 600;
+    max-height: 3.6rem;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.7rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    @media screen and (min-width: 768px) {
+      font-size: ${({ theme }) => theme.fontSize.lg};
+      line-height: 2.1rem;
+      max-height: 4.4rem;
+    }
   }
   .meeting-contents {
     font-size: ${({ theme }) => theme.fontSize.sm};
-    flex: 1;
     width: 100%;
     height: 20rem;
 
-    padding: 0;
-    margin: 1rem 0;
-    line-height: 2.06rem;
-
-    word-break: break-word;
-    overflow-wrap: break-word;
+    line-height: 2rem;
     display: -webkit-box;
     -webkit-line-clamp: 10;
     -webkit-box-orient: vertical;
@@ -53,12 +79,18 @@ const ItemWrapper = styled.div`
   }
   .meeting-location,
   .meeting-date,
-  .meeting-member {
-    padding: 1rem 0;
+  .meeting-member,
+  .meeting-writer {
     font-size: ${({ theme }) => theme.fontSize.sm};
     display: flex;
     align-items: center;
     gap: 1rem;
+  }
+
+  .meeting-sub-info {
+    font-size: ${({ theme }) => theme.fontSize.sm};
+    display: flex;
+    justify-content: space-between;
   }
 
   .meeting-text {
@@ -67,6 +99,18 @@ const ItemWrapper = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+  .meeting-user-profile {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+  }
+
+  .meeting-view {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: ${({ theme }) => theme.color.darkGray};
   }
 `;
 

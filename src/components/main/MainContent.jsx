@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import BoardBanner from 'assets/images/board-banner.jpeg';
 import MeetBanner from 'assets/images/meet-banner.jpg';
 import MeetingSlider from 'components/main/MeetingSlider';
+import StyledButton from 'components/common/StyledButton';
 
 const MainContent = () => {
   return (
@@ -12,11 +13,11 @@ const MainContent = () => {
       <Outer>
         <Inner bg={MeetBanner}>
           <h3 className="sub-title">다양한 모임에 참여하세요.</h3>
-          <button className="nav-btn">모임</button>
+          <StyledButton cherry>모임</StyledButton>
         </Inner>
         <Inner bg={BoardBanner}>
           <h3 className="sub-title">술에 대해 이야기하세요.</h3>
-          <button className="nav-btn">게시판</button>
+          <StyledButton cherry>게시판</StyledButton>
         </Inner>
       </Outer>
     </MainTemplate>
@@ -44,15 +45,6 @@ const Outer = styled.div`
     color: #fff;
 
     position: relative;
-  }
-
-  .nav-btn {
-    padding: 1.2rem 2rem;
-    border-radius: 0.5rem;
-    background-color: #c22d77;
-    color: #fff;
-    font-weight: 600;
-    letter-spacing: 0.2rem;
   }
 `;
 

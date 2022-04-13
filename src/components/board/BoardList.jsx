@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -9,6 +9,7 @@ import Pagination from 'components/board/Pagination';
 
 const BoardList = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const query = {
@@ -21,14 +22,18 @@ const BoardList = () => {
     () => boardAPI.getBoards(query),
     {
       refetchOnWindowFocus: false,
-      staleTime: Infinity,
+      cacheTime: 0,
     },
   );
+  console.log(data);
+
+  const increaseView = useMutation(['board'], boardAPI.increaseView);
 
   const handleRouter = (e) => {
     if (e.target.id) {
-      console.log(e.target);
-      navigate(`/board/${e.target.id}`);
+      const id = e.target.id;
+      increaseView.mutate(id);
+      navigate(`/board/${id}`);
     }
   };
 

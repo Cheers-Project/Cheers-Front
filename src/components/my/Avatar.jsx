@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { useQuery } from 'react-query';
 
 import * as userAPI from 'api/user';
+import * as myAPI from 'api/my';
 
 const Avatar = () => {
   const queryClient = useQueryClient();
@@ -13,8 +14,8 @@ const Avatar = () => {
     staleTime: Infinity,
   });
 
-  const updateMutation = useMutation(userAPI.updateProfileImg, {
-    mutationKey: ['user'],
+  const updateMutation = useMutation(myAPI.updateProfileImg, {
+    mutationKey: ['my/profile'],
     onSuccess: (userInfo) => {
       queryClient.setQueryData(['user'], userInfo);
       queryClient.invalidateQueries(['boards']);
@@ -24,8 +25,8 @@ const Avatar = () => {
     },
   });
 
-  const removeMutation = useMutation(userAPI.removeProfileImg, {
-    mutationKey: ['user'],
+  const removeMutation = useMutation(myAPI.removeProfileImg, {
+    mutationKey: ['my/profile'],
     onSuccess: (userInfo) => {
       queryClient.setQueryData(['user'], userInfo);
       queryClient.invalidateQueries(['boards']);
