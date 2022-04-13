@@ -12,22 +12,26 @@ const MyMeeting = () => {
 
   return (
     <MeetingSection>
-      {meetingList?.meeting.map((meeting) => {
-        return (
-          <MeetingItemOuter key={meeting._id}>
-            <MeetingItem meeting={meeting} key={meeting._id} />
-          </MeetingItemOuter>
-        );
-      })}
+      <ul className="meeting-list">
+        {meetingList?.meeting.map((meeting) => {
+          return (
+            <MeetingItemOuter key={meeting._id}>
+              <MeetingItem meeting={meeting} key={meeting._id} />
+            </MeetingItemOuter>
+          );
+        })}
+      </ul>
     </MeetingSection>
   );
 };
 
 const MeetingSection = styled.section`
-  padding-bottom: 3rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
+  .meeting-list {
+    padding-bottom: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
 `;
 
 const MeetingItemOuter = styled.div`

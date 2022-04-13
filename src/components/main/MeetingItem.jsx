@@ -39,7 +39,7 @@ const MeetingItem = ({ meeting }) => {
   );
 };
 
-const ItemWrapper = styled.div`
+const ItemWrapper = styled.li`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
