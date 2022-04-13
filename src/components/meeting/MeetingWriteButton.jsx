@@ -31,7 +31,7 @@ const MeetingWriteButton = () => {
 
   return (
     <ButtonWrapper>
-      <StyledButton onClick={handleSubmit} color="cherry">
+      <StyledButton onClick={handleSubmit} cherry>
         작성
       </StyledButton>
       <StyledButton onClick={handleCancel}>취소</StyledButton>
