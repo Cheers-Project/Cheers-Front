@@ -1,12 +1,8 @@
-import useCurrentQuery from 'hooks/useCurrentQuery';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const MeetingNav = () => {
-  const [query, setQuery] = useCurrentQuery();
-  console.log(query);
-
   return (
     <MeetingNavWrapper>
       <ul className="nav-list">
