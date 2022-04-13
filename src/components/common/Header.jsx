@@ -73,7 +73,11 @@ const Header = () => {
           </MidNav>
           <RightNav onClick={handleMenuModal}>
             {data?.userInfo?.profileImg ? (
-              <img src={data.userInfo.profileImg} className="profileImg" />
+              <img
+                src={data.userInfo.profileImg}
+                alt="프로필이미지"
+                className="profileImg"
+              />
             ) : (
               <UserOutlined className="user-icon" />
             )}
