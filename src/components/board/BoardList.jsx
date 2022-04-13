@@ -24,7 +24,6 @@ const BoardList = () => {
       cacheTime: 0,
     },
   );
-  console.log(data);
 
   const increaseView = useMutation(['board'], boardAPI.increaseView);
 
