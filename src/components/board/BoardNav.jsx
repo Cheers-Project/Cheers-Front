@@ -54,13 +54,10 @@ const BoardNav = () => {
   );
 };
 
-const BoardNavWrapper = styled.nav`
+const BoardNavWrapper = styled.div`
   display: flex;
   justify-content: center;
-  padding: 1rem 0;
-  @media screen and (min-width: 768px) {
-    padding: 3rem 0;
-  }
+  padding: 3rem 0;
 `;
 
 const NavList = styled.ul`

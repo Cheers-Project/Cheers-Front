@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import styled from 'styled-components';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -9,7 +9,6 @@ import Pagination from 'components/board/Pagination';
 
 const BoardList = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const query = {
@@ -17,7 +16,7 @@ const BoardList = () => {
     page: searchParams.get('page'),
   };
 
-  const { data, isLoading, isError } = useQuery(
+  const { data } = useQuery(
     ['boards', query],
     () => boardAPI.getBoards(query),
     {
@@ -39,8 +38,6 @@ const BoardList = () => {
 
   return (
     <BoardListOuter>
-      {isLoading && '로딩'}
-      {isError && '에러'}
       <BoardListWrapper onClick={handleRouter}>
         {data?.boards.map((board) => (
           <BoardItem key={board._id} boardInfo={board} className="board-item" />

@@ -74,7 +74,7 @@ const PaginationWrapper = styled.div`
     display: flex;
     align-items: center;
     height: 100%;
-    font-size: ${({ theme }) => theme.fontSize.mdTitle};
+    font-size: ${({ theme }) => theme.fontSize.md};
     cursor: pointer;
     transition: 0.2s;
 
@@ -97,7 +97,7 @@ const PageNumberList = styled.ul`
 `;
 
 const PageNumber = styled.button`
-  font-size: ${({ theme }) => theme.fontSize.smTitle};
+  font-size: ${({ theme }) => theme.fontSize.md};
   cursor: pointer;
   transition: 0.2s;
   color: ${({ theme, page, value }) => {

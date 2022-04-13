@@ -73,13 +73,13 @@ const BoardEditor = () => {
       <div className="editor-wrapper">
         <Editor
           className="editor"
-          height="500px"
+          height="100%"
           previewStyle={false}
           toolbarItems={[
             ['heading', 'bold', 'italic', 'strike'],
             ['hr', 'quote'],
             ['ul', 'ol', 'indent', 'outdent'],
-            ['table', 'image', 'link'],
+            ['image', 'link'],
           ]}
           previewHighlight={false}
           initialEditType="wysiwyg"
@@ -100,27 +100,39 @@ const BoardEditor = () => {
 };
 
 const BoardEditorWrapper = styled.section`
+  height: 100%;
   padding: 2rem 0;
   display: flex;
   align-items: center;
   flex-direction: column;
   gap: 3rem;
+  flex: 1;
   .editor-wrapper {
     width: 100%;
+    min-height: 500px;
+    flex: 1;
   }
 
   .toastui-editor-defaultUI {
     width: 100%;
   }
+  .ProseMirror {
+    background-color: ${({ theme }) => theme.color.white};
+  }
 
   .toastui-editor-dropdown-toolbar {
+    flex-direction: column;
     right: -2.1rem !important;
+  }
+  .toastui-editor-defaultUI-toolbar {
+    padding: 0;
+  }
+  .toastui-editor-toolbar-group {
+    border-bottom: 1px solid #dadde6;
+    background-color: #f6f9fc;
   }
   .toastui-editor-popup {
     left: 50% !important;
-  }
-  .toastui-editor-popup-add-table {
-    left: 25rem !important;
   }
 `;
 
