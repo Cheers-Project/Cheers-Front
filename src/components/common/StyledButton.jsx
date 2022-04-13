@@ -1,29 +1,49 @@
 import React from 'react';
-import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import styled, { css } from 'styled-components';
 
-import theme from 'styles/theme';
-
-const StyledButton = ({ children, ...rest }) => {
-  return <Button {...rest}>{children}</Button>;
+const StyledButton = (props) => {
+  return props.to ? <StyledLink {...props} /> : <Button {...props} />;
 };
 
-const Button = styled.button`
-  width: 5rem;
-  font-size: 1.3rem;
-  padding: 1rem 0;
+const buttonStyle = css`
+  padding: 0.8rem 1.2rem;
+  font-size: ${({ theme }) => theme.fontSize.sm};
   color: #fff;
+  text-align: center;
   border-radius: 0.5rem;
   transition: 0.2s background-color;
-  background-color: ${({ color }) =>
-    color ? theme.color.lightCherry : '#ccc'};
+  background-color: ${({ theme }) => theme.color.lightGray};
   &:hover {
-    background-color: ${({ color }) =>
-      color ? theme.color.darkCherry : '#aaa'};
+    background-color: ${({ theme }) => theme.color.darkGray};
   }
   @media screen and (min-width: 768px) {
-    width: 8rem;
-    font-size: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    font-size: ${({ theme }) => theme.fontSize.md};
   }
+
+  ${(props) =>
+    props.cherry &&
+    css`
+      background-color: ${({ theme }) => theme.color.lightCherry};
+      &:hover {
+        background-color: ${({ theme }) => theme.color.darkCherry};
+      }
+    `}
+
+  ${(props) =>
+    props.fullSize &&
+    css`
+      width: 100%;
+    `}
+`;
+
+const Button = styled.button`
+  ${buttonStyle}
+`;
+
+const StyledLink = styled(Link)`
+  ${buttonStyle}
 `;
 
 export default StyledButton;

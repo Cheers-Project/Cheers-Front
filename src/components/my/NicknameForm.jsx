@@ -9,6 +9,7 @@ import * as myAPI from 'api/my';
 import nicknameSchema from 'utils/validation/nicknameSchema';
 import StyledInput from 'components/common/StyledInput';
 import ErrorMessage from 'components/common/ErrorMessage';
+import StyledButton from 'components/common/StyledButton';
 
 const NicknameForm = () => {
   const [isClicked, setIsClicked] = useState(false);
@@ -82,10 +83,10 @@ const NicknameForm = () => {
                 type="text"
                 defaultValue={userInfo?.userInfo.nickname}
               />
-              <button className="nickname-change-btn">변경</button>
-              <button onClick={handleCancle} className="nickname-cancle-btn">
-                취소
-              </button>
+              <div className="btn-wrapper">
+                <StyledButton cherry>변경</StyledButton>
+                <StyledButton onClick={handleCancle}>취소</StyledButton>
+              </div>
             </div>
             <ErrorMessage>
               {isError && error.response.data.msg}
@@ -136,30 +137,12 @@ const NicknameWrapper = styled.div`
     justify-content: space-between;
   }
   .nickname-input {
+    flex: 1;
     margin-right: 1.5rem;
   }
-  .nickname-change-btn {
-    width: 8rem;
-    font-size: 1.5rem;
-    color: #fff;
-    border-radius: 0.5rem;
-    margin-right: 0.5rem;
-    transition: 0.2s background-color;
-    background-color: #db428e;
-    &:hover {
-      background-color: #c22d77;
-    }
-  }
-  .nickname-cancle-btn {
-    width: 8rem;
-    font-size: 1.5rem;
-    color: #fff;
-    border-radius: 0.5rem;
-    background-color: #ccc;
-    transition: 0.2s background-color;
-    &:hover {
-      background-color: #aaa;
-    }
+  .btn-wrapper {
+    display: flex;
+    gap: 0.5rem;
   }
 `;
 
