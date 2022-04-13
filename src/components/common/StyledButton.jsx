@@ -18,7 +18,7 @@ const buttonStyle = css`
     background-color: ${({ theme }) => theme.color.darkGray};
   }
   @media screen and (min-width: 768px) {
-    padding: 1rem 1.5rem;
+    padding: 0.8rem 1.5rem;
     font-size: ${({ theme }) => theme.fontSize.md};
   }
 
