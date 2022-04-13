@@ -23,8 +23,12 @@ const MeetingItem = ({ meeting }) => {
       </div>
       <div className="meeting-sub-info">
         <div className="meeting-writer">
-          <span>작성자 &#58;</span>
-          <p className="meeting-text">{meeting.writer}</p>
+          <img
+            className="meeting-user-profile"
+            src={meeting.writer.profileImg}
+            alt="유저 프로필"
+          />
+          <p className="meeting-text">{meeting.writer.nickname}</p>
         </div>
         <div className="meeting-view">
           <EyeFilled />
@@ -95,6 +99,11 @@ const ItemWrapper = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+  .meeting-user-profile {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
   }
 
   .meeting-view {
