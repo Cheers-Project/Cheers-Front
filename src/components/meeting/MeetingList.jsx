@@ -3,12 +3,19 @@ import styled from 'styled-components';
 import { useQuery } from 'react-query';
 
 import MeetingItem from 'components/main/MeetingItem';
-import * as myAPI from 'api/my';
+import * as meetingAPI from 'api/meeting';
+import useCurrentQuery from 'hooks/useCurrentQuery';
 
 const MeetingList = () => {
-  const { data: meetingList } = useQuery(['my/meeting'], myAPI.fetchMyMeeting, {
-    refetchOnWindowFocus: false,
-  });
+  const [query] = useCurrentQuery();
+
+  const { data: meetingList } = useQuery(
+    ['meeting', query],
+    meetingAPI.fetchMeeting,
+    {
+      refetchOnWindowFocus: false,
+    },
+  );
 
   return (
     <MeetingSection>

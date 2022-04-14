@@ -2,22 +2,38 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import useCurrentLocation from 'hooks/useCurrentLocation';
+import useCurrentQuery from 'hooks/useCurrentQuery';
+
 const MeetingNav = () => {
+  const location = useCurrentLocation();
+  const [query, searchParams] = useCurrentQuery();
+  const { sort } = searchParams;
+
   return (
     <MeetingNavWrapper>
       <ul className="nav-list">
         <li className="nav-item">
-          <Link to="/meeting?test=1" className="nav-link active">
+          <Link
+            to="/meeting?sort=recent"
+            className={sort === 'recent' ? 'nav-link active' : 'nav-link'}
+          >
             최신순
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/meeting?test=2" className="nav-link">
+          <Link
+            to="/meeting?sort=view"
+            className={sort === 'view' ? 'nav-link active' : 'nav-link'}
+          >
             조회순
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/meeting?test=3" className="nav-link">
+          <Link
+            to={`/meeting?sort=near&lon=${location?.lon}&lat=${location?.lat}`}
+            className={sort === 'near' ? 'nav-link active' : 'nav-link'}
+          >
             근처 모임
           </Link>
         </li>
