@@ -1,14 +1,17 @@
 import React from 'react';
+import styled from 'styled-components';
 import { useQuery } from 'react-query';
 import { Viewer } from '@toast-ui/react-editor';
 import { LikeFilled } from '@ant-design/icons';
 
 import * as boardAPI from 'api/board';
-import styled from 'styled-components';
 import UserInfo from './UserInfo';
 import DateInfo from './DateInfo';
+import useCheckOwned from 'hooks/useCheckOwned';
 
 const BoardDetail = () => {
+  const userId = useCheckOwned();
+
   const location = window.location;
   const id = location.pathname.split('/')[2];
 
@@ -23,6 +26,8 @@ const BoardDetail = () => {
 
   const boardInfo = data?.board;
 
+  console.log(userId);
+
   return (
     <>
       {isSuccess && (
@@ -33,6 +38,7 @@ const BoardDetail = () => {
               <UserInfo boardInfo={boardInfo} />
               <DateInfo boardInfo={boardInfo} />
             </SubInto>
+            {userId && boardInfo.writer._id === userId ? 1 : 0}
           </BoardInfo>
           <Viewer initialValue={boardInfo.contents} />
           <LikeWrapper>
