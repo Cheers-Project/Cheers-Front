@@ -12,12 +12,6 @@ export const createMeeting = (payload) => {
     .then((res) => res.data);
 };
 
-export const searchRecentMeeting = () => {
-  return client.get('/meeting?sort=recent').then((res) => res.data);
-};
-
-export const searchNearMeeting = (lon, lat) => {
-  return client
-    .get(`/meeting?sort=near&lon=${lon}&lat=${lat}`)
-    .then((res) => res.data);
+export const fetchMeeting = ({ queryKey }) => {
+  return client.get(`/meeting?${queryKey[1]}`).then((res) => res.data);
 };
