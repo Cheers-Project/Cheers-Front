@@ -8,13 +8,9 @@ import * as meetingAPI from 'api/meeting';
 import MeetingItem from 'components/main/MeetingItem';
 
 const MeetingSlider = () => {
-  const { data: meetingList } = useQuery(
-    ['meeting'],
-    meetingAPI.searchRecentMeeting,
-    {
-      refetchOnWindowFocus: false,
-    },
-  );
+  const { data: meetingList } = useQuery(['meeting'], meetingAPI.fetchMeeting, {
+    refetchOnWindowFocus: false,
+  });
 
   const settings = {
     dots: true,
