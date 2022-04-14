@@ -42,10 +42,10 @@ const Pagination = ({ maxPage, pageNums, searchParams, setSearchParams }) => {
         <CaretLeftOutlined />
       </button>
       <PageNumberList onClick={changePage}>
-        {pageNums.map((pageNum) => {
-          if (maxPage >= pageNum) return <></>;
+        {pageNums.map((pageNum, i) => {
+          if (maxPage < pageNum) return null;
           return (
-            <PageNumber key={pageNum} page={page} value={pageNum}>
+            <PageNumber key={i} page={page} value={pageNum}>
               {pageNum}
             </PageNumber>
           );
