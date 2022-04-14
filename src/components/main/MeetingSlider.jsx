@@ -4,13 +4,19 @@ import Slider from 'react-slick';
 import { useQuery } from 'react-query';
 
 import * as meetingAPI from 'api/meeting';
-
+import useCurrentQuery from 'hooks/useCurrentQuery';
 import MeetingItem from 'components/main/MeetingItem';
 
 const MeetingSlider = () => {
-  const { data: meetingList } = useQuery(['meeting'], meetingAPI.fetchMeeting, {
-    refetchOnWindowFocus: false,
-  });
+  const query = useCurrentQuery();
+
+  const { data: meetingList } = useQuery(
+    ['meeting', query],
+    meetingAPI.fetchMeeting,
+    {
+      refetchOnWindowFocus: false,
+    },
+  );
 
   const settings = {
     dots: true,
