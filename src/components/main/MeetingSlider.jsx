@@ -8,7 +8,7 @@ import useCurrentQuery from 'hooks/useCurrentQuery';
 import MeetingItem from 'components/main/MeetingItem';
 
 const MeetingSlider = () => {
-  const query = useCurrentQuery();
+  const [query] = useCurrentQuery();
 
   const { data: meetingList } = useQuery(
     ['meeting', query],
