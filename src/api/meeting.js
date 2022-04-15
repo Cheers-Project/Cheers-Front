@@ -12,6 +12,14 @@ export const createMeeting = (payload) => {
     .then((res) => res.data);
 };
 
-export const fetchMeeting = ({ queryKey }) => {
-  return client.get(`/meeting?${queryKey[1]}`).then((res) => res.data);
+export const fetchMeeting = async ({ queryKey, pageParam = 1 }) => {
+  const { data } = await client.get(
+    `/meeting?${queryKey[1]}&page=${pageParam}`,
+  );
+
+  return {
+    meeting: data.meeting,
+    nextPage: pageParam + 1,
+    isLastPage: data.isLastPage,
+  };
 };
