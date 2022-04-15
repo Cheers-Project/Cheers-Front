@@ -5,8 +5,8 @@ import { Viewer } from '@toast-ui/react-editor';
 import { LikeFilled } from '@ant-design/icons';
 
 import * as boardAPI from 'api/board';
-import UserInfo from './UserInfo';
-import DateInfo from './DateInfo';
+import UserInfo from 'components/board/UserInfo';
+import DateInfo from 'components/board/DateInfo';
 import useCheckOwned from 'hooks/useCheckOwned';
 
 const BoardDetail = () => {
