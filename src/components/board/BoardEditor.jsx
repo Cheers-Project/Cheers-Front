@@ -10,6 +10,7 @@ import StyledInput from 'components/common/StyledInput';
 const BoardEditor = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState(null);
+  const [imgKeys, setImgKeys] = useState([]);
   const queryClient = useQueryClient();
 
   const editor = useRef(null);
@@ -38,10 +39,13 @@ const BoardEditor = () => {
         formData.append('image', blob);
 
         const res = await boardAPI.uploadImg(formData);
+        setImgKeys((imgKeys) => [...imgKeys, res.data.imgKey]);
 
         callback(res.data.imgUrl, 'image');
       });
   }, [editor]);
+
+  console.log(imgKeys);
 
   const onSubmit = () => {
     const contents = editor.current.getInstance().getHTML();
@@ -53,6 +57,7 @@ const BoardEditor = () => {
     const payload = {
       title,
       contents,
+      imgKeys,
     };
     wrtieBoard.mutate(payload);
     navigate('/board?sort=recent&page=1');

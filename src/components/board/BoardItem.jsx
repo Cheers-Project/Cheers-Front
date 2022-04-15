@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { EyeFilled, LikeFilled, CommentOutlined } from '@ant-design/icons';
 
-import UserInfo from './UserInfo';
-import DateInfo from './DateInfo';
+import UserInfo from 'components/board/UserInfo';
+import DateInfo from 'components/board/DateInfo';
 
 const BoardItem = ({ boardInfo }) => {
   return (
