@@ -8,6 +8,7 @@ import * as boardAPI from 'api/board';
 import UserInfo from 'components/board/UserInfo';
 import DateInfo from 'components/board/DateInfo';
 import useCheckOwned from 'hooks/useCheckOwned';
+import DeleteBtn from 'components/board/DeleteBtn';
 
 const BoardDetail = () => {
   const userId = useCheckOwned();
@@ -26,19 +27,23 @@ const BoardDetail = () => {
 
   const boardInfo = data?.board;
 
-  console.log(userId);
-
   return (
     <>
       {isSuccess && (
         <BoardDetailWrapper>
           <BoardInfo>
-            <h2 className="board-title">{boardInfo.title}</h2>
-            <SubInto>
-              <UserInfo boardInfo={boardInfo} />
-              <DateInfo boardInfo={boardInfo} />
-            </SubInto>
-            {userId && boardInfo.writer._id === userId ? 1 : 0}
+            <div>
+              <h2 className="board-title">{boardInfo.title}</h2>
+              <SubInto>
+                <UserInfo boardInfo={boardInfo} />
+                <DateInfo boardInfo={boardInfo} />
+              </SubInto>
+            </div>
+            {userId && boardInfo.writer._id === userId ? (
+              <div>
+                <DeleteBtn />
+              </div>
+            ) : null}
           </BoardInfo>
           <Viewer initialValue={boardInfo.contents} />
           <LikeWrapper>
@@ -71,7 +76,8 @@ const BoardDetailWrapper = styled.section`
 const BoardInfo = styled.div`
   padding: 2rem 1rem;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  flex-direction: row;
   gap: 1rem;
   background-color: ${({ theme }) => theme.color.white};
   .board-title {
