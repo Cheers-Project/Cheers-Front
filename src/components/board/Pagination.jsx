@@ -25,13 +25,13 @@ const Pagination = ({ maxPage, pageNums, searchParams, setSearchParams }) => {
     if (page > maxPage) {
       setSearchParams({ sort: searchParams.get('sort'), page: 1 });
     }
-  }, []);
+  }, [maxPage, page, searchParams, setSearchParams]);
 
   useEffect(() => {
     if (!page) {
       setSearchParams({ sort: searchParams.get('sort'), page: 1 });
     }
-  }, []);
+  }, [page, searchParams, setSearchParams]);
 
   return (
     <PaginationWrapper>
@@ -42,14 +42,13 @@ const Pagination = ({ maxPage, pageNums, searchParams, setSearchParams }) => {
         <CaretLeftOutlined />
       </button>
       <PageNumberList onClick={changePage}>
-        {pageNums.map((pageNum) => {
-          if (maxPage >= pageNum) {
-            return (
-              <PageNumber key={pageNum} page={page} value={pageNum}>
-                {pageNum}
-              </PageNumber>
-            );
-          }
+        {pageNums.map((pageNum, i) => {
+          if (maxPage < pageNum) return null;
+          return (
+            <PageNumber key={i} page={page} value={pageNum}>
+              {pageNum}
+            </PageNumber>
+          );
         })}
       </PageNumberList>
       <button
@@ -74,7 +73,7 @@ const PaginationWrapper = styled.div`
     display: flex;
     align-items: center;
     height: 100%;
-    font-size: ${({ theme }) => theme.fontSize.mdTitle};
+    font-size: ${({ theme }) => theme.fontSize.md};
     cursor: pointer;
     transition: 0.2s;
 
@@ -97,7 +96,7 @@ const PageNumberList = styled.ul`
 `;
 
 const PageNumber = styled.button`
-  font-size: ${({ theme }) => theme.fontSize.smTitle};
+  font-size: ${({ theme }) => theme.fontSize.md};
   cursor: pointer;
   transition: 0.2s;
   color: ${({ theme, page, value }) => {

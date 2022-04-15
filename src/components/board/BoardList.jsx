@@ -17,7 +17,7 @@ const BoardList = () => {
     page: searchParams.get('page'),
   };
 
-  const { data, isLoading, isError } = useQuery(
+  const { data } = useQuery(
     ['boards', query],
     () => boardAPI.getBoards(query),
     {
@@ -25,9 +25,12 @@ const BoardList = () => {
       cacheTime: 0,
     },
   );
-  console.log(data);
 
-  const increaseView = useMutation(['board'], boardAPI.increaseView);
+  const increaseView = useMutation(boardAPI.increaseView, {
+    onSuccess: (data, id) => {
+      queryClient.setQueryData(['board', id], data);
+    },
+  });
 
   const handleRouter = (e) => {
     if (e.target.id) {
@@ -39,8 +42,6 @@ const BoardList = () => {
 
   return (
     <BoardListOuter>
-      {isLoading && '로딩'}
-      {isError && '에러'}
       <BoardListWrapper onClick={handleRouter}>
         {data?.boards.map((board) => (
           <BoardItem key={board._id} boardInfo={board} className="board-item" />
