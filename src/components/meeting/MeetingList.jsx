@@ -1,32 +1,47 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 
 import MeetingItem from 'components/main/MeetingItem';
 import * as meetingAPI from 'api/meeting';
 import useCurrentQuery from 'hooks/useCurrentQuery';
+import useInterSectionObserver from 'hooks/useInterSectionObserver';
 
 const MeetingList = () => {
   const [query] = useCurrentQuery();
+  const target = useRef();
 
-  const { data: meetingList } = useQuery(
+  const { data, fetchNextPage, hasNextPage, isError } = useInfiniteQuery(
     ['meeting', query],
     meetingAPI.fetchMeeting,
     {
+      getNextPageParam: (lastPage) => {
+        return lastPage.isLastPage ? false : lastPage.nextPage;
+      },
       refetchOnWindowFocus: false,
+      retry: 1,
     },
   );
 
+  useInterSectionObserver({
+    target,
+    handleIntersect: fetchNextPage,
+    enabled: !!hasNextPage,
+  });
+
   return (
     <MeetingSection>
-      {meetingList?.meeting.map((meeting) => {
-        return (
-          <MeetingItemOuter key={meeting._id}>
-            <MeetingItem meeting={meeting} key={meeting._id} />
-          </MeetingItemOuter>
-        );
-      })}
-      ;
+      {isError && <div>위치 서비스 권한이 없습니다.</div>}
+      {data?.pages.map((page) =>
+        page.meeting.map((meeting) => {
+          return (
+            <MeetingItemOuter key={meeting._id}>
+              <MeetingItem meeting={meeting} key={meeting._id} />
+            </MeetingItemOuter>
+          );
+        }),
+      )}
+      <div ref={target}></div>
     </MeetingSection>
   );
 };
