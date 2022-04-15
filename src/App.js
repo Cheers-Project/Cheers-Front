@@ -16,6 +16,7 @@ import MeetingDetailPage from 'pages/MeetingDetailPage';
 import MeetingPage from 'pages/MeetingPage';
 import MeetingWritePage from 'pages/MeetingWritePage';
 import BoardDetailPage from 'pages/BoardDetailPage';
+import NotFoundPage from 'pages/NotFoundPage';
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
           <Route path="meeting" element={<MyMeeting />} />
         </Route>
         <Route path="/" element={<MainPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
