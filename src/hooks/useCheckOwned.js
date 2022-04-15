@@ -9,7 +9,7 @@ const useCheckOwned = () => {
     refetchOnMount: false,
     staleTime: Infinity,
   });
-  console.log(data);
+
   const userId = data ? data.userInfo._id : '';
 
   return userId;
