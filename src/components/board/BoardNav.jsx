@@ -20,16 +20,16 @@ const BoardNav = () => {
           최신순
         </Link>
         <Link
-          to={`/board?sort=like&page=1`}
-          className={sort === 'like' ? 'like nav-item active' : 'like nav-item'}
-        >
-          인기순
-        </Link>
-        <Link
           to={`/board?sort=view&page=1`}
           className={sort === 'view' ? 'like nav-item active' : 'view nav-item'}
         >
           조회순
+        </Link>
+        <Link
+          to={`/board?sort=like&page=1`}
+          className={sort === 'like' ? 'like nav-item active' : 'like nav-item'}
+        >
+          인기순
         </Link>
       </NavList>
     </BoardNavWrapper>
@@ -38,7 +38,6 @@ const BoardNav = () => {
 
 const BoardNavWrapper = styled.div`
   display: flex;
-  justify-content: center;
   padding: 3rem 0;
 `;
 
