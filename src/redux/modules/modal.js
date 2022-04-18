@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   menuModal: false,
+  alarmModal: false,
   userModal: {
     loginModal: false,
     registModal: false,
@@ -21,13 +22,13 @@ const modalSlice = createSlice({
         isOpen: true,
       };
     },
-    toggleMenuModal(state, action) {
-      state.menuModal = action.payload;
+    toggleModal(state, { payload }) {
+      state[payload.target] = payload.visible;
     },
   },
 });
 
-export const { initializeModal, openUserModal, toggleMenuModal } =
+export const { initializeModal, openUserModal, toggleModal } =
   modalSlice.actions;
 
 export default modalSlice.reducer;
