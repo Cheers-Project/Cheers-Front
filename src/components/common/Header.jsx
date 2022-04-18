@@ -86,13 +86,13 @@ const Header = () => {
           </RightNav>
           {menuModal && <MenuList userInfo={data?.userInfo} />}
         </HeaderInner>
-        {menuModal && <MunuListOuter onClick={handleMenuModal} />}
+        {menuModal && <MenuListOuter onClick={handleMenuModal} />}
       </HeaderOuter>
     </>
   );
 };
 
-const MunuListOuter = styled.div`
+const MenuListOuter = styled.div`
   position: absolute;
   top: 0;
   left: 0;
