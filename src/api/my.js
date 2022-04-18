@@ -48,3 +48,19 @@ export const fetchMyMeeting = () => {
     })
     .then((res) => res.data);
 };
+
+export const fetchMyBoard = async ({ pageParam = 1 }) => {
+  const accessToken = localStorage.getItem('accessToken');
+
+  const { data } = await client.get(`/my/board?page=${pageParam}`, {
+    headers: {
+      Authorization: accessToken,
+    },
+  });
+
+  return {
+    boardList: data.boardList,
+    nextPage: pageParam + 1,
+    isLastPage: data.isLastPage,
+  };
+};
