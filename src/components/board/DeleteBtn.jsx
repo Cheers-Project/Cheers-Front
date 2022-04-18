@@ -23,9 +23,7 @@ const DeleteBtn = () => {
     navigate('/board?sort=recent&page=1');
   };
 
-  return <DeleteBtnWrapper onClick={handleDeleteBtn}>삭제</DeleteBtnWrapper>;
+  return <button onClick={handleDeleteBtn}>삭제</button>;
 };
-
-const DeleteBtnWrapper = styled.button``;
 
 export default DeleteBtn;
