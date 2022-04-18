@@ -5,10 +5,10 @@ import { useQuery } from 'react-query';
 
 import * as meetingAPI from 'api/meeting';
 import useCurrentQuery from 'hooks/useCurrentQuery';
-import MeetingItem from 'components/main/MeetingItem';
+import MeetingItem from 'components/meeting/MeetingItem';
 
 const MeetingSlider = () => {
-  const [query] = useCurrentQuery();
+  const { query } = useCurrentQuery();
 
   const { data: meetingList } = useQuery(
     ['meeting', query],
