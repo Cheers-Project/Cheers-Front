@@ -5,16 +5,17 @@ import { useParams } from 'react-router-dom';
 import { Viewer } from '@toast-ui/react-editor';
 
 import * as boardAPI from 'api/board';
+import useOwnedQuery from 'hooks/useOwnedQuery';
+
 import UserInfo from 'components/board/UserInfo';
 import DateInfo from 'components/board/DateInfo';
-import useCheckOwned from 'hooks/useCheckOwned';
 import DeleteBtn from 'components/board/DeleteBtn';
 import LikeBtn from './LikeBtn';
 
 const BoardDetail = () => {
   const { id } = useParams();
 
-  const userId = useCheckOwned();
+  const userId = useOwnedQuery();
 
   const { data, isSuccess } = useQuery(
     ['board', id],
