@@ -33,13 +33,7 @@ const MeetingList = () => {
       <MeetingListWrapper>
         {data?.pages.map((page) =>
           page.meeting.map((meeting) => {
-            return (
-              <MeetingItem
-                meeting={meeting}
-                id={meeting.id}
-                key={meeting._id}
-              />
-            );
+            return <MeetingItem meeting={meeting} key={meeting._id} />;
           }),
         )}
         <div ref={target}></div>
