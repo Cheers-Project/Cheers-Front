@@ -1,37 +1,29 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { CaretLeftOutlined, CaretRightOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import useCurrentQuery from 'hooks/useCurrentQuery';
 
-const Pagination = ({ maxPage, pageNums, searchParams, setSearchParams }) => {
-  const page = searchParams.get('page');
+const Pagination = ({ maxPage, pageNums }) => {
+  const navigate = useNavigate();
+  const [query, searchParams] = useCurrentQuery();
+
+  const { sort, page } = searchParams;
 
   const changePage = (e) => {
     if (!e.target.value) return;
-    setSearchParams({ sort: searchParams.get('sort'), page: e.target.value });
+    navigate(`/board?sort=${sort}&page=${e.target.value}`);
   };
 
   const clickPrevBtn = () => {
     if (page === '1') return;
-    setSearchParams({ sort: searchParams.get('sort'), page: +page - 1 });
+    navigate(`/board?sort=${sort}&page=${+page - 1}`);
   };
 
   const clickNextBtn = () => {
     if (page > maxPage) return;
-    setSearchParams({ sort: searchParams.get('sort'), page: +page + 1 });
+    navigate(`/board?sort=${sort}&page=${+page - 1}`);
   };
-
-  // maxPage 예외처리 확인
-  useEffect(() => {
-    if (page > maxPage) {
-      setSearchParams({ sort: searchParams.get('sort'), page: 1 });
-    }
-  }, [maxPage, page, searchParams, setSearchParams]);
-
-  useEffect(() => {
-    if (!page) {
-      setSearchParams({ sort: searchParams.get('sort'), page: 1 });
-    }
-  }, [page, searchParams, setSearchParams]);
 
   return (
     <PaginationWrapper>
