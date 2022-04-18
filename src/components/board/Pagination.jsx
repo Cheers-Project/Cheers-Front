@@ -6,7 +6,7 @@ import useCurrentQuery from 'hooks/useCurrentQuery';
 
 const Pagination = ({ maxPage, pageNums }) => {
   const navigate = useNavigate();
-  const [query, searchParams] = useCurrentQuery();
+  const { searchParams } = useCurrentQuery();
 
   const { sort, page } = searchParams;
 

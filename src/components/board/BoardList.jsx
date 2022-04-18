@@ -11,14 +11,13 @@ import useCurrentQuery from 'hooks/useCurrentQuery';
 const BoardList = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const [query] = useCurrentQuery();
+  const { query } = useCurrentQuery();
 
   const { data } = useQuery(
     ['boards', query],
     () => boardAPI.getBoards(query),
     {
       onError: () => {
-        console.log(1);
         navigate(-1);
       },
       refetchOnWindowFocus: false,
