@@ -1,36 +1,20 @@
 import React, { useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import useCurrentQuery from 'hooks/useCurrentQuery';
 import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
 
 const BoardNav = () => {
-  const location = window.location;
-  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [query, searchParams] = useCurrentQuery();
+  console.log(query, searchParams);
 
-  const sort = searchParams.get('sort');
-  const page = searchParams.get('page');
-
-  const onClick = (e) => {
-    if (!e.target.classList.contains('nav-item')) return;
-    setSearchParams({ sort: e.target.classList[0], page: page });
-  };
-
-  useEffect(() => {
-    if (sort !== 'recent' && sort !== 'like' && sort !== 'view') {
-      setSearchParams({ sort: 'recent', page: page });
-    }
-  }, [sort, page, setSearchParams]);
-
-  useEffect(() => {
-    if (!sort) {
-      setSearchParams({ sort: 'recent', page: page });
-    }
-  }, [sort, page, setSearchParams]);
+  const { sort } = searchParams;
 
   return (
     <BoardNavWrapper>
-      <NavList onClick={onClick}>
+      <NavList>
         <Link
-          to={`/board?${location.search}`}
+          to={`/board?sort=recent&page=1`}
           className={
             sort === 'recent' ? 'recent nav-item active' : 'recent nav-item'
           }
@@ -38,13 +22,13 @@ const BoardNav = () => {
           최신순
         </Link>
         <Link
-          to={`/board?${location.search}`}
+          to={`/board?sort=like&page=1`}
           className={sort === 'like' ? 'like nav-item active' : 'like nav-item'}
         >
           인기순
         </Link>
         <Link
-          to={`/board?${location.search}`}
+          to={`/board?sort=view&page=1`}
           className={sort === 'view' ? 'like nav-item active' : 'view nav-item'}
         >
           조회순

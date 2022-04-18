@@ -1,28 +1,29 @@
 import React from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import styled from 'styled-components';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import * as boardAPI from 'api/board';
 import BoardItem from 'components/board/BoardItem';
 import Pagination from 'components/board/Pagination';
+import useCurrentQuery from 'hooks/useCurrentQuery';
 
 const BoardList = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const query = {
-    sort: searchParams.get('sort'),
-    page: searchParams.get('page'),
-  };
+  const [query] = useCurrentQuery();
 
   const { data } = useQuery(
     ['boards', query],
     () => boardAPI.getBoards(query),
     {
+      onError: () => {
+        console.log(1);
+        navigate(-1);
+      },
       refetchOnWindowFocus: false,
       cacheTime: 0,
+      retry: 0,
     },
   );
 
@@ -48,12 +49,7 @@ const BoardList = () => {
         ))}
       </BoardListWrapper>
       {data?.maxPage && (
-        <Pagination
-          maxPage={data.maxPage}
-          pageNums={data.pageNums}
-          searchParams={searchParams}
-          setSearchParams={setSearchParams}
-        />
+        <Pagination maxPage={data.maxPage} pageNums={data.pageNums} />
       )}
     </BoardListOuter>
   );

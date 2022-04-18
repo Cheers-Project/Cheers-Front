@@ -1,7 +1,8 @@
 import client from 'api/index';
 
-export const getBoards = (payload) => {
-  return client.get('/board', { params: payload }).then((res) => res.data);
+export const getBoards = (queryKey) => {
+  console.log(queryKey);
+  return client.get(`/board?${queryKey}`).then((res) => res.data);
 };
 
 export const getBoradById = (id) => {
