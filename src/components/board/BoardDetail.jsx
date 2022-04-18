@@ -1,20 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
 import { Viewer } from '@toast-ui/react-editor';
-import { LikeFilled } from '@ant-design/icons';
 
 import * as boardAPI from 'api/board';
 import UserInfo from 'components/board/UserInfo';
 import DateInfo from 'components/board/DateInfo';
 import useCheckOwned from 'hooks/useCheckOwned';
 import DeleteBtn from 'components/board/DeleteBtn';
+import LikeBtn from './LikeBtn';
 
 const BoardDetail = () => {
-  const userId = useCheckOwned();
+  const { id } = useParams();
 
-  const location = window.location;
-  const id = location.pathname.split('/')[2];
+  const userId = useCheckOwned();
 
   const { data, isSuccess } = useQuery(
     ['board', id],
@@ -46,10 +46,7 @@ const BoardDetail = () => {
             ) : null}
           </BoardInfo>
           <Viewer initialValue={boardInfo.contents} />
-          <LikeWrapper>
-            <LikeFilled />
-            <p className="like-cnt">{boardInfo.like}</p>
-          </LikeWrapper>
+          <LikeBtn boardInfo={boardInfo} userId={userId} />
         </BoardDetailWrapper>
       )}
     </>
@@ -90,19 +87,5 @@ const SubInto = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
-`;
-
-const LikeWrapper = styled.div`
-  padding: 3rem 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  background-color: ${({ theme }) => theme.color.white};
-  font-size: 4rem;
-  .like-cnt {
-    font-size: ${({ theme }) => theme.fontSize.md};
-  }
 `;
 export default BoardDetail;
