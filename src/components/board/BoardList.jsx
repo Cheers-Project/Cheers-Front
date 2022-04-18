@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,7 +10,6 @@ import useCurrentQuery from 'hooks/useCurrentQuery';
 
 const BoardList = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const { query } = useCurrentQuery();
 
   const { data } = useQuery(
@@ -26,23 +25,9 @@ const BoardList = () => {
     },
   );
 
-  const increaseView = useMutation(boardAPI.increaseView, {
-    onSuccess: (data, id) => {
-      queryClient.setQueryData(['board', id], data);
-    },
-  });
-
-  const handleRouter = (e) => {
-    if (e.target.id) {
-      const id = e.target.id;
-      increaseView.mutate(id);
-      navigate(`/board/${id}`);
-    }
-  };
-
   return (
     <BoardListOuter>
-      <BoardListWrapper onClick={handleRouter}>
+      <BoardListWrapper>
         {data?.boards.map((board) => (
           <BoardItem key={board._id} boardInfo={board} className="board-item" />
         ))}

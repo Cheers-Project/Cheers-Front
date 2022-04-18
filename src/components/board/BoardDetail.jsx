@@ -1,20 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
+import { EyeFilled } from '@ant-design/icons';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { Viewer } from '@toast-ui/react-editor';
 
 import * as boardAPI from 'api/board';
+import useOwnedQuery from 'hooks/useOwnedQuery';
 import UserInfo from 'components/board/UserInfo';
 import DateInfo from 'components/board/DateInfo';
-import useCheckOwned from 'hooks/useCheckOwned';
 import DeleteBtn from 'components/board/DeleteBtn';
 import LikeBtn from './LikeBtn';
 
 const BoardDetail = () => {
   const { id } = useParams();
 
-  const userId = useCheckOwned();
+  const userId = useOwnedQuery();
 
   const { data, isSuccess } = useQuery(
     ['board', id],
@@ -32,18 +33,22 @@ const BoardDetail = () => {
       {isSuccess && (
         <BoardDetailWrapper>
           <BoardInfo>
-            <div>
-              <h2 className="board-title">{boardInfo.title}</h2>
+            <TopBoardInfoWrapper>
+              <Title className="board-title">{boardInfo.title}</Title>
+              {userId && boardInfo.writer._id === userId ? (
+                <UpdateWrapper>
+                  <button>수정</button>
+                  <DeleteBtn />
+                </UpdateWrapper>
+              ) : null}
+            </TopBoardInfoWrapper>
+            <BottomBoardInfoWrapper>
+              <UserInfo boardInfo={boardInfo} />
               <SubInto>
-                <UserInfo boardInfo={boardInfo} />
+                <ViewWrapper>조회수 {boardInfo.view}</ViewWrapper>
                 <DateInfo boardInfo={boardInfo} />
               </SubInto>
-            </div>
-            {userId && boardInfo.writer._id === userId ? (
-              <div>
-                <DeleteBtn />
-              </div>
-            ) : null}
+            </BottomBoardInfoWrapper>
           </BoardInfo>
           <Viewer initialValue={boardInfo.contents} />
           <LikeBtn boardInfo={boardInfo} userId={userId} />
@@ -74,18 +79,56 @@ const BoardInfo = styled.div`
   padding: 2rem 1rem;
   display: flex;
   justify-content: space-between;
-  flex-direction: row;
-  gap: 1rem;
+  flex-direction: column;
   background-color: ${({ theme }) => theme.color.white};
-  .board-title {
-    font-size: ${({ theme }) => theme.fontSize.lgTitle};
-    font-weight: 600;
-  }
+`;
+
+const TopBoardInfoWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  padding: 1rem 0;
+`;
+
+const Title = styled.h2`
+  font-size: ${({ theme }) => theme.fontSize.lgTitle};
+  font-weight: 600;
+`;
+
+const BottomBoardInfoWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+`;
+
+const ViewWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 `;
 
 const SubInto = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
+  color: ${({ theme }) => theme.color.darkGray};
+  font-size: ${({ theme }) => theme.fontSize.xsm};
+  @media screen and (min-width: 768px) {
+    font-size: ${({ theme }) => theme.fontSize.md};
+  }
+`;
+
+const UpdateWrapper = styled.div`
+  display: flex;
+  gap: 1rem;
+  button {
+    font-size: ${({ theme }) => theme.fontSize.md};
+    transition: 0.2s;
+    &:hover {
+      color: ${({ theme }) => theme.color.lightCherry};
+    }
+  }
 `;
 export default BoardDetail;

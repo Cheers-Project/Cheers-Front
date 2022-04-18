@@ -22,7 +22,7 @@ const Pagination = ({ maxPage, pageNums }) => {
 
   const clickNextBtn = () => {
     if (page > maxPage) return;
-    navigate(`/board?sort=${sort}&page=${+page - 1}`);
+    navigate(`/board?sort=${sort}&page=${+page + 1}`);
   };
 
   return (

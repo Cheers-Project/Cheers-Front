@@ -24,6 +24,8 @@ const UserInfoWrapper = styled.div`
     border-radius: 50%;
   }
   .user-profile-nickname {
+    font-size: ${({ theme }) => theme.fontSize.xsm};
+    font-weight: 600;
     @media screen and (min-width: 768px) {
       font-size: ${({ theme }) => theme.fontSize.md};
     }

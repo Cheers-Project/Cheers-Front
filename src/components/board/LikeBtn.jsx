@@ -4,12 +4,12 @@ import { LikeFilled } from '@ant-design/icons';
 
 import * as boardAPI from 'api/board';
 import { useMutation, useQueryClient } from 'react-query';
-import useCheckLike from 'hooks/useCheckLike';
+import useLikeQuery from 'hooks/useLikeQuery';
 
 const LikeBtn = ({ boardInfo }) => {
   const queryClient = useQueryClient();
 
-  const isLiked = useCheckLike(boardInfo.likeUsers);
+  const isLiked = useLikeQuery(boardInfo.likeUsers);
 
   const updateLike = useMutation(['like', boardInfo._id], boardAPI.updateLike, {
     onSuccess: (data, id) => {
