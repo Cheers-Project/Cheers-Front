@@ -17,10 +17,15 @@ const buttonStyle = css`
   &:hover {
     background-color: ${({ theme }) => theme.color.darkGray};
   }
-  @media screen and (min-width: 768px) {
-    padding: 0.8rem 1.5rem;
-    font-size: ${({ theme }) => theme.fontSize.md};
-  }
+
+  ${(props) =>
+    props.responsive &&
+    css`
+      @media screen and (min-width: 768px) {
+        padding: 0.8rem 1.5rem;
+        font-size: ${({ theme }) => theme.fontSize.md};
+      }
+    `}
 
   ${(props) =>
     props.cherry &&

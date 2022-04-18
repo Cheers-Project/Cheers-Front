@@ -13,11 +13,15 @@ const MainContent = () => {
       <Outer>
         <Inner bg={MeetBanner}>
           <h3 className="sub-title">다양한 모임에 참여하세요.</h3>
-          <StyledButton cherry>모임</StyledButton>
+          <StyledButton cherry responsive>
+            모임
+          </StyledButton>
         </Inner>
         <Inner bg={BoardBanner}>
           <h3 className="sub-title">술에 대해 이야기하세요.</h3>
-          <StyledButton cherry>게시판</StyledButton>
+          <StyledButton cherry responsive>
+            게시판
+          </StyledButton>
         </Inner>
       </Outer>
     </MainTemplate>
