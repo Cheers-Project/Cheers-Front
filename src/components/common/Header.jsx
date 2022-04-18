@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 
 import MenuList from './MenuList';
-import { toggleMenuModal } from 'redux/modules/modal';
+import { toggleModal } from 'redux/modules/modal';
 import * as userAPI from 'api/user';
 
 const Header = () => {
@@ -31,7 +31,7 @@ const Header = () => {
   };
 
   const handleMenuModal = () => {
-    dispatch(toggleMenuModal(!menuModal));
+    dispatch(toggleModal({ target: 'menuModal', visible: !menuModal }));
   };
 
   const onScroll = throttle(() => {

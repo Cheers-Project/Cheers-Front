@@ -31,10 +31,12 @@ const MeetingWriteButton = () => {
 
   return (
     <ButtonWrapper>
-      <StyledButton onClick={handleSubmit} cherry>
+      <StyledButton onClick={handleSubmit} cherry responsive>
         작성
       </StyledButton>
-      <StyledButton onClick={handleCancel}>취소</StyledButton>
+      <StyledButton onClick={handleCancel} responsive>
+        취소
+      </StyledButton>
     </ButtonWrapper>
   );
 };

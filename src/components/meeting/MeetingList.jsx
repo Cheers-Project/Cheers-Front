@@ -11,7 +11,7 @@ const MeetingList = () => {
   const [query] = useCurrentQuery();
   const target = useRef();
 
-  const { data, fetchNextPage, hasNextPage, isError } = useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ['meeting', query],
     meetingAPI.fetchMeeting,
     {
@@ -31,7 +31,6 @@ const MeetingList = () => {
 
   return (
     <MeetingSection>
-      {isError && <div>위치 서비스 권한이 없습니다.</div>}
       {data?.pages.map((page) =>
         page.meeting.map((meeting) => {
           return (
