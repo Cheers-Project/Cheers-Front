@@ -15,7 +15,7 @@ const MeetingNav = () => {
 
   const { alarmModal } = useSelector(({ modal }) => modal);
   const { location, error } = useCurrentLocation();
-  const [query, searchParams] = useCurrentQuery();
+  const { searchParams } = useCurrentQuery();
   const { sort } = searchParams;
 
   const handleNavigate = () => {

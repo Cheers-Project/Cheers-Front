@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useQuery } from 'react-query';
 
 import * as myAPI from 'api/my';
-import MeetingItem from 'components/main/MeetingItem';
+import MeetingItem from 'components/meeting/MeetingItem';
 
 const MyMeeting = () => {
   const { data: meetingList } = useQuery(['my/meeting'], myAPI.fetchMyMeeting, {

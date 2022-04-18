@@ -9,7 +9,7 @@ const useCurrentQuery = () => {
   });
   const query = qs.stringify(searchParams);
 
-  return [query, searchParams];
+  return { query, searchParams };
 };
 
 export default useCurrentQuery;
