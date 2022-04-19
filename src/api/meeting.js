@@ -39,3 +39,15 @@ export const fetchMeeting = async ({ queryKey, pageParam = 1 }) => {
 export const fetchMeetingDetail = ({ queryKey }) => {
   return client.get(`/meeting/${queryKey[1]}`).then((res) => res.data);
 };
+
+export const removeMeeting = (id) => {
+  const accessToken = localStorage.getItem('accessToken');
+
+  return client
+    .delete(`/meeting/${id}`, {
+      headers: {
+        Authorization: accessToken,
+      },
+    })
+    .then((res) => res.data);
+};
