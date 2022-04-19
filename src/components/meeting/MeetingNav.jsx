@@ -81,7 +81,6 @@ const MeetingNav = () => {
 
 const MeetingNavWrapper = styled.div`
   display: flex;
-  justify-content: center;
   padding: 3rem 0;
   .nav-list {
     display: flex;

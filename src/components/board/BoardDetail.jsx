@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { EyeFilled } from '@ant-design/icons';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { Viewer } from '@toast-ui/react-editor';
@@ -22,7 +21,6 @@ const BoardDetail = () => {
     () => boardAPI.getBoradById(id),
     {
       refetchOnWindowFocus: false,
-      staleTime: Infinity,
     },
   );
 

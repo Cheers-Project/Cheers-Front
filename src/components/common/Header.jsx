@@ -198,6 +198,7 @@ const Button = styled.button`
   font-weight: 500;
   letter-spacing: 0.1rem;
   &::after {
+    display: block;
     transition: 0.2s;
     margin-top: 0.5rem;
     width: 0;
