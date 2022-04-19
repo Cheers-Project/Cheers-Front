@@ -3,18 +3,14 @@ import styled from 'styled-components';
 import { EyeFilled, LikeFilled, CommentOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
-import * as boardAPI from 'api/board';
-import useViewQuery from 'hooks/useViewQuery';
 import UserInfo from 'components/board/UserInfo';
 import DateInfo from 'components/board/DateInfo';
 
 const BoardItem = ({ boardInfo }) => {
   const navigate = useNavigate();
-  const mutation = useViewQuery(boardAPI.increaseView, 'board');
 
   const handleRouter = () => {
     const { _id: id } = boardInfo;
-    mutation.mutate(id);
     navigate(`/board/${id}`);
   };
   return (

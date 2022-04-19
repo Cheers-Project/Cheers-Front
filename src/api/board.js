@@ -8,10 +8,6 @@ export const getBoradById = (id) => {
   return client.get(`/board/${id}`).then((res) => res.data);
 };
 
-export const increaseView = (id, payload) => {
-  return client.patch(`/board/${id}`).then((res) => res.data);
-};
-
 export const updateLike = (id) => {
   const accessToken = localStorage.getItem('accessToken');
 
