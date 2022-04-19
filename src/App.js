@@ -24,8 +24,9 @@ const App = () => {
       <Routes>
         <Route path="/board">
           <Route index element={<BoardListPage />} />
-          <Route path="write" element={<BoardWritePage />} />
           <Route path=":id" element={<BoardDetailPage />} />
+          <Route path="write" element={<BoardWritePage />} />
+          <Route path="write/:id" element={<BoardWritePage />} />
         </Route>
         <Route path="/meeting">
           <Route index element={<MeetingPage />} />

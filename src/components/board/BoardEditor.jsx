@@ -1,33 +1,44 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Editor } from '@toast-ui/react-editor';
 import { useMutation, useQueryClient } from 'react-query';
 
 import * as boardAPI from 'api/board';
 import StyledInput from 'components/common/StyledInput';
+import useBoardQuery from 'hooks/useBoardQuery';
 
 const BoardEditor = () => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState(null);
-  const [imgKeys, setImgKeys] = useState([]);
-  const queryClient = useQueryClient();
-
   const editor = useRef(null);
+  const queryClient = useQueryClient();
+  const { boardInfo } = useBoardQuery('update');
 
-  const changeTitle = (e) => {
-    setTitle(e.target.value);
-  };
+  const [title, setTitle] = useState('');
+  const [imgKeys, setImgKeys] = useState([]);
 
-  const wrtieBoard = useMutation(boardAPI.write, {
+  const writeBoard = useMutation(boardAPI.writeBoard, {
     mutationKey: ['boards'],
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['boards']);
+      navigate('/board?sort=recent&page=1');
     },
     onError: (error) => {
       console.log(error);
     },
   });
+
+  const updateBoard = useMutation(boardAPI.updateBoard, {
+    onSuccess: (data, variables) => {
+      const { id } = variables;
+      queryClient.setQueryData(['board', id], data);
+      navigate(`/board/${id}`);
+    },
+  });
+
+  const changeTitle = (e) => {
+    setTitle(e.target.value);
+  };
 
   useEffect(() => {
     if (!editor) return;
@@ -45,7 +56,11 @@ const BoardEditor = () => {
       });
   }, [editor]);
 
-  console.log(imgKeys);
+  useEffect(() => {
+    setTitle(boardInfo?.title);
+    setImgKeys(boardInfo?.imgKeys);
+    editor.current.getInstance().setHTML(boardInfo?.contents);
+  }, [boardInfo]);
 
   const onSubmit = () => {
     const contents = editor.current.getInstance().getHTML();
@@ -59,8 +74,11 @@ const BoardEditor = () => {
       contents,
       imgKeys,
     };
-    wrtieBoard.mutate(payload);
-    navigate('/board?sort=recent&page=1');
+    if (boardInfo) {
+      updateBoard.mutate({ payload, id: boardInfo._id });
+      return;
+    }
+    writeBoard.mutate(payload);
   };
 
   const handleCancelBtn = () => {
@@ -74,6 +92,7 @@ const BoardEditor = () => {
         type="text"
         placeholder="제목을 입력하세요."
         onChange={changeTitle}
+        defaultValue={boardInfo && boardInfo.title}
       />
       <div className="editor-wrapper">
         <Editor
@@ -94,7 +113,7 @@ const BoardEditor = () => {
       </div>
       <ButtonWrapper>
         <button onClick={onSubmit} className="upload-btn">
-          업로드
+          {!boardInfo ? '업로드' : '수정'}
         </button>
         <button onClick={handleCancelBtn} className="cancle-btn">
           취소
