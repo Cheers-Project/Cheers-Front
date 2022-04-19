@@ -33,7 +33,11 @@ const MeetingList = () => {
       <MeetingListWrapper>
         {data?.pages.map((page) =>
           page.meeting.map((meeting) => {
-            return <MeetingItem meeting={meeting} key={meeting._id} />;
+            return (
+              <MeetingItemOuter>
+                <MeetingItem meeting={meeting} key={meeting._id} />
+              </MeetingItemOuter>
+            );
           }),
         )}
         <div ref={target}></div>
@@ -47,6 +51,25 @@ const MeetingListWrapper = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
+`;
+
+const MeetingItemOuter = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  margin: 0 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+
+  @media screen and (min-width: 768px) {
+    width: calc(50% - 3rem);
+  }
+  @media screen and (min-width: 1024px) {
+    width: calc(33.333% - 4rem);
+  }
 `;
 
 export default MeetingList;

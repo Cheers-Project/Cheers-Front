@@ -82,6 +82,7 @@ const StyledSlider = styled(Slider)`
     border-radius: 1rem;
     margin: 0 1rem;
     padding: 0.5rem 1rem;
+    cursor: pointer;
     > * {
       display: flex;
       flex-direction: column;

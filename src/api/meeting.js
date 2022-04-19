@@ -27,7 +27,3 @@ export const fetchMeeting = async ({ queryKey, pageParam = 1 }) => {
 export const fetchMeetingDetail = ({ queryKey }) => {
   return client.get(`/meeting/${queryKey[1]}`).then((res) => res.data);
 };
-
-export const increaseView = (id) => {
-  return client.patch(`/meeting/${id}`).then((res) => res.data);
-};
