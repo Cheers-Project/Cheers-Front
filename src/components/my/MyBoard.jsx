@@ -19,6 +19,7 @@ const MyBoard = () => {
         return lastPage.isLastPage ? false : lastPage.nextPage;
       },
       refetchOnWindowFocus: false,
+      staleTime: Infinity,
     },
   );
 

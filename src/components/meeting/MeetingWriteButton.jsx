@@ -25,7 +25,7 @@ const MeetingWriteButton = () => {
     onSuccess: (data, variables) => {
       const { id } = variables;
 
-      queryClient.invalidateQueries(['meeting']);
+      queryClient.setQueryData(['meeting', id], data);
       navigate(`/meeting/${id}`);
     },
   });
