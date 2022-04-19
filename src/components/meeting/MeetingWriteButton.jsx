@@ -16,7 +16,7 @@ const MeetingWriteButton = () => {
   const postMutation = useMutation(meetingAPI.createMeeting, {
     mutationKey: ['meeting'],
     onSuccess: () => {
-      navigate('/meeting');
+      navigate('/meeting?sort=recent');
     },
   });
 
