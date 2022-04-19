@@ -82,18 +82,22 @@ const MeetingNav = () => {
 const MeetingNavWrapper = styled.div`
   display: flex;
   padding: 3rem 0;
+  margin-left: 1rem;
   .nav-list {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
+    @media screen and (min-width: 768px) {
+      gap: 2rem;
+    }
   }
   .nav-item {
     display: flex;
     align-items: center;
   }
   .nav-link {
-    font-size: ${({ theme }) => theme.fontSize.md};
-    padding: 1rem;
+    font-size: ${({ theme }) => theme.fontSize.sm};
+    padding: 0.8rem;
     background-color: ${({ theme }) => theme.color.white};
     border-radius: 2rem;
     transition: 0.2s;
@@ -101,6 +105,10 @@ const MeetingNavWrapper = styled.div`
       border-radius: 2rem;
       color: ${({ theme }) => theme.color.white};
       background-color: ${({ theme }) => theme.color.lightCherry};
+    }
+    @media screen and (min-width: 768px) {
+      font-size: ${({ theme }) => theme.fontSize.md};
+      padding: 1rem;
     }
   }
   .active {

@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
 import { changeTime } from 'redux/modules/meeting';
+import useMeetingQuery from 'hooks/useMeetingQuery';
 
 const MeetingTime = () => {
   const dispatch = useDispatch();
+  const meetingInfo = useMeetingQuery();
 
   const handleTime = (e) => {
     dispatch(changeTime(e.target.value));
@@ -16,7 +18,12 @@ const MeetingTime = () => {
       <p className="label-text">모임 시간</p>
       <div className="input-container">
         <div className="info-text">모임 시간을 선택하세요</div>
-        <input onChange={handleTime} className="time-input" type="time" />
+        <input
+          onChange={handleTime}
+          defaultValue={meetingInfo?.meetingTime}
+          className="time-input"
+          type="time"
+        />
       </div>
     </TimeWrapper>
   );

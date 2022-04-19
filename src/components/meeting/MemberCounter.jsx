@@ -1,11 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux';
 
-import useCount from 'hooks/useCount';
+import { increaseNumber, decreaseNumber } from 'redux/modules/meeting';
+import useMeetingQuery from 'hooks/useMeetingQuery';
 
 const MemberCounter = () => {
-  const [count, increase, decrease] = useCount(2);
+  const meetingInfo = useMeetingQuery();
+  const dispatch = useDispatch();
+  const { totalNumber } = useSelector(({ meeting }) => meeting);
+
+  const increase = (e) => {
+    dispatch(increaseNumber());
+  };
+
+  const decrease = (e) => {
+    dispatch(decreaseNumber());
+  };
 
   return (
     <CounterWrapper>
@@ -14,16 +26,25 @@ const MemberCounter = () => {
         <div className="info-text">자신을 포함한 인원입니다</div>
         <Counter>
           <button
-            className={count > 2 ? 'decrease-btn' : 'decrease-btn disabled'}
-            disabled={count > 2 ? false : true}
+            className={
+              totalNumber > 2 ? 'decrease-btn' : 'decrease-btn disabled'
+            }
+            disabled={totalNumber > 2 ? false : true}
             onClick={decrease}
           >
             <MinusOutlined />
           </button>
-          <input className="counter-input" type="text" value={count} readOnly />
+          <input
+            className="counter-input"
+            type="text"
+            value={totalNumber}
+            readOnly
+          />
           <button
-            className={count < 10 ? 'increase-btn' : 'increase-btn disabled'}
-            disabled={count < 10 ? false : true}
+            className={
+              totalNumber < 10 ? 'increase-btn' : 'increase-btn disabled'
+            }
+            disabled={totalNumber < 10 ? false : true}
             onClick={increase}
           >
             <PlusOutlined />

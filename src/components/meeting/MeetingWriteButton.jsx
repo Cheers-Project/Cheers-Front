@@ -1,28 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import * as meetingAPI from 'api/meeting';
 import StyledButton from 'components/common/StyledButton';
 
 const MeetingWriteButton = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const meeting = useSelector(({ meeting }) => meeting);
+  const queryClient = useQueryClient();
 
-  const mutation = useMutation(meetingAPI.createMeeting, {
+  const postMutation = useMutation(meetingAPI.createMeeting, {
     mutationKey: ['meeting'],
     onSuccess: () => {
       navigate('/meeting');
     },
-    onError: (error) => {
-      console.log(error);
+  });
+
+  const editMutation = useMutation(meetingAPI.editMeeting, {
+    mutationKey: ['meeting', id],
+    onSuccess: (data, variables) => {
+      const { id } = variables;
+
+      queryClient.invalidateQueries(['meeting']);
+      navigate(`/meeting/${id}`);
     },
   });
 
   const handleSubmit = () => {
-    mutation.mutate(meeting);
+    if (id) {
+      editMutation.mutate({ id, meeting });
+      return;
+    }
+    postMutation.mutate(meeting);
   };
 
   const handleCancel = () => {
