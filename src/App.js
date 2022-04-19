@@ -31,6 +31,7 @@ const App = () => {
           <Route index element={<MeetingPage />} />
           <Route path=":id" element={<MeetingDetailPage />} />
           <Route path="write" element={<MeetingWritePage />} />
+          <Route path="write/:id" element={<MeetingWritePage />} />
         </Route>
         <Route path="/oauth/kakao" element={<KakaoPage />} />
         <Route path="/redirect" element={<RedirectPage />} />
