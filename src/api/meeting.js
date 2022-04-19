@@ -12,6 +12,18 @@ export const createMeeting = (payload) => {
     .then((res) => res.data);
 };
 
+export const editMeeting = ({ id, meeting }) => {
+  const accessToken = localStorage.getItem('accessToken');
+
+  return client
+    .patch(`/meeting/${id}`, meeting, {
+      headers: {
+        Authorization: accessToken,
+      },
+    })
+    .then((res) => res.data);
+};
+
 export const fetchMeeting = async ({ queryKey, pageParam = 1 }) => {
   const { data } = await client.get(
     `/meeting?${queryKey[1]}&page=${pageParam}`,
