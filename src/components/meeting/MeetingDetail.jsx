@@ -1,9 +1,11 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useMutation } from 'react-query';
 
 import StyledButton from 'components/common/StyledButton';
 import useMeetingQuery from 'hooks/useMeetingQuery';
 import useOwnedQuery from 'hooks/useOwnedQuery';
+import * as meetingAPI from 'api/meeting';
 
 const MeetingDetail = () => {
   const { id } = useParams();
@@ -11,8 +13,19 @@ const MeetingDetail = () => {
   const meetingInfo = useMeetingQuery();
   const userId = useOwnedQuery();
 
+  const mutation = useMutation(meetingAPI.removeMeeting, {
+    mutationKey: ['meeting', id],
+    onSuccess: () => {
+      navigate(`/meeting?sort=recent`);
+    },
+  });
+
   const handleNavigate = () => {
     navigate(`/meeting/write/${id}`);
+  };
+
+  const handleRemove = () => {
+    mutation.mutate(id);
   };
 
   return (
@@ -26,7 +39,7 @@ const MeetingDetail = () => {
             <StyledButton onClick={handleNavigate} cherry>
               수정
             </StyledButton>
-            <StyledButton>삭제</StyledButton>
+            <StyledButton onClick={handleRemove}>삭제</StyledButton>
           </>
         )}
       </div>
