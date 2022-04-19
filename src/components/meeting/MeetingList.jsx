@@ -34,7 +34,7 @@ const MeetingList = () => {
         {data?.pages.map((page) =>
           page.meeting.map((meeting) => {
             return (
-              <MeetingItemOuter>
+              <MeetingItemOuter key={meeting._id}>
                 <MeetingItem meeting={meeting} key={meeting._id} />
               </MeetingItemOuter>
             );

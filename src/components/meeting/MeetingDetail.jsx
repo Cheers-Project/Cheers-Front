@@ -1,21 +1,31 @@
 import React from 'react';
-import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import * as meetingAPI from 'api/meeting';
+import StyledButton from 'components/common/StyledButton';
+import useMeetingQuery from 'hooks/useMeetingQuery';
 
 const MeetingDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const meetingInfo = useMeetingQuery();
 
-  const { data: meetingInfo } = useQuery(
-    ['meeting', id],
-    meetingAPI.fetchMeetingDetail,
-    {
-      refetchOnWindowFocus: false,
-    },
+  const handleNavigate = () => {
+    navigate(`/meeting/write/${id}`);
+  };
+
+  return (
+    <div>
+      <p style={{ margin: '1rem 0', fontSize: '1.4rem' }}>
+        {meetingInfo?.view}
+      </p>
+      <div style={{ display: 'flex', gap: '1rem' }}>
+        <StyledButton onClick={handleNavigate} cherry>
+          수정
+        </StyledButton>
+        <StyledButton>삭제</StyledButton>
+      </div>
+    </div>
   );
-
-  return <div>{meetingInfo?.meeting.view}</div>;
 };
 
 export default MeetingDetail;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { DayPicker } from 'react-day-picker';
 import { differenceInCalendarDays, format } from 'date-fns';
@@ -6,12 +6,14 @@ import ko from 'date-fns/locale/ko';
 import { useDispatch } from 'react-redux';
 
 import { changeDate } from 'redux/modules/meeting';
+import useMeetingQuery from 'hooks/useMeetingQuery';
 
 const MeetingCalendar = () => {
   const dispatch = useDispatch();
+  const meetingInfo = useMeetingQuery();
   const [selected, setSelected] = useState();
 
-  const handleDate = (day, selectedDay) => {
+  const handleDate = (_, selectedDay) => {
     const convertedDate = format(selectedDay, 'yyyy-MM-dd');
 
     dispatch(changeDate(convertedDate));
@@ -23,26 +25,48 @@ const MeetingCalendar = () => {
     return differenceInCalendarDays(date, new Date()) < 0;
   };
 
+  useEffect(() => {
+    setSelected(meetingInfo ? new Date(meetingInfo.meetingDate) : '');
+  }, [meetingInfo]);
+
   return (
     <CalendarWrapper>
       <div className="label-wrapper">
         <p className="label-text">모임 날짜</p>
       </div>
-
-      <DayPicker
-        selected={selected}
-        onSelect={handleDate}
-        mode="single"
-        locale={ko}
-        fromYear={2022}
-        toYear={2026}
-        disabled={isPastDate}
-        captionLayout="dropdown"
-        modifiersClassNames={{
-          selected: 'selected',
-          today: 'today',
-        }}
-      />
+      {meetingInfo && (
+        <DayPicker
+          selected={selected}
+          onSelect={handleDate}
+          mode="single"
+          locale={ko}
+          fromYear={2022}
+          toYear={2026}
+          defaultMonth={new Date(meetingInfo.meetingDate)}
+          disabled={isPastDate}
+          captionLayout="dropdown"
+          modifiersClassNames={{
+            selected: 'selected',
+            today: 'today',
+          }}
+        />
+      )}
+      {!meetingInfo && (
+        <DayPicker
+          selected={selected}
+          onSelect={handleDate}
+          mode="single"
+          locale={ko}
+          fromYear={2022}
+          toYear={2026}
+          disabled={isPastDate}
+          captionLayout="dropdown"
+          modifiersClassNames={{
+            selected: 'selected',
+            today: 'today',
+          }}
+        />
+      )}
     </CalendarWrapper>
   );
 };

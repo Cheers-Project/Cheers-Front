@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { SearchOutlined } from '@ant-design/icons';
 
 import MeetingMap from 'components/meeting/MeetingMap';
+import useMeetingQuery from 'hooks/useMeetingQuery';
 
 const MeetingLocation = () => {
+  const meetingInfo = useMeetingQuery();
   const [inputValue, setInputValue] = useState('');
   const [keyword, setKeyword] = useState('');
 
@@ -17,6 +19,15 @@ const MeetingLocation = () => {
     setKeyword(inputValue);
     setInputValue('');
   };
+
+  useEffect(() => {
+    setInputValue(meetingInfo ? meetingInfo.location.placeName : '');
+    setKeyword(
+      meetingInfo
+        ? `${meetingInfo.location.addressName}${meetingInfo.location.placeName}`
+        : '',
+    );
+  }, [meetingInfo]);
 
   return (
     <LocationWrapper>

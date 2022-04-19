@@ -5,7 +5,7 @@ const initialState = {
   contents: '',
   meetingDate: '',
   meetingTime: '',
-  totalNumber: '',
+  totalNumber: 2,
   location: {
     placeName: '',
     addressName: '',
@@ -18,14 +18,18 @@ const meetingSlice = createSlice({
   initialState,
   reducers: {
     initializeForm: () => initialState,
+    overwriteMeeting: (state, { payload }) => payload,
     changeTitle: (state, { payload }) => {
       state.title = payload;
     },
     changeContents: (state, { payload }) => {
       state.contents = payload;
     },
-    changeNumber: (state, { payload }) => {
-      state.totalNumber = payload;
+    increaseNumber: (state) => {
+      state.totalNumber = +state.totalNumber + 1;
+    },
+    decreaseNumber: (state) => {
+      state.totalNumber = +state.totalNumber - 1;
     },
     changeTime: (state, { payload }) => {
       state.meetingTime = payload;
@@ -41,9 +45,11 @@ const meetingSlice = createSlice({
 
 export const {
   initializeForm,
+  overwriteMeeting,
   changeTitle,
   changeContents,
-  changeNumber,
+  increaseNumber,
+  decreaseNumber,
   changeTime,
   changeDate,
   changeLocation,

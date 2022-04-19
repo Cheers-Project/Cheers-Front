@@ -7,6 +7,7 @@ import { useQuery, useQueryClient } from 'react-query';
 import * as userAPI from 'api/user';
 import UserModal from 'components/user/UserModal';
 import { initializeModal, openUserModal } from 'redux/modules/modal';
+import { initializeForm } from 'redux/modules/meeting';
 
 const MenuList = ({ userInfo }) => {
   const dispatch = useDispatch();
@@ -58,7 +59,12 @@ const MenuList = ({ userInfo }) => {
           <MenuItem onClick={() => handleRouter('/board/write')}>
             게시물 작성
           </MenuItem>
-          <MenuItem onClick={() => handleRouter('/meeting/write')}>
+          <MenuItem
+            onClick={() => {
+              dispatch(initializeForm());
+              handleRouter('/meeting/write');
+            }}
+          >
             모임 생성
           </MenuItem>
           <MenuItem onClick={() => handleRouter('/mypage')}>
