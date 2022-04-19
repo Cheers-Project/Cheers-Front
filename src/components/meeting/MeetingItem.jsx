@@ -3,16 +3,11 @@ import styled from 'styled-components';
 import { EyeFilled } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
-import * as meetingAPI from 'api/meeting';
-import useViewQuery from 'hooks/useViewQuery';
-
 const MeetingItem = ({ meeting }) => {
   const navigate = useNavigate();
-  const mutation = useViewQuery(meetingAPI.increaseView, 'meeting');
 
   const handleNavigate = () => {
     const { _id: id } = meeting;
-    mutation.mutate(id);
     navigate(`/meeting/${id}`);
   };
 
