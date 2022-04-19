@@ -4,8 +4,20 @@ export const getBoards = (queryKey) => {
   return client.get(`/board?${queryKey}`).then((res) => res.data);
 };
 
-export const getBoradById = (id) => {
-  return client.get(`/board/${id}`).then((res) => res.data);
+export const getBoradById = (id, type) => {
+  return client.get(`/board/${id}?type=${type}`).then((res) => res.data);
+};
+
+export const updateBoard = ({ payload, id }) => {
+  const accessToken = localStorage.getItem('accessToken');
+
+  return client
+    .patch(`/board/${id}`, payload, {
+      headers: {
+        Authorization: accessToken,
+      },
+    })
+    .then((res) => res.data);
 };
 
 export const updateLike = (id) => {
@@ -20,7 +32,7 @@ export const updateLike = (id) => {
     .then((res) => res.data);
 };
 
-export const write = (payload) => {
+export const writeBoard = (payload) => {
   const accessToken = localStorage.getItem('accessToken');
 
   return client

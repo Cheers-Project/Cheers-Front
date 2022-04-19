@@ -1,30 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
-import { Viewer } from '@toast-ui/react-editor';
+import { useNavigate } from 'react-router-dom';
 
-import * as boardAPI from 'api/board';
 import useOwnedQuery from 'hooks/useOwnedQuery';
 import UserInfo from 'components/board/UserInfo';
 import DateInfo from 'components/board/DateInfo';
 import DeleteBtn from 'components/board/DeleteBtn';
 import LikeBtn from './LikeBtn';
+import useBoardQuery from 'hooks/useBoardQuery';
+import BoardViewer from './BoardViewer';
 
 const BoardDetail = () => {
-  const { id } = useParams();
+  const navigate = useNavigate();
 
   const userId = useOwnedQuery();
+  const { boardInfo, isSuccess } = useBoardQuery('detail');
 
-  const { data, isSuccess } = useQuery(
-    ['board', id],
-    () => boardAPI.getBoradById(id),
-    {
-      refetchOnWindowFocus: false,
-    },
-  );
-
-  const boardInfo = data?.board;
+  const handleRoute = () => {
+    navigate(`/board/write/${boardInfo?._id}`);
+  };
 
   return (
     <>
@@ -35,7 +29,7 @@ const BoardDetail = () => {
               <Title className="board-title">{boardInfo.title}</Title>
               {userId && boardInfo.writer._id === userId ? (
                 <UpdateWrapper>
-                  <button>수정</button>
+                  <button onClick={handleRoute}>수정</button>
                   <DeleteBtn />
                 </UpdateWrapper>
               ) : null}
@@ -48,7 +42,7 @@ const BoardDetail = () => {
               </SubInto>
             </BottomBoardInfoWrapper>
           </BoardInfo>
-          <Viewer initialValue={boardInfo.contents} />
+          <BoardViewer />
           <LikeBtn boardInfo={boardInfo} userId={userId} />
         </BoardDetailWrapper>
       )}
@@ -60,17 +54,6 @@ const BoardDetailWrapper = styled.section`
   display: flex;
   flex-direction: column;
   padding: 2rem 0;
-
-  .toastui-editor-contents {
-    width: 100%;
-    background-color: ${({ theme }) => theme.color.white};
-    font-size: ${({ theme }) => theme.fontSize.md};
-    padding: 2rem 1rem;
-    p {
-      margin: 0;
-      padding: 0;
-    }
-  }
 `;
 
 const BoardInfo = styled.div`
