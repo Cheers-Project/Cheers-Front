@@ -10,15 +10,10 @@ const useMeetingQuery = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const { data, isSuccess } = useQuery(
-    ['meeting', id],
-    meetingAPI.fetchMeetingDetail,
-    {
-      refetchOnWindowFocus: false,
-      staleTime: Infinity,
-      enabled: !!id,
-    },
-  );
+  const { data } = useQuery(['meeting', id], meetingAPI.fetchMeetingDetail, {
+    refetchOnWindowFocus: false,
+    enabled: !!id,
+  });
 
   useEffect(() => {
     if (data) {
