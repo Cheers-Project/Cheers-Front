@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 
 import * as userAPI from 'api/user';
 
-const useOwnedQuery = () => {
+const useOwnedQuery = (writerId) => {
   const { data } = useQuery(['user'], userAPI.fetchUser, {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
@@ -11,7 +11,9 @@ const useOwnedQuery = () => {
 
   const userId = data ? data.userInfo._id : '';
 
-  return userId;
+  const isOwned = writerId === userId ? true : false;
+
+  return { isOwned, userId };
 };
 
 export default useOwnedQuery;
