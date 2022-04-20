@@ -9,6 +9,7 @@ import DeleteBtn from 'components/board/DeleteBtn';
 import LikeBtn from './LikeBtn';
 import useBoardQuery from 'hooks/useBoardQuery';
 import BoardViewer from './BoardViewer';
+import CommentWriter from 'components/comment/CommentWriter';
 
 const BoardDetail = () => {
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ const BoardDetail = () => {
           </BoardInfo>
           <BoardViewer />
           <LikeBtn boardInfo={boardInfo} userId={userId} />
+          <CommentWriter boardId={boardInfo._id} />
         </BoardDetailWrapper>
       )}
     </>
