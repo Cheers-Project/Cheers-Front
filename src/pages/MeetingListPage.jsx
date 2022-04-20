@@ -8,7 +8,7 @@ import Responsive from 'components/common/Responsive';
 import MeetingList from 'components/meeting/MeetingList';
 import MeetingNav from 'components/meeting/MeetingNav';
 
-const MeetingPage = () => {
+const MeetingListPage = () => {
   return (
     <Outer>
       <Header />
@@ -21,4 +21,4 @@ const MeetingPage = () => {
   );
 };
 
-export default MeetingPage;
+export default MeetingListPage;
