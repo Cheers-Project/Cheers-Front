@@ -12,11 +12,11 @@ export const createMeeting = (payload) => {
     .then((res) => res.data);
 };
 
-export const editMeeting = ({ id, meeting }) => {
+export const editMeeting = ({ id, payload }) => {
   const accessToken = localStorage.getItem('accessToken');
 
   return client
-    .patch(`/meeting/${id}`, meeting, {
+    .patch(`/meeting/${id}`, payload, {
       headers: {
         Authorization: accessToken,
       },
