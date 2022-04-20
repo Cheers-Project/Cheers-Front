@@ -13,7 +13,7 @@ import MyBoard from 'components/my/MyBoard';
 import MyMeeting from 'components/my/MyMeeting';
 
 import MeetingDetailPage from 'pages/MeetingDetailPage';
-import MeetingPage from 'pages/MeetingPage';
+import MeetingListPage from 'pages/MeetingListPage';
 import MeetingWritePage from 'pages/MeetingWritePage';
 import BoardDetailPage from 'pages/BoardDetailPage';
 import NotFoundPage from 'pages/NotFoundPage';
@@ -29,7 +29,7 @@ const App = () => {
           <Route path="write/:id" element={<BoardWritePage />} />
         </Route>
         <Route path="/meeting">
-          <Route index element={<MeetingPage />} />
+          <Route index element={<MeetingListPage />} />
           <Route path=":id" element={<MeetingDetailPage />} />
           <Route path="write" element={<MeetingWritePage />} />
           <Route path="write/:id" element={<MeetingWritePage />} />

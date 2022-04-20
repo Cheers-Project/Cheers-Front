@@ -36,10 +36,6 @@ ${reset}
     background-color: #f5f5f5;
   }
 
-  body, html, #root {
-    height: 100%;
-  }
-
   a {
     text-decoration: none;
     color: inherit;

@@ -6,7 +6,7 @@ import MeetingMap from 'components/meeting/MeetingMap';
 import useMeetingQuery from 'hooks/useMeetingQuery';
 
 const MeetingLocation = () => {
-  const meetingInfo = useMeetingQuery();
+  const { meetingInfo } = useMeetingQuery();
   const [inputValue, setInputValue] = useState('');
   const [keyword, setKeyword] = useState('');
 

@@ -8,7 +8,7 @@ import MeetingDetail from 'components/meeting/MeetingDetail';
 
 const MeetingDetailPage = () => {
   return (
-    <Outer>
+    <Outer white>
       <Header />
       <Spacer />
       <Responsive>

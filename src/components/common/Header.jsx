@@ -9,8 +9,9 @@ import { useQuery } from 'react-query';
 import MenuList from './MenuList';
 import { toggleModal } from 'redux/modules/modal';
 import * as userAPI from 'api/user';
+import { css } from 'styled-components';
 
-const Header = () => {
+const Header = ({ black }) => {
   const dispatch = useDispatch();
 
   const [isScrolled, setIsScrolled] = useState(false);
@@ -35,30 +36,27 @@ const Header = () => {
     } else {
       setIsScrolled(false);
     }
-  }, 400);
+  }, 200);
 
   useEffect(() => {
-    const path = window.location.pathname;
-    if (path === '/') {
-      window.addEventListener('scroll', onScroll);
-    } else {
-      setIsScrolled(true);
-    }
+    window.addEventListener('scroll', onScroll);
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
   }, [onScroll]);
+
   return (
     <>
-      <HeaderOuter isScrolled={isScrolled}>
-        <HeaderInner>
+
+      <HeaderOuter black={black} isScrolled={isScrolled}>
+        <HeaderInner isScrolled={isScrolled}>
           <Logo>
             <Link to={'/'}>
               Cherry
               <br /> Alcohol
             </Link>
           </Logo>
-          <MidNav isScrolled={isScrolled}>
+          <MidNav isScrolled={isScrolled} black={black}>
             <Link to={'/board?sort=recent&page=1'} className="mid-nav-btn">
               게시판
             </Link>
@@ -86,9 +84,25 @@ const Header = () => {
 };
 
 const HeaderOuter = styled.div`
-  background-color: ${({ isScrolled }) => {
-    return isScrolled ? '#fff' : 'rgba(25,23,24, 0.5)';
-  }};
+  background-color: #fff;
+  ${({ black }) =>
+    black &&
+    css`
+      background-color: rgba(25, 23, 24, 0.5);
+    `};
+
+  ${({ isScrolled, black }) =>
+    black && isScrolled
+      ? css`
+          background-color: #fff;
+        `
+      : null};
+  ${({ isScrolled }) =>
+    isScrolled &&
+    css`
+      box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
+    `};
+
   position: fixed;
   top: 0;
   left: 0;
@@ -165,9 +179,20 @@ const MidNav = styled.nav`
   padding: 0.5rem 1rem;
   border-radius: 1.2rem;
   gap: 0.5rem;
-  color: ${({ isScrolled }) => {
-    return isScrolled ? '#000' : '#fff';
-  }};
+  color: #000;
+  ${({ black }) =>
+    black &&
+    css`
+      color: #fff;
+    `}
+
+  ${({ isScrolled }) =>
+    isScrolled &&
+    css`
+      color: #000;
+    `}
+  
+
   @media screen and (min-width: 768px) {
     gap: 10rem;
   }

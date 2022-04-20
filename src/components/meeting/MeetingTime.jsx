@@ -7,7 +7,7 @@ import useMeetingQuery from 'hooks/useMeetingQuery';
 
 const MeetingTime = () => {
   const dispatch = useDispatch();
-  const meetingInfo = useMeetingQuery();
+  const { meetingInfo } = useMeetingQuery();
 
   const handleTime = (e) => {
     dispatch(changeTime(e.target.value));
