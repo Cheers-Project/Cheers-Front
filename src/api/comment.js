@@ -15,3 +15,7 @@ export const createComment = (payload) => {
 export const fetchComment = (id) => {
   return client.get(`/comment/${id}`).then((res) => res.data);
 };
+
+export const deleteComment = (id) => {
+  return client.delete(`/comment/${id}`).then((res) => res.data);
+};

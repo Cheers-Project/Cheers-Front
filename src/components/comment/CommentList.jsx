@@ -2,22 +2,31 @@ import React from 'react';
 import styled from 'styled-components';
 
 import useCommentQuery from 'hooks/useCommentQuery';
+import CommentItem from './CommentItem';
 
 const CommentList = () => {
   const comments = useCommentQuery();
 
-  console.log(comments);
-
   return (
     <CommentListOuter>
-      {comments &&
-        comments.map((comment) => (
-          <div key={comment._id}>{comment.content}</div>
-        ))}
+      <CommentListWrapper>
+        {comments &&
+          comments.map((comment) => (
+            <CommentItem key={comment._id} commentInfo={comment} />
+          ))}
+      </CommentListWrapper>
     </CommentListOuter>
   );
 };
 
-const CommentListOuter = styled.div``;
+const CommentListOuter = styled.div`
+  padding: 3rem 0;
+`;
+
+const CommentListWrapper = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
 
 export default CommentList;
