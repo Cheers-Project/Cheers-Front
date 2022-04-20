@@ -10,9 +10,6 @@ const useCommentQuery = () => {
     () => commentAPI.fetchComment(postId),
     {
       refetchOnWindowFocus: false,
-      enabled: !!postId,
-      cacheTime: 0,
-      retry: false,
     },
   );
   return data?.comments;
