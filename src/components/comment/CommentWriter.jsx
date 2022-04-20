@@ -17,7 +17,7 @@ const CommentWriter = ({ boardId }) => {
 
   const handleSubmit = () => {
     const payload = {
-      boardId,
+      postId: boardId,
       content,
     };
     createComment.mutate(payload);
