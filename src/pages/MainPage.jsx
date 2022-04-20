@@ -9,7 +9,7 @@ import MainContent from 'components/main/MainContent';
 const MainPage = () => {
   return (
     <>
-      <Header />
+      <Header black />
       <Banner />
       <Responsive>
         {/* 메인 컨텐츠 영역 */}
