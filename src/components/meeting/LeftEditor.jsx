@@ -9,7 +9,7 @@ import useMeetingQuery from 'hooks/useMeetingQuery';
 
 const LeftEditor = () => {
   const dispatch = useDispatch();
-  const meetingInfo = useMeetingQuery();
+  const { meetingInfo } = useMeetingQuery();
 
   const handleTitle = (e) => {
     dispatch(changeTitle(e.target.value));

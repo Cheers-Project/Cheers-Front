@@ -21,7 +21,7 @@ const useMeetingQuery = () => {
     }
   }, [data, dispatch]);
 
-  return data?.meeting;
+  return { meetingInfo: data?.meeting, isClosed: data?.isClosed };
 };
 
 export default useMeetingQuery;

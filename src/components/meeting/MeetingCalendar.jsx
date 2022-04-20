@@ -10,7 +10,7 @@ import useMeetingQuery from 'hooks/useMeetingQuery';
 
 const MeetingCalendar = () => {
   const dispatch = useDispatch();
-  const meetingInfo = useMeetingQuery();
+  const { meetingInfo } = useMeetingQuery();
   const [selected, setSelected] = useState();
 
   const handleDate = (_, selectedDay) => {

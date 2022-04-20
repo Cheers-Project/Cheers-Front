@@ -4,10 +4,8 @@ import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { increaseNumber, decreaseNumber } from 'redux/modules/meeting';
-import useMeetingQuery from 'hooks/useMeetingQuery';
 
 const MemberCounter = () => {
-  const meetingInfo = useMeetingQuery();
   const dispatch = useDispatch();
   const { totalNumber } = useSelector(({ meeting }) => meeting);
 
