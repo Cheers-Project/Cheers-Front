@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { UserOutlined } from '@ant-design/icons';
 import { throttle } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 
 import MenuList from './MenuList';
@@ -13,7 +13,6 @@ import { css } from 'styled-components';
 
 const Header = ({ black }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -27,10 +26,6 @@ const Header = ({ black }) => {
     staleTime: Infinity,
   });
 
-  const routeMain = () => {
-    navigate('/');
-  };
-
   const handleMenuModal = () => {
     dispatch(toggleModal({ target: 'menuModal', visible: !menuModal }));
   };
@@ -43,10 +38,6 @@ const Header = ({ black }) => {
     }
   }, 200);
 
-  const handleRouter = (routePage) => {
-    navigate(routePage);
-  };
-
   useEffect(() => {
     window.addEventListener('scroll', onScroll);
     return () => {
@@ -56,19 +47,22 @@ const Header = ({ black }) => {
 
   return (
     <>
+
       <HeaderOuter black={black} isScrolled={isScrolled}>
         <HeaderInner isScrolled={isScrolled}>
-          <Logo onClick={routeMain}>
-            Cherry
-            <br /> Alcohol
+          <Logo>
+            <Link to={'/'}>
+              Cherry
+              <br /> Alcohol
+            </Link>
           </Logo>
           <MidNav isScrolled={isScrolled} black={black}>
-            <Button onClick={() => handleRouter('/board?sort=recent&page=1')}>
+            <Link to={'/board?sort=recent&page=1'} className="mid-nav-btn">
               게시판
-            </Button>
-            <Button onClick={() => handleRouter('/meeting?sort=recent')}>
+            </Link>
+            <Link to={'/meeting?sort=recent'} className="mid-nav-btn">
               모임
-            </Button>
+            </Link>
           </MidNav>
           <RightNav onClick={handleMenuModal}>
             {data?.userInfo?.profileImg ? (
@@ -88,16 +82,6 @@ const Header = ({ black }) => {
     </>
   );
 };
-
-const MenuListOuter = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 100vh;
-  z-index: 200;
-`;
 
 const HeaderOuter = styled.div`
   background-color: #fff;
@@ -147,6 +131,14 @@ const HeaderInner = styled.header`
   }
 `;
 
+const Logo = styled.h1`
+  font-size: 2rem;
+  color: #c22d77;
+  font-weight: 600;
+  letter-spacing: 0.2rem;
+  cursor: pointer;
+`;
+
 const RightNav = styled.nav`
   display: flex;
   align-items: center;
@@ -182,14 +174,6 @@ const RightNav = styled.nav`
   }
 `;
 
-const Logo = styled.div`
-  font-size: 2rem;
-  color: #c22d77;
-  font-weight: 600;
-  letter-spacing: 0.2rem;
-  cursor: pointer;
-`;
-
 const MidNav = styled.nav`
   display: flex;
   padding: 0.5rem 1rem;
@@ -212,30 +196,37 @@ const MidNav = styled.nav`
   @media screen and (min-width: 768px) {
     gap: 10rem;
   }
+  .mid-nav-btn {
+    padding: 1rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: 0.1rem;
+    &::after {
+      display: block;
+      transition: 0.2s;
+      margin-top: 0.5rem;
+      width: 0;
+      content: '';
+      height: 2px;
+      background-color: #c22d77;
+    }
+    &:hover::after {
+      width: 100%;
+    }
+    @media screen and (min-width: 768px) {
+      font-size: 1.6rem;
+    }
+  }
 `;
 
-const Button = styled.button`
-  color: inherit;
-  background-color: inherit;
-  padding: 1rem;
-  font-size: 1.4rem;
-  font-weight: 500;
-  letter-spacing: 0.1rem;
-  &::after {
-    display: block;
-    transition: 0.2s;
-    margin-top: 0.5rem;
-    width: 0;
-    content: '';
-    height: 2px;
-    background-color: #c22d77;
-  }
-  &:hover::after {
-    width: 100%;
-  }
-  @media screen and (min-width: 768px) {
-    font-size: 1.6rem;
-  }
+const MenuListOuter = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
+  z-index: 200;
 `;
 
 export default Header;

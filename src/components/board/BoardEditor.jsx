@@ -29,9 +29,8 @@ const BoardEditor = () => {
   });
 
   const updateBoard = useMutation(boardAPI.updateBoard, {
-    onSuccess: (data, variables) => {
+    onSuccess: (_, variables) => {
       const { id } = variables;
-      queryClient.setQueryData(['board', id], data);
       navigate(`/board/${id}`);
     },
   });
