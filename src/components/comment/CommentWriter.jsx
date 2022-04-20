@@ -5,8 +5,10 @@ import { useMutation } from 'react-query';
 import * as commentAPI from 'api/comment';
 import StyledInput from 'components/common/StyledInput';
 import StyledButton from 'components/common/StyledButton';
+import { useParams } from 'react-router-dom';
 
-const CommentWriter = ({ boardId }) => {
+const CommentWriter = () => {
+  const { id: postId } = useParams();
   const [content, setContent] = useState('');
 
   const createComment = useMutation(['comment'], commentAPI.createComment);
@@ -17,7 +19,7 @@ const CommentWriter = ({ boardId }) => {
 
   const handleSubmit = () => {
     const payload = {
-      postId: boardId,
+      postId,
       content,
     };
     createComment.mutate(payload);
