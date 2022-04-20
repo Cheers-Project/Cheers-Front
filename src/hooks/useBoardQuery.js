@@ -10,7 +10,6 @@ const useBoardQuery = (type) => {
     () => boardAPI.getBoradById(id, type),
     {
       refetchOnWindowFocus: false,
-      staleTime: Infinity,
       enabled: !!id,
       retry: false,
     },
