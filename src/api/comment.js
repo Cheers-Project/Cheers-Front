@@ -11,3 +11,7 @@ export const createComment = (payload) => {
     })
     .then((res) => res.data);
 };
+
+export const fetchComment = (id) => {
+  return client.get(`/comment/${id}`).then((res) => res.data);
+};
