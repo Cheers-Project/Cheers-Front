@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 
 const CommentItem = ({ commentInfo }) => {
   const queryClient = useQueryClient();
-  const userId = useOwnedQuery();
+  const { isOwned } = useOwnedQuery(commentInfo.writer._id);
   const { id: postId } = useParams();
 
   const deleteComment = useMutation(commentAPI.deleteComment, {
@@ -18,7 +18,7 @@ const CommentItem = ({ commentInfo }) => {
   });
 
   const handleDeleteBtn = () => {
-    deleteComment.mutate(commentInfo?._id);
+    deleteComment.mutate(commentInfo._id);
   };
 
   return (
@@ -26,20 +26,20 @@ const CommentItem = ({ commentInfo }) => {
       <CommentUserInfo>
         <img
           className="user-profile-img"
-          src={commentInfo?.writer.profileImg}
+          src={commentInfo.writer.profileImg}
           alt="user-profileImg"
         />
-        <p className="user-profile-nickname">{commentInfo?.writer.nickname}</p>
+        <p className="user-profile-nickname">{commentInfo.writer.nickname}</p>
       </CommentUserInfo>
       <div>
-        <p>{commentInfo?.content}</p>
+        <p>{commentInfo.content}</p>
       </div>
-      {commentInfo?.writer._id === userId ? (
+      {isOwned && (
         <div>
           <button>수정</button>
           <button onClick={handleDeleteBtn}>삭제</button>
         </div>
-      ) : null}
+      )}
     </CommentItemWrapper>
   );
 };
