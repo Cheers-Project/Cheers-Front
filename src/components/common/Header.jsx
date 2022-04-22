@@ -39,6 +39,9 @@ const Header = ({ black }) => {
   }, 200);
 
   useEffect(() => {
+    if (window.scrollY > 20) {
+      setIsScrolled(true);
+    }
     window.addEventListener('scroll', onScroll);
     return () => {
       window.removeEventListener('scroll', onScroll);
@@ -47,7 +50,6 @@ const Header = ({ black }) => {
 
   return (
     <>
-
       <HeaderOuter black={black} isScrolled={isScrolled}>
         <HeaderInner isScrolled={isScrolled}>
           <Logo>

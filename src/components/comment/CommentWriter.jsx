@@ -43,8 +43,9 @@ const CommentWriter = () => {
         autoComplete="off"
         onChange={changeComment}
         value={content}
+        className="comment-input"
       />
-      <StyledButton onClick={handleSubmit} cherry>
+      <StyledButton onClick={handleSubmit} cherry responsive>
         작성
       </StyledButton>
     </CommentWriterWrapper>
@@ -57,8 +58,12 @@ const CommentWriterWrapper = styled.div`
   background-color: ${({ theme }) => theme.color.white};
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
+  align-items: stretch;
+  gap: 2rem;
+  .comment-input {
+    width: 100%;
+    flex: 1;
+  }
 `;
 
 export default CommentWriter;

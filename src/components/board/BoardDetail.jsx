@@ -9,14 +9,13 @@ import DeleteBtn from 'components/board/DeleteBtn';
 import LikeBtn from './LikeBtn';
 import useBoardQuery from 'hooks/useBoardQuery';
 import BoardViewer from './BoardViewer';
-import CommentWriter from 'components/comment/CommentWriter';
 import CommentList from 'components/comment/CommentList';
 
 const BoardDetail = () => {
   const navigate = useNavigate();
 
-  const userId = useOwnedQuery();
   const { boardInfo, isSuccess } = useBoardQuery('detail');
+  const { isOwned, userId } = useOwnedQuery(boardInfo?.writer._id);
 
   const handleRoute = () => {
     navigate(`/board/write/${boardInfo?._id}`);
@@ -29,12 +28,12 @@ const BoardDetail = () => {
           <BoardInfo>
             <TopBoardInfoWrapper>
               <Title className="board-title">{boardInfo.title}</Title>
-              {userId && boardInfo.writer._id === userId ? (
+              {isOwned && (
                 <UpdateWrapper>
                   <button onClick={handleRoute}>수정</button>
                   <DeleteBtn />
                 </UpdateWrapper>
-              ) : null}
+              )}
             </TopBoardInfoWrapper>
             <BottomBoardInfoWrapper>
               <UserInfo boardInfo={boardInfo} />
@@ -46,7 +45,6 @@ const BoardDetail = () => {
           </BoardInfo>
           <BoardViewer />
           <LikeBtn boardInfo={boardInfo} userId={userId} />
-          <CommentWriter />
           <CommentList />
         </BoardDetailWrapper>
       )}
@@ -109,6 +107,7 @@ const UpdateWrapper = styled.div`
   display: flex;
   gap: 1rem;
   button {
+    color: ${({ theme }) => theme.color.darkGray};
     font-size: ${({ theme }) => theme.fontSize.md};
     transition: 0.2s;
     &:hover {
