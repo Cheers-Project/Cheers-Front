@@ -22,6 +22,10 @@ ${reset}
     margin: -1px;
     clip-path: polygon(0 0, 0 0, 0 0);
   }
+
+  html, body, #root {
+    height: 100%;
+  }
   
   html {
     font-size: 10px;
