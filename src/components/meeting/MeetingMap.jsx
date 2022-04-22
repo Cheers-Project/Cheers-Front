@@ -3,8 +3,11 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { changeLocation } from 'redux/modules/meeting';
+import useMeetingQuery from 'hooks/useMeetingQuery';
 
 const MeetingMap = ({ keyword }) => {
+  const { meetingInfo } = useMeetingQuery();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -94,21 +97,32 @@ const MeetingMap = ({ keyword }) => {
       ps.keywordSearch(keyword, searchCallback);
     };
 
-    // 위치 정보가 허용 되어있으면 현재 위치, 아니면 서울 시청을 보여줌
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        createKakaoMap(position);
-      },
-      (error) => {
-        createKakaoMap({
-          coords: {
-            longitude: '126.9784147',
-            latitude: '37.5666805',
-          },
-        });
-      },
-    );
-  }, [keyword, dispatch]);
+    // 모임 정보가 존재하면 모임 정보를 바탕으로 지도 초기 위치 설정
+    if (meetingInfo) {
+      const position = {
+        coords: {
+          longitude: meetingInfo.location.coordinates[0],
+          latitude: meetingInfo.location.coordinates[1],
+        },
+      };
+      createKakaoMap(position);
+    } else {
+      // 위치 정보가 허용 되어있으면 현재 위치, 아니면 서울 시청을 보여줌
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          createKakaoMap(position);
+        },
+        (error) => {
+          createKakaoMap({
+            coords: {
+              longitude: '126.9784147',
+              latitude: '37.5666805',
+            },
+          });
+        },
+      );
+    }
+  }, [keyword, dispatch, meetingInfo]);
 
   return <MapWrapper id="map"></MapWrapper>;
 };
