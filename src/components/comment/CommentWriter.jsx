@@ -45,11 +45,9 @@ const CommentWriter = () => {
         value={content}
         className="comment-input"
       />
-      <div>
-        <StyledButton onClick={handleSubmit} cherry responsive>
-          작성
-        </StyledButton>
-      </div>
+      <StyledButton onClick={handleSubmit} cherry responsive>
+        작성
+      </StyledButton>
     </CommentWriterWrapper>
   );
 };
@@ -61,7 +59,7 @@ const CommentWriterWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: stretch;
-  gap: 0.5rem;
+  gap: 2rem;
   .comment-input {
     width: 100%;
     flex: 1;
