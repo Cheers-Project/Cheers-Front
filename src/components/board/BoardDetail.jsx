@@ -43,7 +43,7 @@ const BoardDetail = () => {
               </SubInto>
             </BottomBoardInfoWrapper>
           </BoardInfo>
-          <BoardViewer />
+          <BoardViewer boardInfo={boardInfo} />
           <LikeBtn boardInfo={boardInfo} userId={userId} />
           <CommentList />
         </BoardDetailWrapper>
