@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import { EyeFilled } from '@ant-design/icons';
@@ -8,11 +8,13 @@ import { format } from 'date-fns';
 import useMeetingQuery from 'hooks/useMeetingQuery';
 import useOwnedQuery from 'hooks/useOwnedQuery';
 import * as meetingAPI from 'api/meeting';
-import MeetingMap from './MeetingMap';
+import MeetingMap from 'components/meeting/MeetingMap';
 import StyledButton from 'components/common/StyledButton';
-import { css } from 'styled-components';
+import CommentList from 'components/comment/CommentList';
 
 const MeetingDetail = () => {
+  console.log('render');
+
   const { id } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -118,7 +120,7 @@ const MeetingDetail = () => {
             <p>{meetingInfo?.totalNumber}명</p>
           </div>
           <MeetingMap
-            keyword={`${meetingInfo?.location.addressName}${meetingInfo?.location.placeName}`}
+            keyword={`${meetingInfo?.location.addressName} ${meetingInfo?.location.placeName}`}
           />
           {!isOwned && (
             <div className="join-btn-wrapper">
@@ -141,6 +143,7 @@ const MeetingDetail = () => {
             </div>
           )}
         </MeetingInfoWrapper>
+        {meetingInfo?.attendMember.includes(userId) && <CommentList />}
       </MeetingDetailWrapper>
     </section>
   );
