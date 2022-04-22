@@ -3,14 +3,29 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 const StyledButton = (props) => {
-  return props.to ? <StyledLink {...props} /> : <Button {...props} />;
+  return props.to ? (
+    <StyledLink
+      {...props}
+      cherry={props.cherry ? 1 : 0}
+      responsive={props.responsive ? 1 : 0}
+    />
+  ) : (
+    <Button
+      {...props}
+      cherry={props.cherry ? 1 : 0}
+      responsive={props.responsive ? 1 : 0}
+    />
+  );
 };
 
 const buttonStyle = css`
+  display: flex;
+  align-items: center;
   padding: 0.8rem 1.2rem;
   font-size: ${({ theme }) => theme.fontSize.sm};
   color: #fff;
   text-align: center;
+  line-height: 2rem;
   border-radius: 0.5rem;
   transition: 0.2s background-color;
   background-color: ${({ theme }) => theme.color.lightGray};
