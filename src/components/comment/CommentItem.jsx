@@ -94,6 +94,7 @@ const CommentInfoWrapper = styled.div`
     }
     .comment-time {
       color: ${({ theme }) => theme.color.darkGray};
+      font-size: ${({ theme }) => theme.fontSize.sm};
       margin-top: 0.8rem;
     }
   }
