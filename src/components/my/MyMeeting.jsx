@@ -4,29 +4,43 @@ import { useQuery } from 'react-query';
 
 import * as myAPI from 'api/my';
 import MeetingItem from 'components/meeting/MeetingItem';
+import StyledButton from 'components/common/StyledButton';
 
 const MyMeeting = () => {
   const { data: meetingList } = useQuery(['my/meeting'], myAPI.fetchMyMeeting, {
     refetchOnWindowFocus: false,
-    staleTime: Infinity,
   });
 
   return (
     <MeetingSection>
-      <ul className="meeting-list">
-        {meetingList?.meeting.map((meeting) => {
-          return (
-            <MeetingItemOuter>
-              <MeetingItem meeting={meeting} key={meeting._id} />
-            </MeetingItemOuter>
-          );
-        })}
-      </ul>
+      {meetingList?.meeting.length ? (
+        <ul className="meeting-list">
+          {meetingList.meeting.map((meeting) => {
+            return (
+              <MeetingItemOuter key={meeting._id}>
+                <MeetingItem meeting={meeting} key={meeting._id} />
+              </MeetingItemOuter>
+            );
+          })}
+        </ul>
+      ) : (
+        <EmptyMeeting>
+          <p className="empty-text">아직 참여한 모임이 없습니다.</p>
+          <div className="write-btn-wrapper">
+            <StyledButton to="/meeting/write" cherry responsive>
+              모임 생성
+            </StyledButton>
+          </div>
+        </EmptyMeeting>
+      )}
     </MeetingSection>
   );
 };
 
 const MeetingSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   .meeting-list {
     padding-bottom: 3rem;
     display: flex;
@@ -51,6 +65,21 @@ const MeetingItemOuter = styled.div`
   }
   @media screen and (min-width: 1024px) {
     width: calc(33.333% - 4rem);
+  }
+`;
+
+const EmptyMeeting = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  .empty-text {
+    font-size: ${({ theme }) => theme.fontSize.lg};
+  }
+  .write-btn-wrapper {
+    margin: 5rem 0;
+    display: flex;
+    justify-content: center;
   }
 `;
 
