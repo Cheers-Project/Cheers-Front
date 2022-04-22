@@ -232,7 +232,8 @@ const MeetingInfoWrapper = styled.div`
     gap: 1rem;
   }
   .join-btn-wrapper {
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
   }
 `;
 
