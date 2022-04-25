@@ -27,7 +27,7 @@ const FooterInner = styled.footer`
   width: 100%;
   padding: 2rem 2rem;
   margin: 0 auto;
-  font-size: 1.5rem;
+  font-size: ${({ theme }) => theme.fontSize.md};
   background-color: #fff;
   text-align: center;
   align-items: center;
