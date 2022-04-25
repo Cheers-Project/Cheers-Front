@@ -1,24 +1,45 @@
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { toggleModal } from 'redux/modules/modal';
 
 const useCurrentLocation = () => {
+  const dispatch = useDispatch();
   const [location, setLocation] = useState();
-  const [error, setError] = useState();
-
-  const handleSuccess = (position) => {
-    const { longitude: lon, latitude: lat } = position.coords;
-    setLocation({ lon, lat });
-  };
-
-  const handleFailure = (error) => {
-    setError(error);
-  };
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // 현재 디바이스의 경도, 위도를 가져옴
-    navigator.geolocation.getCurrentPosition(handleSuccess, handleFailure);
-  }, []);
+    const handleLoadLocationSuccess = (position) => {
+      const { latitude: lat, longitude: lon } = position.coords;
+      setLocation({ lon, lat });
+      setError(null);
+      setLoading(false);
+      dispatch(toggleModal({ target: 'alarmModal', visible: false }));
+    };
 
-  return { location, error };
+    const handleLoadLocationFailure = (e) => {
+      setError(e);
+      setLoading(false);
+    };
+
+    const handleLoadLocation = () => {
+      setLoading(true);
+      return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      })
+        .then((position) => {
+          handleLoadLocationSuccess(position);
+        })
+        .catch((e) => {
+          handleLoadLocationFailure(e);
+        });
+    };
+    // 현재 디바이스의 경도, 위도를 가져옴
+    handleLoadLocation();
+  }, [dispatch]);
+
+  return { location, error, loading };
 };
 
 export default useCurrentLocation;
