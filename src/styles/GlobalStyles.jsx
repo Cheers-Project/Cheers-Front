@@ -63,6 +63,7 @@ ${reset}
   
   button {
     cursor: pointer;
+    font-family: 'Roboto', sans-serif;
   }    
 
   input,textarea {
