@@ -7,33 +7,41 @@ import MeetingItem from 'components/meeting/MeetingItem';
 import StyledButton from 'components/common/StyledButton';
 
 const MyMeeting = () => {
-  const { data: meetingList } = useQuery(['my/meeting'], myAPI.fetchMyMeeting, {
-    refetchOnWindowFocus: false,
-  });
+  const { data: meetingList, isSuccess } = useQuery(
+    ['my/meeting'],
+    myAPI.fetchMyMeeting,
+    {
+      refetchOnWindowFocus: false,
+    },
+  );
 
   return (
-    <MeetingSection>
-      {meetingList?.meeting.length ? (
-        <ul className="meeting-list">
-          {meetingList.meeting.map((meeting) => {
-            return (
-              <MeetingItemOuter key={meeting._id}>
-                <MeetingItem meeting={meeting} key={meeting._id} />
-              </MeetingItemOuter>
-            );
-          })}
-        </ul>
-      ) : (
-        <EmptyMeeting>
-          <p className="empty-text">아직 참여한 모임이 없습니다.</p>
-          <div className="write-btn-wrapper">
-            <StyledButton to="/meeting/write" cherry responsive>
-              모임 생성
-            </StyledButton>
-          </div>
-        </EmptyMeeting>
+    <>
+      {isSuccess && (
+        <MeetingSection>
+          {meetingList?.meeting.length ? (
+            <ul className="meeting-list">
+              {meetingList.meeting.map((meeting) => {
+                return (
+                  <MeetingItemOuter key={meeting._id}>
+                    <MeetingItem meeting={meeting} key={meeting._id} />
+                  </MeetingItemOuter>
+                );
+              })}
+            </ul>
+          ) : (
+            <EmptyMeeting>
+              <p className="empty-text">아직 참여한 모임이 없습니다.</p>
+              <div className="write-btn-wrapper">
+                <StyledButton to="/meeting/write" cherry responsive>
+                  모임 생성
+                </StyledButton>
+              </div>
+            </EmptyMeeting>
+          )}
+        </MeetingSection>
       )}
-    </MeetingSection>
+    </>
   );
 };
 
