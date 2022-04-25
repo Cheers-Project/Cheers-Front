@@ -118,4 +118,4 @@ const ContentWrapper = styled.div`
   font-size: ${({ theme }) => theme.fontSize.md};
 `;
 
-export default CommentItem;
+export default React.memo(CommentItem);
