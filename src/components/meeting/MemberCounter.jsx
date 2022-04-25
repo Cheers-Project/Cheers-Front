@@ -7,7 +7,7 @@ import { increaseNumber, decreaseNumber } from 'redux/modules/meeting';
 
 const MemberCounter = () => {
   const dispatch = useDispatch();
-  const { totalNumber } = useSelector(({ meeting }) => meeting);
+  const totalNumber = useSelector(({ meeting }) => meeting.totalNumber);
 
   const handleMemberIncrease = () => {
     dispatch(increaseNumber());
