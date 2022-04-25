@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Spinner = () => {
+const Spinner = (props) => {
   return (
     <SpinnerWrapper>
-      <Dot className="bounce1"></Dot>
-      <Dot className="bounce2"></Dot>
-      <Dot className="bounce3"></Dot>
+      <Dot {...props} className="bounce1"></Dot>
+      <Dot {...props} className="bounce2"></Dot>
+      <Dot {...props} className="bounce3"></Dot>
     </SpinnerWrapper>
   );
 };
@@ -23,8 +23,8 @@ const SpinnerWrapper = styled.div`
 `;
 
 const Dot = styled.div`
-  width: 1.5rem;
-  height: 1.5rem;
+  width: ${(props) => (props.small ? '0.8rem' : '1.5rem')};
+  height: ${(props) => (props.small ? '0.8rem' : '1.5rem')};
   background-color: #333;
   border-radius: 100%;
   display: inline-block;
