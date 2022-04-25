@@ -10,10 +10,14 @@ const useMeetingQuery = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const { data } = useQuery(['meeting', id], meetingAPI.fetchMeetingDetail, {
-    refetchOnWindowFocus: false,
-    enabled: !!id,
-  });
+  const { data, isSuccess } = useQuery(
+    ['meeting', id],
+    meetingAPI.fetchMeetingDetail,
+    {
+      refetchOnWindowFocus: false,
+      enabled: !!id,
+    },
+  );
 
   useEffect(() => {
     if (data) {
@@ -21,7 +25,7 @@ const useMeetingQuery = () => {
     }
   }, [data, dispatch]);
 
-  return { meetingInfo: data?.meeting, isClosed: data?.isClosed };
+  return { meetingInfo: data?.meeting, isClosed: data?.isClosed, isSuccess };
 };
 
 export default useMeetingQuery;

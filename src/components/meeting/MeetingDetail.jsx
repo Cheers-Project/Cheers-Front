@@ -16,7 +16,7 @@ const MeetingDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { meetingInfo, isClosed } = useMeetingQuery();
+  const { meetingInfo, isClosed, isSuccess } = useMeetingQuery();
   const { userId, isOwned } = useOwnedQuery(meetingInfo?.writer._id);
 
   const removeMutation = useMutation(meetingAPI.removeMeeting, {
@@ -63,89 +63,91 @@ const MeetingDetail = () => {
 
   return (
     <section>
-      <MeetingDetailWrapper>
-        <MeetingTitleWrapper>
-          <h2 className="meeting-title">{meetingInfo?.title}</h2>
-          <div className="meeting-view">
-            <EyeFilled />
-            <div>{meetingInfo?.view}</div>
-          </div>
-        </MeetingTitleWrapper>
-        <MeetingSubInfoWrapper>
-          <div className="sub-info-inner">
-            <img
-              className="user-profile"
-              src={meetingInfo?.writer.profileImg}
-              alt="유저 프로필"
-            />
-            <div>
-              <p className="user-nickname">{meetingInfo?.writer.nickname}</p>
-              <div className="created-date">
-                {meetingInfo &&
-                  format(new Date(meetingInfo.createdDate), 'yyyy-MM-dd')}
+      {isSuccess && (
+        <MeetingDetailWrapper>
+          <MeetingTitleWrapper>
+            <h2 className="meeting-title">{meetingInfo?.title}</h2>
+            <div className="meeting-view">
+              <EyeFilled />
+              <div>{meetingInfo?.view}</div>
+            </div>
+          </MeetingTitleWrapper>
+          <MeetingSubInfoWrapper>
+            <div className="sub-info-inner">
+              <img
+                className="user-profile"
+                src={meetingInfo?.writer.profileImg}
+                alt="유저 프로필"
+              />
+              <div>
+                <p className="user-nickname">{meetingInfo?.writer.nickname}</p>
+                <div className="created-date">
+                  {meetingInfo &&
+                    format(new Date(meetingInfo.createdDate), 'yyyy-MM-dd')}
+                </div>
               </div>
             </div>
-          </div>
-          {isOwned && (
-            <div className="setting-btn-wrapper">
-              <button
-                onClick={handleMeetingEditNavigate}
-                className="setting-btn"
-              >
-                수정
-              </button>
-              <button onClick={handleMeetingRemove} className="setting-btn">
-                삭제
-              </button>
-            </div>
-          )}
-        </MeetingSubInfoWrapper>
-        <MeetingContentsWrapper>
-          <div className="meeting-contents">{meetingInfo?.contents}</div>
-        </MeetingContentsWrapper>
-        <MeetingInfoWrapper>
-          <div className="meeting-info">
-            <span style={{ verticalAlign: 'center' }}>모임 장소 &#58;</span>
-            <p>{meetingInfo?.location.placeName}</p>
-          </div>
-          <div className="meeting-info">
-            <span>모임 날짜 &#58;</span>
-            <p>{meetingInfo?.meetingDate}</p>
-          </div>
-          <div className="meeting-info">
-            <span>모임 시간 &#58;</span>
-            <p>{meetingInfo?.meetingTime}</p>
-          </div>
-          <div className="meeting-info">
-            <span>모임 인원 &#58;</span>
-            <p>{meetingInfo?.totalNumber}명</p>
-          </div>
-          <MeetingMap
-            keyword={`${meetingInfo?.location.addressName} ${meetingInfo?.location.placeName}`}
-          />
-          {!isOwned && (
-            <div className="join-btn-wrapper">
-              {meetingInfo?.attendMember.includes(userId) ? (
-                <StyledButton onClick={handleMeetingCancel} responsive>
-                  모임 취소 {meetingInfo?.attendMember.length} /{' '}
-                  {meetingInfo?.totalNumber}
-                </StyledButton>
-              ) : (
-                <JoinBtn
-                  onClick={handleMeetingJoin}
-                  isClosed={isClosed}
-                  cherry
-                  responsive
+            {isOwned && (
+              <div className="setting-btn-wrapper">
+                <button
+                  onClick={handleMeetingEditNavigate}
+                  className="setting-btn"
                 >
-                  모임 참여 {meetingInfo?.attendMember.length} /{' '}
-                  {meetingInfo?.totalNumber}
-                </JoinBtn>
-              )}
+                  수정
+                </button>
+                <button onClick={handleMeetingRemove} className="setting-btn">
+                  삭제
+                </button>
+              </div>
+            )}
+          </MeetingSubInfoWrapper>
+          <MeetingContentsWrapper>
+            <div className="meeting-contents">{meetingInfo?.contents}</div>
+          </MeetingContentsWrapper>
+          <MeetingInfoWrapper>
+            <div className="meeting-info">
+              <span style={{ verticalAlign: 'center' }}>모임 장소 &#58;</span>
+              <p>{meetingInfo?.location.placeName}</p>
             </div>
-          )}
-        </MeetingInfoWrapper>
-        {meetingInfo?.attendMember.includes(userId) && <CommentList />}
-      </MeetingDetailWrapper>
+            <div className="meeting-info">
+              <span>모임 날짜 &#58;</span>
+              <p>{meetingInfo?.meetingDate}</p>
+            </div>
+            <div className="meeting-info">
+              <span>모임 시간 &#58;</span>
+              <p>{meetingInfo?.meetingTime}</p>
+            </div>
+            <div className="meeting-info">
+              <span>모임 인원 &#58;</span>
+              <p>{meetingInfo?.totalNumber}명</p>
+            </div>
+            <MeetingMap
+              keyword={`${meetingInfo?.location.addressName} ${meetingInfo?.location.placeName}`}
+            />
+            {!isOwned && (
+              <div className="join-btn-wrapper">
+                {meetingInfo?.attendMember.includes(userId) ? (
+                  <StyledButton onClick={handleMeetingCancel} responsive>
+                    모임 취소 {meetingInfo?.attendMember.length} /{' '}
+                    {meetingInfo?.totalNumber}
+                  </StyledButton>
+                ) : (
+                  <JoinBtn
+                    onClick={handleMeetingJoin}
+                    isClosed={isClosed}
+                    cherry
+                    responsive
+                  >
+                    모임 참여 {meetingInfo?.attendMember.length} /{' '}
+                    {meetingInfo?.totalNumber}
+                  </JoinBtn>
+                )}
+              </div>
+            )}
+          </MeetingInfoWrapper>
+          {meetingInfo?.attendMember.includes(userId) && <CommentList />}
+        </MeetingDetailWrapper>
+      )}
     </section>
   );
 };
