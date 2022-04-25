@@ -8,6 +8,7 @@ import useCurrentQuery from 'hooks/useCurrentQuery';
 import ModalWrapper from 'components/common/ModalWrapper';
 import { toggleModal } from 'redux/modules/modal';
 import StyledButton from 'components/common/StyledButton';
+import Spinner from 'components/auth/Spinner';
 
 const MeetingNav = () => {
   const dispatch = useDispatch();
@@ -23,11 +24,15 @@ const MeetingNav = () => {
       dispatch(toggleModal({ target: 'alarmModal', visible: true }));
       return;
     }
+    if (loading) {
+      dispatch(toggleModal({ target: 'alarmModal', visible: true }));
+      return;
+    }
 
     navigate(`/meeting?sort=near&lon=${location?.lon}&lat=${location?.lat}`);
   };
 
-  const handleModalVisible = () => {
+  const handleModalClose = () => {
     dispatch(toggleModal({ target: 'alarmModal', visible: false }));
   };
 
@@ -64,18 +69,25 @@ const MeetingNav = () => {
           <ModalContent>
             <div className="notice-wrapper">
               {loading && (
-                <p className="notice-text">위치 정보를 가져오고 있습니다.</p>
+                <>
+                  <p className="notice-text">위치 정보를 가져오는 중입니다.</p>
+                  <div className="loading-wrapper">
+                    <Spinner small />
+                  </div>
+                </>
               )}
               {error && (
-                <p className="notice-text">위치 권한을 설정해주세요.</p>
+                <>
+                  <p className="notice-text">위치 권한을 설정해주세요.</p>
+                  <StyledButton
+                    onClick={handleModalClose}
+                    className="confirm-btn"
+                    cherry
+                  >
+                    확인
+                  </StyledButton>
+                </>
               )}
-              <StyledButton
-                onClick={handleModalVisible}
-                className="confirm-btn"
-                cherry
-              >
-                확인
-              </StyledButton>
             </div>
           </ModalContent>
         </ModalWrapper>
@@ -135,16 +147,21 @@ const ModalContent = styled.div`
   .notice-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 5rem;
   }
   .notice-text {
     width: 100%;
     font-size: ${({ theme }) => theme.fontSize.md};
     font-weight: 600;
     text-align: center;
+    padding-bottom: 2rem;
+  }
+  .loading-wrapper {
+    align-self: center;
+    margin-top: 2rem;
   }
   .confirm-btn {
     align-self: flex-end;
+    margin-top: 2rem;
   }
 `;
 
