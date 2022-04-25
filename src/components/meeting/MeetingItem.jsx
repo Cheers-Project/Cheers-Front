@@ -121,4 +121,4 @@ const MeetingItemInner = styled.li`
   }
 `;
 
-export default MeetingItem;
+export default React.memo(MeetingItem);
