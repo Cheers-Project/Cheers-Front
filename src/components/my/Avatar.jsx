@@ -115,7 +115,7 @@ const AvatarForm = styled.form`
     margin-top: 2rem;
     padding: 0.6rem 1rem;
     border-radius: 0.5rem;
-    font-size: 1.5rem;
+    font-size: ${({ theme }) => theme.fontSize.md};
     color: #fff;
     letter-spacing: 0.1rem;
     transition: 0.2s;

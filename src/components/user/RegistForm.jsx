@@ -143,7 +143,7 @@ const RegistFormWrapper = styled.form`
 
   .over-text {
     display: block;
-    font-size: 1.4rem;
+    font-size: ${({ theme }) => theme.fontSize.sm};
     margin-bottom: 0.8rem;
   }
 
@@ -152,7 +152,7 @@ const RegistFormWrapper = styled.form`
     margin-top: 1rem;
     padding: 1rem;
     border-radius: 0.5rem;
-    font-size: 1.5rem;
+    font-size: ${({ theme }) => theme.fontSize.md};
     color: #fff;
     letter-spacing: 0.1rem;
     transition: 0.2s;
@@ -166,12 +166,12 @@ const RegistFormWrapper = styled.form`
     width: 100%;
     text-align: center;
     margin-top: 1rem;
-    font-size: 1.4rem;
+    font-size: ${({ theme }) => theme.fontSize.sm};
 
     .login-btn {
       text-decoration: underline;
       margin-left: 0.5rem;
-      font-size: 1.4rem;
+      font-size: ${({ theme }) => theme.fontSize.sm};
       background-color: inherit;
     }
   }
@@ -185,7 +185,7 @@ const RegistFormWrapper = styled.form`
     top: 50%;
     right: 0;
     transform: translateY(-50%);
-    font-size: 1.6rem;
+    font-size: ${({ theme }) => theme.fontSize.md};
     color: #ccc;
     background-color: inherit;
   }

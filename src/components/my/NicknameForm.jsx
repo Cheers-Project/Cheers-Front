@@ -125,22 +125,22 @@ const NicknameWrapper = styled.div`
     align-items: center;
   }
   .nickname-title {
-    font-size: 1.8rem;
+    font-size: ${({ theme }) => theme.fontSize.lg};
     font-weight: 600;
     @media screen and (min-width: 768px) {
-      font-size: 2rem;
+      font-size: ${({ theme }) => theme.fontSize.smTitle};
     }
   }
   .nickname-fixed-btn {
     background-color: inherit;
     color: #db428e;
-    font-size: 1.5rem;
+    font-size: ${({ theme }) => theme.fontSize.md};
     padding: 0 0 0.2rem 0;
     border-bottom: 1px solid #db428e;
   }
   .user-nickname {
     margin-top: 1.5rem;
-    font-size: 1.5rem;
+    font-size: ${({ theme }) => theme.fontSize.md};
     display: flex;
     justify-content: space-between;
   }

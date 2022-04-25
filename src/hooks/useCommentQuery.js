@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query';
-import * as commentAPI from 'api/comment';
 import { useParams } from 'react-router-dom';
+
+import * as commentAPI from 'api/comment';
 
 const useCommentQuery = () => {
   const { id: postId } = useParams();
