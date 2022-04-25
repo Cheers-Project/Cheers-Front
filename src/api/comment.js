@@ -28,5 +28,8 @@ export const updateComment = ({ id, payload }) => {
 };
 
 export const deleteComment = (id) => {
-  return client.delete(`/comment/${id}`).then((res) => res.data);
+  const accessToken = localStorage.getItem('accessToken');
+  return client
+    .delete(`/comment/${id}`, { headers: { Authorization: accessToken } })
+    .then((res) => res.data);
 };
