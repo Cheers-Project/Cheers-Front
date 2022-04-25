@@ -29,9 +29,6 @@ const KakaoRedirect = () => {
           navigate('/oauth/kakao');
         }
       },
-      onError: (error) => {
-        console.log(error);
-      },
     },
   );
   return (

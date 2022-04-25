@@ -14,7 +14,6 @@ const CommentWriter = () => {
 
   const createComment = useMutation(['comment'], commentAPI.createComment, {
     onSuccess: (_, variables) => {
-      console.log(variables);
       const { postId } = variables;
       queryClient.invalidateQueries(['comments', postId]);
       setContent('');

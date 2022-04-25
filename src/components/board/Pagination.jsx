@@ -58,7 +58,7 @@ const PaginationWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.8rem;
+  font-size: ${({ theme }) => theme.fontSize.lg};
   position: relative;
   .btn {
     padding: 1rem;

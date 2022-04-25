@@ -122,7 +122,7 @@ const LoginFormWrapper = styled.form`
 
   .over-text {
     display: block;
-    font-size: 1.4rem;
+    font-size: ${({ theme }) => theme.fontSize.sm};
     margin-bottom: 0.8rem;
   }
 
@@ -131,7 +131,7 @@ const LoginFormWrapper = styled.form`
     margin-top: 1rem;
     padding: 1rem;
     border-radius: 0.5rem;
-    font-size: 1.5rem;
+    font-size: ${({ theme }) => theme.fontSize.md};
     color: #fff;
     letter-spacing: 0.1rem;
     transition: 0.2s;
@@ -145,12 +145,12 @@ const LoginFormWrapper = styled.form`
     width: 100%;
     text-align: center;
     margin-top: 2rem;
-    font-size: 1.4rem;
+    font-size: ${({ theme }) => theme.fontSize.sm};
 
     .regist-btn {
       text-decoration: underline;
       margin-left: 0.5rem;
-      font-size: 1.4rem;
+      font-size: ${({ theme }) => theme.fontSize.sm};
       background-color: inherit;
     }
   }
@@ -162,7 +162,7 @@ const LoginFormWrapper = styled.form`
     align-items: center;
     background-color: #ffea27;
     border-radius: 0.5rem;
-    font-size: 1.5rem;
+    font-size: ${({ theme }) => theme.fontSize.md};
     margin-top: 1rem;
 
     .kakao-icon {

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Editor } from '@toast-ui/react-editor';
 import { useMutation, useQueryClient } from 'react-query';
 
@@ -24,9 +24,6 @@ const BoardEditor = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(['boards']);
       navigate('/board?sort=recent&page=1');
-    },
-    onError: (error) => {
-      console.log(error);
     },
   });
 

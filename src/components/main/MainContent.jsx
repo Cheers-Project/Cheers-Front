@@ -13,13 +13,13 @@ const MainContent = () => {
       <Outer>
         <Inner bg={MeetBanner}>
           <h3 className="sub-title">다양한 모임에 참여하세요.</h3>
-          <StyledButton cherry responsive>
+          <StyledButton to="/meeting?sort=recent" cherry responsive>
             모임
           </StyledButton>
         </Inner>
         <Inner bg={BoardBanner}>
           <h3 className="sub-title">술에 대해 이야기하세요.</h3>
-          <StyledButton cherry responsive>
+          <StyledButton to="/board?sort=recent&page=1" cherry responsive>
             게시판
           </StyledButton>
         </Inner>
