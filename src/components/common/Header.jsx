@@ -131,7 +131,7 @@ const HeaderInner = styled.header`
 `;
 
 const Logo = styled.h1`
-  font-size: 2rem;
+  font-size: ${({ theme }) => theme.fontSize.smTitle};
   color: #c22d77;
   font-weight: 600;
   letter-spacing: 0.2rem;
@@ -148,7 +148,7 @@ const RightNav = styled.nav`
   background-color: #c22d77;
   cursor: pointer;
   z-index: 300;
-  font-size: 1.2rem;
+  font-size: ${({ theme }) => theme.fontSize.xsm};
   * {
     pointer-events: none;
   }
@@ -157,12 +157,12 @@ const RightNav = styled.nav`
   }
   .user-icon {
     padding: 0.5rem;
-    font-size: 1.2rem;
+    font-size: ${({ theme }) => theme.fontSize.xsm};
     color: #fff;
     border-radius: 50%;
     border: 1.5px solid #fff;
     @media screen and (min-width: 768px) {
-      font-size: 2rem;
+      font-size: ${({ theme }) => theme.fontSize.smTitle};
     }
   }
 
@@ -197,7 +197,7 @@ const MidNav = styled.nav`
   }
   .mid-nav-btn {
     padding: 1rem;
-    font-size: 1.4rem;
+    font-size: ${({ theme }) => theme.fontSize.sm};
     font-weight: 500;
     letter-spacing: 0.1rem;
     &::after {
@@ -213,7 +213,7 @@ const MidNav = styled.nav`
       width: 100%;
     }
     @media screen and (min-width: 768px) {
-      font-size: 1.6rem;
+      font-size: ${({ theme }) => theme.fontSize.md};
     }
   }
 `;

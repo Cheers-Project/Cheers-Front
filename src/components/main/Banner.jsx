@@ -22,13 +22,13 @@ const BannerWrapper = styled.div`
 
 const BannerText = styled.p`
   color: #fff;
-  font-size: 2rem;
+  font-size: ${({ theme }) => theme.fontSize.smTitle};
   font-weight: 600;
   line-height: 1.6;
   text-align: center;
 
   @media screen and (min-width: 768px) {
-    font-size: 2.5rem;
+    font-size: ${({ theme }) => theme.fontSize.lgTitle};
   }
 
   @media screen and (min-width: 1024px) {

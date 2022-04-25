@@ -44,7 +44,7 @@ const Outer = styled.div`
 
   .sub-title {
     margin-bottom: 2rem;
-    font-size: 2rem;
+    font-size: ${({ theme }) => theme.fontSize.smTitle};
     font-weight: 600;
     color: #fff;
 

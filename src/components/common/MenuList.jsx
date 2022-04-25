@@ -113,7 +113,7 @@ const MenuItem = styled.li`
   margin: 1rem;
   padding: 1rem;
   border-radius: 0.5rem;
-  font-size: 1.5rem;
+  font-size: ${({ theme }) => theme.fontSize.sm};
   font-weight: 500;
   letter-spacing: 0.1rem;
   cursor: pointer;

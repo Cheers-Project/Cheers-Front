@@ -79,7 +79,7 @@ const CalendarWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     > button {
-      font-size: 1.6rem;
+      font-size: ${({ theme }) => theme.fontSize.md};
     }
   }
   .label-text {

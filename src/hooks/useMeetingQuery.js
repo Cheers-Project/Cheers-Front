@@ -1,10 +1,10 @@
+import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import * as meetingAPI from 'api/meeting';
 import { overwriteMeeting } from 'redux/modules/meeting';
-import { useEffect } from 'react';
 
 const useMeetingQuery = () => {
   const dispatch = useDispatch();
