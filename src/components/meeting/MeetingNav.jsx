@@ -13,7 +13,7 @@ const MeetingNav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { alarmModal } = useSelector(({ modal }) => modal);
-  const { location, error } = useCurrentLocation();
+  const { location, error, loading } = useCurrentLocation();
   const { searchParams } = useCurrentQuery();
 
   const { sort } = searchParams;
@@ -63,7 +63,12 @@ const MeetingNav = () => {
         <ModalWrapper>
           <ModalContent>
             <div className="notice-wrapper">
-              <p className="notice-text">위치 권한을 설정해주세요.</p>
+              {loading && (
+                <p className="notice-text">위치 정보를 가져오고 있습니다.</p>
+              )}
+              {error && (
+                <p className="notice-text">위치 권한을 설정해주세요.</p>
+              )}
               <StyledButton
                 onClick={handleModalVisible}
                 className="confirm-btn"
