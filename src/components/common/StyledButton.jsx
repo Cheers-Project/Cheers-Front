@@ -3,19 +3,7 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 const StyledButton = (props) => {
-  return props.to ? (
-    <StyledLink
-      {...props}
-      cherry={props.cherry ? 1 : 0}
-      responsive={props.responsive ? 1 : 0}
-    />
-  ) : (
-    <Button
-      {...props}
-      cherry={props.cherry ? 1 : 0}
-      responsive={props.responsive ? 1 : 0}
-    />
-  );
+  return props.to ? <StyledLink {...props} /> : <Button {...props} />;
 };
 
 const buttonStyle = css`
