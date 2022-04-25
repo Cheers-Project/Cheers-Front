@@ -19,8 +19,9 @@ const BoardDetail = () => {
 
   const { boardInfo, isSuccess } = useBoardQuery('detail');
   const { isOwned, userId } = useOwnedQuery(boardInfo?.writer._id);
+
   const deleteBoard = useMutation(boardAPI.deleteBoard, {
-    onSuccess: (data, id) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['boards']);
     },
   });

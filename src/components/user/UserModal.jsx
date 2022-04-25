@@ -44,9 +44,7 @@ const ModalContentWrapper = styled.div`
   width: 400px;
   padding: 2rem;
   border-radius: 1rem;
-
   position: relative;
-
   background-color: #fff;
 
   display: flex;
@@ -79,7 +77,7 @@ const ModalContentWrapper = styled.div`
   }
 
   .modal-title {
-    font-size: 2rem;
+    font-size: ${({ theme }) => theme.fontSize.smTitle};
     margin-bottom: 2rem;
   }
 `;

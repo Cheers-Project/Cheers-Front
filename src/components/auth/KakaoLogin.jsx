@@ -77,13 +77,13 @@ const KakaoLoginWrapper = styled.div`
     font-weight: 600;
   }
   h3 {
-    font-size: 2.4rem;
+    font-size: ${({ theme }) => theme.fontSize.lgTitle};
   }
   .continue-btn {
     background-color: #fff47d;
     padding: 1rem;
     border-radius: 0.5rem;
-    font-size: 1.5rem;
+    font-size: ${({ theme }) => theme.fontSize.md};
     letter-spacing: 0.1rem;
   }
 `;
