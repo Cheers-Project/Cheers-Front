@@ -9,13 +9,8 @@ import StyledInput from 'components/common/StyledInput';
 const KakaoLogin = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-
   const [nickname, setNickname] = useState(null);
   const [errMsg, setErrMsg] = useState('');
-
-  const changeNicnkName = (e) => {
-    setNickname(e.target.value);
-  };
 
   const mutation = useMutation(userAPI.kakaoLogin, {
     mutationKey: ['user'],
@@ -33,13 +28,17 @@ const KakaoLogin = () => {
     },
   });
 
-  const handleContinueBtn = () => {
-    const kakaoToken = localStorage.getItem('kakaoToken');
+  const handleNicknameChange = (e) => {
+    setNickname(e.target.value);
+  };
 
+  const handleNicknameSubmit = () => {
+    const kakaoToken = localStorage.getItem('kakaoToken');
     const payload = {
       kakaoToken,
       nickname,
     };
+
     mutation.mutate(payload);
   };
 
@@ -54,11 +53,11 @@ const KakaoLogin = () => {
           type="text"
           placeholder="닉네임"
           autoComplete="off"
-          onChange={changeNicnkName}
+          onChange={handleNicknameChange}
         />
         <ErrorMessage>{errMsg}</ErrorMessage>
       </div>
-      <button className="continue-btn" onClick={handleContinueBtn}>
+      <button className="continue-btn" onClick={handleNicknameSubmit}>
         계속하기
       </button>
     </KakaoLoginWrapper>

@@ -2,25 +2,25 @@ import React from 'react';
 import styled from 'styled-components';
 import { CaretLeftOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+
 import useCurrentQuery from 'hooks/useCurrentQuery';
 
 const Pagination = ({ maxPage, pageNums }) => {
   const navigate = useNavigate();
   const { searchParams } = useCurrentQuery();
-
   const { sort, page } = searchParams;
 
-  const changePage = (e) => {
+  const handlePageChange = (e) => {
     if (!e.target.value) return;
     navigate(`/board?sort=${sort}&page=${e.target.value}`);
   };
 
-  const clickPrevBtn = () => {
+  const handlePrevPageRoute = () => {
     if (page === '1') return;
     navigate(`/board?sort=${sort}&page=${+page - 1}`);
   };
 
-  const clickNextBtn = () => {
+  const handleNextPageRoute = () => {
     if (page > maxPage) return;
     navigate(`/board?sort=${sort}&page=${+page + 1}`);
   };
@@ -28,12 +28,12 @@ const Pagination = ({ maxPage, pageNums }) => {
   return (
     <PaginationWrapper>
       <button
-        onClick={clickPrevBtn}
+        onClick={handlePrevPageRoute}
         className={page === '1' ? 'btn prev-btn hide' : 'btn prev-btn'}
       >
         <CaretLeftOutlined />
       </button>
-      <PageNumberList onClick={changePage}>
+      <PageNumberList onClick={handlePageChange}>
         {pageNums.map((pageNum, i) => {
           if (maxPage < pageNum) return null;
           return (
@@ -44,7 +44,7 @@ const Pagination = ({ maxPage, pageNums }) => {
         })}
       </PageNumberList>
       <button
-        onClick={clickNextBtn}
+        onClick={handleNextPageRoute}
         className={page === `${maxPage}` ? 'btn next-btn hide' : 'btn next-btn'}
       >
         <CaretRightOutlined />
@@ -68,12 +68,10 @@ const PaginationWrapper = styled.div`
     font-size: ${({ theme }) => theme.fontSize.md};
     cursor: pointer;
     transition: 0.2s;
-
     &:hover {
       color: ${({ theme }) => theme.color.lightCherry};
     }
   }
-
   .hide {
     opacity: 0;
     cursor: unset;

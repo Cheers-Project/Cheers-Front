@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 import useCommentQuery from 'hooks/useCommentQuery';
 import useOwnedQuery from 'hooks/useOwnedQuery';
-import CommentItem from './CommentItem';
-import CommentWriter from './CommentWriter';
+import CommentItem from 'components/comment/CommentItem';
+import CommentWriter from 'components/comment/CommentWriter';
 
 const CommentList = () => {
   const comments = useCommentQuery();

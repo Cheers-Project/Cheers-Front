@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query';
+import { useParams } from 'react-router-dom';
 
 import * as commentAPI from 'api/comment';
 import StyledInput from 'components/common/StyledInput';
 import StyledButton from 'components/common/StyledButton';
-import { useParams } from 'react-router-dom';
 
 const CommentWriter = () => {
   const queryClient = useQueryClient();
@@ -21,11 +21,11 @@ const CommentWriter = () => {
     },
   });
 
-  const changeComment = (e) => {
+  const handleCommentChange = (e) => {
     setContent(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleCommentSubmit = () => {
     const payload = {
       postId,
       content,
@@ -41,11 +41,11 @@ const CommentWriter = () => {
         type="text"
         placeholder="댓글을 입력하세요."
         autoComplete="off"
-        onChange={changeComment}
+        onChange={handleCommentChange}
         value={content}
         className="comment-input"
       />
-      <StyledButton onClick={handleSubmit} cherry responsive>
+      <StyledButton onClick={handleCommentSubmit} cherry responsive>
         작성
       </StyledButton>
     </CommentWriterWrapper>

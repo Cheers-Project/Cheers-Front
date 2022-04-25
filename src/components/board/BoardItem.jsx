@@ -9,13 +9,13 @@ import DateInfo from 'components/board/DateInfo';
 const BoardItem = ({ boardInfo }) => {
   const navigate = useNavigate();
 
-  const handleRouter = () => {
+  const handleBoardDetailRoute = () => {
     const { _id: id } = boardInfo;
     navigate(`/board/${id}`);
   };
-  console.log('render');
+
   return (
-    <BoardItemWrapper onClick={handleRouter}>
+    <BoardItemWrapper onClick={handleBoardDetailRoute}>
       <LeftWrapper>
         <Title>{boardInfo.title}</Title>
         <UserInfo boardInfo={boardInfo} />
