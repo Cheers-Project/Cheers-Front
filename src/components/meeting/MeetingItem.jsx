@@ -6,13 +6,13 @@ import { useNavigate } from 'react-router-dom';
 const MeetingItem = ({ meeting }) => {
   const navigate = useNavigate();
 
-  const handleNavigate = () => {
+  const handleMeetingDetailNavigate = () => {
     const { _id: id } = meeting;
     navigate(`/meeting/${id}`);
   };
 
   return (
-    <MeetingItemInner onClick={handleNavigate}>
+    <MeetingItemInner onClick={handleMeetingDetailNavigate}>
       <h4 className="meeting-title ">{meeting.title}</h4>
       <p className="meeting-contents">{meeting.contents}</p>
       <div className="meeting-location">
@@ -121,4 +121,4 @@ const MeetingItemInner = styled.li`
   }
 `;
 
-export default MeetingItem;
+export default React.memo(MeetingItem);

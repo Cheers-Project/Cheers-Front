@@ -7,22 +7,22 @@ import useMeetingQuery from 'hooks/useMeetingQuery';
 
 const MeetingLocation = () => {
   const { meetingInfo } = useMeetingQuery();
-  const [inputValue, setInputValue] = useState('');
-  const [keyword, setKeyword] = useState('');
+  const [searchInputValue, setSearchInputValue] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState('');
 
-  const onChange = (e) => {
-    setInputValue(e.target.value);
+  const handleSearchKeywordChange = (e) => {
+    setSearchInputValue(e.target.value);
   };
 
-  const onSubmit = (e) => {
+  const handleSearchKeywordSubmit = (e) => {
     e.preventDefault();
-    setKeyword(inputValue);
-    setInputValue('');
+    setSearchKeyword(searchInputValue);
+    setSearchInputValue('');
   };
 
   useEffect(() => {
-    setInputValue(meetingInfo ? meetingInfo.location.placeName : '');
-    setKeyword(
+    setSearchInputValue(meetingInfo ? meetingInfo.location.placeName : '');
+    setSearchKeyword(
       meetingInfo
         ? `${meetingInfo.location.addressName}${meetingInfo.location.placeName}`
         : '',
@@ -32,19 +32,19 @@ const MeetingLocation = () => {
   return (
     <LocationWrapper>
       <p className="label-text">모임 장소</p>
-      <form onSubmit={onSubmit} className="location-form">
+      <form onSubmit={handleSearchKeywordSubmit} className="location-form">
         <input
           className="location-input"
           type="text"
           placeholder="모임 장소를 검색하세요"
-          onChange={onChange}
-          value={inputValue}
+          onChange={handleSearchKeywordChange}
+          value={searchInputValue}
         />
         <button className="search-btn">
           <SearchOutlined />
         </button>
       </form>
-      <MeetingMap keyword={keyword} />
+      <MeetingMap keyword={searchKeyword} />
     </LocationWrapper>
   );
 };

@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import * as userAPI from 'api/user';
 import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 
+import * as userAPI from 'api/user';
 import StyledInput from 'components/common/StyledInput';
 import ErrorMessage from 'components/common/ErrorMessage';
 import registSchema from 'utils/validation/registSchema';
@@ -19,10 +19,7 @@ const RegistForm = () => {
   const mutation = useMutation(userAPI.regist, {
     mutationKey: ['user'],
     onSuccess: () => {
-      changeModal();
-    },
-    onError: (error) => {
-      console.log(error);
+      handleModalVisible();
     },
   });
 
@@ -32,20 +29,23 @@ const RegistForm = () => {
     formState: { errors },
   } = useForm({ resolver: joiResolver(registSchema) });
 
-  const changeModal = () => {
+  const handleModalVisible = () => {
     dispatch(openUserModal({ modal: 'loginModal' }));
   };
 
-  const handleVisible = () => {
+  const handlePasswordVisible = () => {
     setVisible(!visible);
   };
 
-  const onSubmit = (data) => {
+  const handleRegistFormSubmit = (data) => {
     mutation.mutate(data);
   };
 
   return (
-    <RegistFormWrapper autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+    <RegistFormWrapper
+      autoComplete="off"
+      onSubmit={handleSubmit(handleRegistFormSubmit)}
+    >
       <div className="input-container">
         <label className="over-text" htmlFor="idInput">
           이메일(아이디)
@@ -92,7 +92,7 @@ const RegistForm = () => {
             type={visible ? 'text' : 'password'}
             placeholder="비밀번호"
           />
-          <button onClick={handleVisible} className="toggle-btn">
+          <button onClick={handlePasswordVisible} className="toggle-btn">
             {visible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
           </button>
         </div>
@@ -122,7 +122,7 @@ const RegistForm = () => {
       <div className="guide-container">
         <p>
           계정이 있으신가요?{' '}
-          <button onClick={changeModal} className="login-btn">
+          <button onClick={handleModalVisible} className="login-btn">
             로그인
           </button>
         </p>

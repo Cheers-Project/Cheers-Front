@@ -12,7 +12,7 @@ const MyBoard = () => {
   const { query } = useCurrentQuery();
   const target = useRef();
 
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage, isSuccess } = useInfiniteQuery(
     ['my/board', query],
     myAPI.fetchMyBoard,
     {
@@ -30,27 +30,31 @@ const MyBoard = () => {
   });
 
   return (
-    <BoardSection>
-      {data?.pages[0].boardList.length ? (
-        <ul className="board-list">
-          {data.pages.map((page) =>
-            page.boardList.map((board) => {
-              return <BoardItem boardInfo={board} key={board._id} />;
-            }),
+    <>
+      {isSuccess && (
+        <BoardSection>
+          {data?.pages[0].boardList.length ? (
+            <ul className="board-list">
+              {data.pages.map((page) =>
+                page.boardList.map((board) => {
+                  return <BoardItem boardInfo={board} key={board._id} />;
+                }),
+              )}
+              <div ref={target}></div>
+            </ul>
+          ) : (
+            <EmptyMeeting>
+              <p className="empty-text">아직 작성한 게시물이 없습니다.</p>
+              <div className="write-btn-wrapper">
+                <StyledButton to="/board/write" cherry responsive>
+                  게시물 작성
+                </StyledButton>
+              </div>
+            </EmptyMeeting>
           )}
-          <div ref={target}></div>
-        </ul>
-      ) : (
-        <EmptyMeeting>
-          <p className="empty-text">아직 작성한 게시물이 없습니다.</p>
-          <div className="write-btn-wrapper">
-            <StyledButton to="/board/write" cherry responsive>
-              게시물 작성
-            </StyledButton>
-          </div>
-        </EmptyMeeting>
+        </BoardSection>
       )}
-    </BoardSection>
+    </>
   );
 };
 

@@ -13,8 +13,6 @@ import StyledButton from 'components/common/StyledButton';
 import CommentList from 'components/comment/CommentList';
 
 const MeetingDetail = () => {
-  console.log('render');
-
   const { id } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -37,15 +35,15 @@ const MeetingDetail = () => {
     },
   });
 
-  const handleNavigate = () => {
+  const handleMeetingEditNavigate = () => {
     navigate(`/meeting/write/${id}`);
   };
 
-  const handleRemove = () => {
+  const handleMeetingRemove = () => {
     removeMutation.mutate(id);
   };
 
-  const handleJoinMeeting = () => {
+  const handleMeetingJoin = () => {
     const payload = {
       ...meetingInfo,
       attendMember: [...meetingInfo.attendMember, userId],
@@ -54,7 +52,7 @@ const MeetingDetail = () => {
     editMutation.mutate({ id, payload });
   };
 
-  const handleCancelMeeting = () => {
+  const handleMeetingCancel = () => {
     const payload = {
       ...meetingInfo,
       attendMember: meetingInfo.attendMember.filter((data) => data !== userId),
@@ -90,10 +88,13 @@ const MeetingDetail = () => {
           </div>
           {isOwned && (
             <div className="setting-btn-wrapper">
-              <button onClick={handleNavigate} className="setting-btn">
+              <button
+                onClick={handleMeetingEditNavigate}
+                className="setting-btn"
+              >
                 수정
               </button>
-              <button onClick={handleRemove} className="setting-btn">
+              <button onClick={handleMeetingRemove} className="setting-btn">
                 삭제
               </button>
             </div>
@@ -125,13 +126,13 @@ const MeetingDetail = () => {
           {!isOwned && (
             <div className="join-btn-wrapper">
               {meetingInfo?.attendMember.includes(userId) ? (
-                <StyledButton onClick={handleCancelMeeting} responsive>
+                <StyledButton onClick={handleMeetingCancel} responsive>
                   모임 취소 {meetingInfo?.attendMember.length} /{' '}
                   {meetingInfo?.totalNumber}
                 </StyledButton>
               ) : (
                 <JoinBtn
-                  onClick={handleJoinMeeting}
+                  onClick={handleMeetingJoin}
                   isClosed={isClosed}
                   cherry
                   responsive

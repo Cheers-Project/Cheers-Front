@@ -41,25 +41,31 @@ const NicknameForm = () => {
     resolver: joiResolver(nicknameSchema),
   });
 
-  const onSubmit = (data) => {
+  const handeNicknameSubmit = (data) => {
     mutate(data);
   };
 
-  const handleOpen = (e) => {
+  const handleNicknameInputOpen = () => {
     setIsClicked(!isClicked);
   };
 
-  const handleCancle = (e) => {
+  const handleNicknameInputClose = () => {
     setIsClicked(false);
   };
 
   return (
     <NicknameWrapper>
-      <form onSubmit={handleSubmit(onSubmit)} className="nickname-title-form">
+      <form
+        onSubmit={handleSubmit(handeNicknameSubmit)}
+        className="nickname-title-form"
+      >
         <div className="nickname-wrapper">
           <h3 className="nickname-title">닉네임</h3>
           {!isClicked && (
-            <button onClick={handleOpen} className="nickname-fixed-btn">
+            <button
+              onClick={handleNicknameInputOpen}
+              className="nickname-fixed-btn"
+            >
               수정
             </button>
           )}
@@ -85,7 +91,9 @@ const NicknameForm = () => {
               />
               <div className="btn-wrapper">
                 <StyledButton cherry>변경</StyledButton>
-                <StyledButton onClick={handleCancle}>취소</StyledButton>
+                <StyledButton onClick={handleNicknameInputClose}>
+                  취소
+                </StyledButton>
               </div>
             </div>
             <ErrorMessage>
