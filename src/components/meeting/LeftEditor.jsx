@@ -11,11 +11,11 @@ const LeftEditor = () => {
   const dispatch = useDispatch();
   const { meetingInfo } = useMeetingQuery();
 
-  const handleTitle = (e) => {
+  const handleTitleInput = (e) => {
     dispatch(changeTitle(e.target.value));
   };
 
-  const handleContents = (e) => {
+  const handleContentsInput = (e) => {
     dispatch(changeContents(e.target.value));
   };
 
@@ -23,7 +23,7 @@ const LeftEditor = () => {
     <LeftEditorWrapper>
       <div className="title-container">
         <input
-          onChange={handleTitle}
+          onChange={handleTitleInput}
           defaultValue={meetingInfo?.title}
           className="title-input"
           type="text"
@@ -33,7 +33,7 @@ const LeftEditor = () => {
       <div className="contents-container">
         <textarea
           defaultValue={meetingInfo?.contents}
-          onChange={handleContents}
+          onChange={handleContentsInput}
           className="contents-input"
           placeholder="내용을 입력하세요"
         ></textarea>

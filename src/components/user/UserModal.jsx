@@ -10,18 +10,18 @@ import { initializeModal } from 'redux/modules/modal';
 
 const UserModal = () => {
   const dispatch = useDispatch();
-
   const userModal = useSelector(({ modal }) => {
     return modal.userModal;
   });
 
-  const closeModal = () => {
+  const handleModalInitial = () => {
     dispatch(initializeModal());
   };
+
   return (
     <ModalWrapper>
       <ModalContentWrapper>
-        <CloseOutlined className="close-btn" onClick={closeModal} />
+        <CloseOutlined className="close-btn" onClick={handleModalInitial} />
         {userModal.loginModal && (
           <>
             <h2 className="modal-title">로그인</h2>

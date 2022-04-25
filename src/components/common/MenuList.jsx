@@ -13,8 +13,11 @@ const MenuList = ({ userInfo }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const userModal = useSelector(({ modal }) => {
+    return modal.userModal.isOpen;
+  });
 
-  const { refetch } = useQuery('logout', userAPI.logout, {
+  const { refetch } = useQuery(['logout'], userAPI.logout, {
     enabled: false,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
@@ -27,14 +30,10 @@ const MenuList = ({ userInfo }) => {
     },
   });
 
-  const userModal = useSelector(({ modal }) => {
-    return modal.userModal.isOpen;
-  });
-
-  const handleLoginModal = () => {
+  const handleLoginModalVisible = () => {
     dispatch(openUserModal({ modal: 'loginModal' }));
   };
-  const handleRegistModal = () => {
+  const handleRegistModalVisible = () => {
     dispatch(openUserModal({ modal: 'registModal' }));
   };
 
@@ -42,7 +41,7 @@ const MenuList = ({ userInfo }) => {
     refetch();
   };
 
-  const handleRouter = (routePage) => {
+  const handlePageRouter = (routePage) => {
     dispatch(initializeModal());
     navigate(routePage);
   };
@@ -51,23 +50,23 @@ const MenuList = ({ userInfo }) => {
     <MenuListWrapper>
       {!userInfo ? (
         <>
-          <MenuItem onClick={handleLoginModal}>로그인</MenuItem>
-          <MenuItem onClick={handleRegistModal}>회원가입</MenuItem>
+          <MenuItem onClick={handleLoginModalVisible}>로그인</MenuItem>
+          <MenuItem onClick={handleRegistModalVisible}>회원가입</MenuItem>
         </>
       ) : (
         <>
-          <MenuItem onClick={() => handleRouter('/board/write')}>
+          <MenuItem onClick={() => handlePageRouter('/board/write')}>
             게시물 작성
           </MenuItem>
           <MenuItem
             onClick={() => {
               dispatch(initializeForm());
-              handleRouter('/meeting/write');
+              handlePageRouter('/meeting/write');
             }}
           >
             모임 생성
           </MenuItem>
-          <MenuItem onClick={() => handleRouter('/mypage')}>
+          <MenuItem onClick={() => handlePageRouter('/mypage')}>
             마이페이지
           </MenuItem>
           <MenuItem onClick={handleLogout}>로그아웃</MenuItem>

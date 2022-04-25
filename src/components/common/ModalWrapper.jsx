@@ -1,10 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { initializeModal } from 'redux/modules/modal';
-
 import styled from 'styled-components';
 
-import Modal from './Modal';
+import { initializeModal } from 'redux/modules/modal';
+import Modal from 'components/common/Modal';
 
 const ModalWrapper = ({ children }) => {
   const dispatch = useDispatch();

@@ -20,9 +20,6 @@ const Avatar = () => {
       queryClient.setQueryData(['user'], userInfo);
       queryClient.invalidateQueries(['boards']);
     },
-    onError: (error) => {
-      console.log('fail');
-    },
   });
 
   const removeMutation = useMutation(myAPI.removeProfileImg, {
@@ -31,24 +28,21 @@ const Avatar = () => {
       queryClient.setQueryData(['user'], userInfo);
       queryClient.invalidateQueries(['boards']);
     },
-    onError: (error) => {
-      console.log('fail');
-    },
   });
 
-  const changeProfileImg = (e) => {
+  const handleProfileImageChange = (e) => {
     if (!e.target.files[0]) return;
 
-    const formData = convertToFormData(e.target.files[0]);
+    const formData = handleConvertToFormData(e.target.files[0]);
     updateMutation.mutate(formData);
   };
 
-  const removeProfileImg = (e) => {
+  const handleProfileImageRemove = (e) => {
     e.preventDefault();
     removeMutation.mutate();
   };
 
-  const convertToFormData = (file) => {
+  const handleConvertToFormData = (file) => {
     const formData = new FormData();
     formData.append('profileImg', file);
 
@@ -68,7 +62,7 @@ const Avatar = () => {
           <UserOutlined className="profile-image" />
         )}
         <input
-          onChange={changeProfileImg}
+          onChange={handleProfileImageChange}
           id="profileImg"
           className="a11y-hidden"
           name="profileImg"
@@ -79,7 +73,7 @@ const Avatar = () => {
           프로필 변경
         </label>
         <button
-          onClick={removeProfileImg}
+          onClick={handleProfileImageRemove}
           className="profile-img-btn remove-btn"
         >
           프로필 제거

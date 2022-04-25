@@ -30,7 +30,7 @@ const MeetingWriteButton = () => {
     },
   });
 
-  const handleSubmit = () => {
+  const handleMeetingFormSubmit = () => {
     if (id) {
       editMutation.mutate({ id, meeting });
       return;
@@ -38,16 +38,16 @@ const MeetingWriteButton = () => {
     postMutation.mutate(meeting);
   };
 
-  const handleCancel = () => {
+  const handleMeetingFormCancel = () => {
     navigate(-1);
   };
 
   return (
     <ButtonWrapper>
-      <StyledButton onClick={handleSubmit} cherry responsive>
+      <StyledButton onClick={handleMeetingFormSubmit} cherry responsive>
         작성
       </StyledButton>
-      <StyledButton onClick={handleCancel} responsive>
+      <StyledButton onClick={handleMeetingFormCancel} responsive>
         취소
       </StyledButton>
     </ButtonWrapper>

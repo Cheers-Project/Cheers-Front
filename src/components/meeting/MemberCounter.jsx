@@ -9,11 +9,11 @@ const MemberCounter = () => {
   const dispatch = useDispatch();
   const { totalNumber } = useSelector(({ meeting }) => meeting);
 
-  const increase = (e) => {
+  const handleMemberIncrease = () => {
     dispatch(increaseNumber());
   };
 
-  const decrease = (e) => {
+  const handleMemberDecrease = () => {
     dispatch(decreaseNumber());
   };
 
@@ -28,7 +28,7 @@ const MemberCounter = () => {
               totalNumber > 2 ? 'decrease-btn' : 'decrease-btn disabled'
             }
             disabled={totalNumber > 2 ? false : true}
-            onClick={decrease}
+            onClick={handleMemberDecrease}
           >
             <MinusOutlined />
           </button>
@@ -43,7 +43,7 @@ const MemberCounter = () => {
               totalNumber < 10 ? 'increase-btn' : 'increase-btn disabled'
             }
             disabled={totalNumber < 10 ? false : true}
-            onClick={increase}
+            onClick={handleMemberIncrease}
           >
             <PlusOutlined />
           </button>

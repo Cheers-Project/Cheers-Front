@@ -17,7 +17,7 @@ const MeetingMap = ({ keyword }) => {
     const container = document.getElementById('map');
     let selectedMarker = null;
 
-    const createKakaoMap = (position) => {
+    const handleKakaoMapCreate = (position) => {
       const { longitude: lon, latitude: lat } = position.coords;
 
       const options = {
@@ -42,7 +42,7 @@ const MeetingMap = ({ keyword }) => {
       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
       // 마커와 인포 윈도우를 표시하는 함수
-      const displayMarker = (place) => {
+      const handleMarkerDisplay = (place) => {
         let marker = new kakao.maps.Marker({
           map,
           position: new kakao.maps.LatLng(place.y, place.x),
@@ -81,11 +81,11 @@ const MeetingMap = ({ keyword }) => {
       };
 
       // 검색어가 입력되면 실행될 콜백 함수
-      const searchCallback = (data, status, pagination) => {
+      const handleSearchCallback = (data, status, pagination) => {
         if (status === kakao.maps.services.Status.OK) {
           let bounds = new kakao.maps.LatLngBounds();
           for (let i = 0; i < data.length; i++) {
-            displayMarker(data[i]);
+            handleMarkerDisplay(data[i]);
             bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
           }
           map.setBounds(bounds);
@@ -94,7 +94,7 @@ const MeetingMap = ({ keyword }) => {
 
       // 검색어가 존재하지 않으면 현재 위치를 보여줌
       if (!keyword) return;
-      ps.keywordSearch(keyword, searchCallback);
+      ps.keywordSearch(keyword, handleSearchCallback);
     };
 
     // 모임 정보가 존재하면 모임 정보를 바탕으로 지도 초기 위치 설정
@@ -105,15 +105,15 @@ const MeetingMap = ({ keyword }) => {
           latitude: meetingInfo.location.coordinates[1],
         },
       };
-      createKakaoMap(position);
+      handleKakaoMapCreate(position);
     } else {
       // 위치 정보가 허용 되어있으면 현재 위치, 아니면 서울 시청을 보여줌
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          createKakaoMap(position);
+          handleKakaoMapCreate(position);
         },
         (error) => {
-          createKakaoMap({
+          handleKakaoMapCreate({
             coords: {
               longitude: '126.9784147',
               latitude: '37.5666805',

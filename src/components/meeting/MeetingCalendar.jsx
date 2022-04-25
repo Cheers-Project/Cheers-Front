@@ -13,7 +13,7 @@ const MeetingCalendar = () => {
   const { meetingInfo } = useMeetingQuery();
   const [selected, setSelected] = useState();
 
-  const handleDate = (_, selectedDay) => {
+  const handleSelectedDate = (_, selectedDay) => {
     const convertedDate = format(selectedDay, 'yyyy-MM-dd');
 
     dispatch(changeDate(convertedDate));
@@ -21,7 +21,7 @@ const MeetingCalendar = () => {
   };
 
   // 오늘 이전 날짜 선택 불가
-  const isPastDate = (date) => {
+  const handleDisabledDate = (date) => {
     return differenceInCalendarDays(date, new Date()) < 0;
   };
 
@@ -37,13 +37,13 @@ const MeetingCalendar = () => {
       {meetingInfo && (
         <DayPicker
           selected={selected}
-          onSelect={handleDate}
+          onSelect={handleSelectedDate}
           mode="single"
           locale={ko}
           fromYear={2022}
           toYear={2026}
           defaultMonth={new Date(meetingInfo.meetingDate)}
-          disabled={isPastDate}
+          disabled={handleDisabledDate}
           captionLayout="dropdown"
           modifiersClassNames={{
             selected: 'selected',
@@ -54,12 +54,12 @@ const MeetingCalendar = () => {
       {!meetingInfo && (
         <DayPicker
           selected={selected}
-          onSelect={handleDate}
+          onSelect={handleSelectedDate}
           mode="single"
           locale={ko}
           fromYear={2022}
           toYear={2026}
-          disabled={isPastDate}
+          disabled={handleDisabledDate}
           captionLayout="dropdown"
           modifiersClassNames={{
             selected: 'selected',

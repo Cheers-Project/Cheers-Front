@@ -12,13 +12,13 @@ import StyledButton from 'components/common/StyledButton';
 const MeetingNav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const { alarmModal } = useSelector(({ modal }) => modal);
   const { location, error } = useCurrentLocation();
   const { searchParams } = useCurrentQuery();
+
   const { sort } = searchParams;
 
-  const handleNavigate = () => {
+  const handleNearbyMeetingNavigate = () => {
     if (!location || error) {
       dispatch(toggleModal({ target: 'alarmModal', visible: true }));
       return;
@@ -27,7 +27,7 @@ const MeetingNav = () => {
     navigate(`/meeting?sort=near&lon=${location?.lon}&lat=${location?.lat}`);
   };
 
-  const handleModal = () => {
+  const handleModalVisible = () => {
     dispatch(toggleModal({ target: 'alarmModal', visible: false }));
   };
 
@@ -52,7 +52,7 @@ const MeetingNav = () => {
         </li>
         <li className="nav-item">
           <button
-            onClick={handleNavigate}
+            onClick={handleNearbyMeetingNavigate}
             className={sort === 'near' ? 'nav-link active' : 'nav-link'}
           >
             근처 모임
@@ -65,7 +65,7 @@ const MeetingNav = () => {
             <div className="notice-wrapper">
               <p className="notice-text">위치 권한을 설정해주세요.</p>
               <StyledButton
-                onClick={handleModal}
+                onClick={handleModalVisible}
                 className="confirm-btn"
                 cherry
               >

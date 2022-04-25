@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { UserOutlined } from '@ant-design/icons';
 import { throttle } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 
-import MenuList from './MenuList';
+import MenuList from 'components/common/MenuList';
 import { toggleModal } from 'redux/modules/modal';
 import * as userAPI from 'api/user';
-import { css } from 'styled-components';
 
 const Header = ({ black }) => {
   const dispatch = useDispatch();
-
   const [isScrolled, setIsScrolled] = useState(false);
-
   const menuModal = useSelector(({ modal }) => {
     return modal.menuModal;
   });
@@ -26,11 +23,11 @@ const Header = ({ black }) => {
     staleTime: Infinity,
   });
 
-  const handleMenuModal = () => {
+  const handleMenuModalVisible = () => {
     dispatch(toggleModal({ target: 'menuModal', visible: !menuModal }));
   };
 
-  const onScroll = throttle(() => {
+  const handleScroll = throttle(() => {
     if (window.scrollY > 20) {
       setIsScrolled(true);
     } else {
@@ -42,11 +39,11 @@ const Header = ({ black }) => {
     if (window.scrollY > 20) {
       setIsScrolled(true);
     }
-    window.addEventListener('scroll', onScroll);
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, [onScroll]);
+  }, [handleScroll]);
 
   return (
     <>
@@ -66,7 +63,7 @@ const Header = ({ black }) => {
               모임
             </Link>
           </MidNav>
-          <RightNav onClick={handleMenuModal}>
+          <RightNav onClick={handleMenuModalVisible}>
             {data?.userInfo?.profileImg ? (
               <img
                 src={data.userInfo.profileImg}
@@ -79,7 +76,7 @@ const Header = ({ black }) => {
           </RightNav>
           {menuModal && <MenuList userInfo={data?.userInfo} />}
         </HeaderInner>
-        {menuModal && <MenuListOuter onClick={handleMenuModal} />}
+        {menuModal && <MenuListOuter onClick={handleMenuModalVisible} />}
       </HeaderOuter>
     </>
   );

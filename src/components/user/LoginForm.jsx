@@ -10,26 +10,18 @@ import StyledInput from 'components/common/StyledInput';
 import ErrorMessage from 'components/common/ErrorMessage';
 import loginSchema from 'utils/validation/loginSchema';
 import { initializeModal, openUserModal } from 'redux/modules/modal';
-
 import * as userAPI from 'api/user';
 
 const LoginForm = () => {
-  const dispatch = useDispatch();
-  const queryClient = useQueryClient();
-
-  const [errMsg, setErrMsg] = useState('');
-
-  const changeModal = () => {
-    dispatch(openUserModal({ modal: 'registModal' }));
-  };
-
-  // 카카오 로그인 페이지 이동
   const {
     REACT_APP_KAKAO_API_KEY: KAKAO_API_KEY,
     REACT_APP_KAKAO_REDIRECT_URI: KAKAO_REDIRECT_URI,
   } = process.env;
-
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
+
+  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+  const [errMsg, setErrMsg] = useState('');
 
   const {
     register,
@@ -51,12 +43,19 @@ const LoginForm = () => {
     },
   });
 
-  const onSubmit = (data) => {
+  const handleModalVisible = () => {
+    dispatch(openUserModal({ modal: 'registModal' }));
+  };
+
+  const handleLoginFormSubmit = (data) => {
     mutation.mutate(data);
   };
 
   return (
-    <LoginFormWrapper autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+    <LoginFormWrapper
+      autoComplete="off"
+      onSubmit={handleSubmit(handleLoginFormSubmit)}
+    >
       <div className="input-container">
         <label className="over-text" htmlFor="idInput">
           이메일(아이디)
@@ -98,7 +97,11 @@ const LoginForm = () => {
       <div className="guide-container">
         <p>
           회원이 아니신가요?{' '}
-          <button onClick={changeModal} errors={errors} className="regist-btn">
+          <button
+            onClick={handleModalVisible}
+            errors={errors}
+            className="regist-btn"
+          >
             회원 가입
           </button>
         </p>
