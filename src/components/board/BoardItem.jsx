@@ -13,6 +13,7 @@ const BoardItem = ({ boardInfo }) => {
     const { _id: id } = boardInfo;
     navigate(`/board/${id}`);
   };
+  console.log('render');
   return (
     <BoardItemWrapper onClick={handleRouter}>
       <LeftWrapper>
@@ -96,4 +97,4 @@ const BoardSubInfoWrapper = styled.div`
   }
 `;
 
-export default BoardItem;
+export default React.memo(BoardItem);
