@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
+
 import * as boardAPI from 'api/board';
 
 const useBoardQuery = (type) => {
