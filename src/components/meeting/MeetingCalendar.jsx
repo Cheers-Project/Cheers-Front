@@ -26,7 +26,7 @@ const MeetingCalendar = () => {
   };
 
   useEffect(() => {
-    setSelected(meetingInfo ? new Date(meetingInfo.meetingDate) : '');
+    setSelected(meetingInfo ? new Date(meetingInfo.meetingDate) : new Date());
   }, [meetingInfo]);
 
   return (
