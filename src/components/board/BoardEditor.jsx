@@ -1,21 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Editor } from '@toast-ui/react-editor';
 import { useMutation, useQueryClient } from 'react-query';
 
 import * as boardAPI from 'api/board';
 import StyledInput from 'components/common/StyledInput';
 import useBoardQuery from 'hooks/useBoardQuery';
+import StyledButton from 'components/common/StyledButton';
 
 const BoardEditor = () => {
   const navigate = useNavigate();
-  const editor = useRef(null);
   const queryClient = useQueryClient();
-  const { boardInfo } = useBoardQuery('update');
+  const editor = useRef(null);
 
   const [title, setTitle] = useState('');
   const [imgKeys, setImgKeys] = useState([]);
+
+  const { boardInfo } = useBoardQuery('update');
 
   const writeBoard = useMutation(boardAPI.writeBoard, {
     mutationKey: ['boards'],
@@ -35,8 +37,27 @@ const BoardEditor = () => {
     },
   });
 
-  const changeTitle = (e) => {
+  const handleTitleChange = (e) => {
     setTitle(e.target.value);
+  };
+
+  const handleBoardSubmit = () => {
+    const contents = editor.current.getInstance().getHTML();
+    if (!title) {
+      alert('제목을 입력해주세요');
+      return;
+    }
+
+    const payload = {
+      title,
+      contents,
+      imgKeys,
+    };
+    if (boardInfo) {
+      updateBoard.mutate({ payload, id: boardInfo._id });
+      return;
+    }
+    writeBoard.mutate(payload);
   };
 
   useEffect(() => {
@@ -61,36 +82,13 @@ const BoardEditor = () => {
     editor.current.getInstance().setHTML(boardInfo?.contents);
   }, [boardInfo]);
 
-  const onSubmit = () => {
-    const contents = editor.current.getInstance().getHTML();
-    if (!title) {
-      alert('제목을 입력해주세요');
-      return;
-    }
-
-    const payload = {
-      title,
-      contents,
-      imgKeys,
-    };
-    if (boardInfo) {
-      updateBoard.mutate({ payload, id: boardInfo._id });
-      return;
-    }
-    writeBoard.mutate(payload);
-  };
-
-  const handleCancelBtn = () => {
-    navigate(-1);
-  };
-
   return (
     <BoardEditorWrapper>
       <Input
         id="boardTitle"
         type="text"
         placeholder="제목을 입력하세요."
-        onChange={changeTitle}
+        onChange={handleTitleChange}
         defaultValue={boardInfo && boardInfo.title}
       />
       <div className="editor-wrapper">
@@ -111,12 +109,12 @@ const BoardEditor = () => {
         />
       </div>
       <ButtonWrapper>
-        <button onClick={onSubmit} className="upload-btn">
+        <StyledButton cherry onClick={handleBoardSubmit}>
           {!boardInfo ? '업로드' : '수정'}
-        </button>
-        <button onClick={handleCancelBtn} className="cancle-btn">
+        </StyledButton>
+        <StyledButton to={-1} className="cancle-btn">
           취소
-        </button>
+        </StyledButton>
       </ButtonWrapper>
     </BoardEditorWrapper>
   );
@@ -171,33 +169,6 @@ const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 2rem;
-
-  > button {
-    width: 5rem;
-    font-size: 1.3rem;
-    margin-right: 0.5rem;
-    padding: 1rem 0;
-    color: #fff;
-    border-radius: 0.5rem;
-    transition: 0.2s background-color;
-    @media screen and (min-width: 768px) {
-      width: 8rem;
-      font-size: 1.5rem;
-    }
-  }
-
-  .upload-btn {
-    background-color: #db428e;
-    &:hover {
-      background-color: #c22d77;
-    }
-  }
-  .cancle-btn {
-    background-color: #ccc;
-    &:hover {
-      background-color: #aaa;
-    }
-  }
 `;
 
 export default BoardEditor;

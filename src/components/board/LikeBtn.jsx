@@ -17,7 +17,7 @@ const LikeBtn = ({ boardInfo }) => {
     },
   });
 
-  const handleLikeBtn = () => {
+  const handleLikeChange = () => {
     updateLike.mutate(boardInfo._id);
   };
 
@@ -25,7 +25,7 @@ const LikeBtn = ({ boardInfo }) => {
     <LikeWrapper>
       <LikeFilled
         className={isLiked ? 'like-active' : 'like'}
-        onClick={handleLikeBtn}
+        onClick={handleLikeChange}
       />
       <p className="like-cnt">{boardInfo.like}</p>
     </LikeWrapper>

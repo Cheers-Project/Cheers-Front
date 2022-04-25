@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 const BoardNav = () => {
   const { searchParams } = useCurrentQuery();
-
   const { sort } = searchParams;
 
   return (
@@ -13,21 +12,19 @@ const BoardNav = () => {
       <NavList>
         <Link
           to={`/board?sort=recent&page=1`}
-          className={
-            sort === 'recent' ? 'recent nav-item active' : 'recent nav-item'
-          }
+          className={sort === 'recent' ? 'nav-item active' : 'recent nav-item'}
         >
           최신순
         </Link>
         <Link
           to={`/board?sort=view&page=1`}
-          className={sort === 'view' ? 'like nav-item active' : 'view nav-item'}
+          className={sort === 'view' ? 'nav-item active' : 'view nav-item'}
         >
           조회순
         </Link>
         <Link
           to={`/board?sort=like&page=1`}
-          className={sort === 'like' ? 'like nav-item active' : 'like nav-item'}
+          className={sort === 'like' ? 'nav-item active' : 'like nav-item'}
         >
           인기순
         </Link>

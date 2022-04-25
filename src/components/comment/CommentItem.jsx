@@ -6,14 +6,15 @@ import { format } from 'date-fns';
 
 import * as commentAPI from 'api/comment';
 import useOwnedQuery from 'hooks/useOwnedQuery';
-import CommentUpdater from './CommentUpdater';
+import CommentUpdater from 'components/comment/CommentUpdater';
 
 const CommentItem = ({ commentInfo }) => {
-  const [update, setUpdate] = useState(false);
   const queryClient = useQueryClient();
-  const { isOwned } = useOwnedQuery(commentInfo.writer._id);
+  const [updateState, setUpdateState] = useState(false);
   const { id: postId } = useParams();
   const createdDate = format(new Date(commentInfo.createdDate), 'yyyy-MM-dd');
+
+  const { isOwned } = useOwnedQuery(commentInfo.writer._id);
 
   const deleteComment = useMutation(commentAPI.deleteComment, {
     onSuccess: () => {
@@ -21,12 +22,12 @@ const CommentItem = ({ commentInfo }) => {
     },
   });
 
-  const handleDeleteBtn = () => {
+  const handleCommentDelete = () => {
     deleteComment.mutate(commentInfo._id);
   };
 
-  const handleUpdate = () => {
-    setUpdate(!update);
+  const handleUpdateStateChange = () => {
+    setUpdateState(!updateState);
   };
 
   return (
@@ -45,19 +46,22 @@ const CommentItem = ({ commentInfo }) => {
             <div className="comment-time">{createdDate}</div>
           </div>
         </CommentInfoWrapper>
-        {isOwned && !update && (
+        {isOwned && !updateState && (
           <UpdateWrapper>
-            <button onClick={handleUpdate}>수정</button>
-            <button onClick={handleDeleteBtn}>삭제</button>
+            <button onClick={handleUpdateStateChange}>수정</button>
+            <button onClick={handleCommentDelete}>삭제</button>
           </UpdateWrapper>
         )}
       </CommentInfoOuter>
-      {!update ? (
+      {!updateState ? (
         <ContentWrapper>
           <p>{commentInfo.content}</p>
         </ContentWrapper>
       ) : (
-        <CommentUpdater commentInfo={commentInfo} handleUpdate={handleUpdate} />
+        <CommentUpdater
+          commentInfo={commentInfo}
+          handleUpdateStateChange={handleUpdateStateChange}
+        />
       )}
     </CommentItemWrapper>
   );
@@ -118,4 +122,4 @@ const ContentWrapper = styled.div`
   font-size: ${({ theme }) => theme.fontSize.md};
 `;
 
-export default CommentItem;
+export default React.memo(CommentItem);

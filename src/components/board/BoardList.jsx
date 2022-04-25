@@ -12,7 +12,7 @@ const BoardList = () => {
   const navigate = useNavigate();
   const { query } = useCurrentQuery();
 
-  const { data } = useQuery(
+  const { data: BoardsData } = useQuery(
     ['boards', query],
     () => boardAPI.getBoards(query),
     {
@@ -28,12 +28,15 @@ const BoardList = () => {
   return (
     <BoardListOuter>
       <BoardListWrapper>
-        {data?.boards.map((board) => (
+        {BoardsData?.boards.map((board) => (
           <BoardItem key={board._id} boardInfo={board} className="board-item" />
         ))}
       </BoardListWrapper>
-      {data?.maxPage && (
-        <Pagination maxPage={data.maxPage} pageNums={data.pageNums} />
+      {BoardsData?.maxPage && (
+        <Pagination
+          maxPage={BoardsData.maxPage}
+          pageNums={BoardsData.pageNums}
+        />
       )}
     </BoardListOuter>
   );

@@ -7,7 +7,7 @@ import * as commentAPI from 'api/comment';
 import StyledInput from 'components/common/StyledInput';
 import StyledButton from 'components/common/StyledButton';
 
-const CommentUpdater = ({ commentInfo, handleUpdate }) => {
+const CommentUpdater = ({ commentInfo, handleUpdateStateChange }) => {
   const queryClient = useQueryClient();
   const { id: postId } = useParams();
   const [content, setContent] = useState(commentInfo.content);
@@ -15,19 +15,18 @@ const CommentUpdater = ({ commentInfo, handleUpdate }) => {
   const updateComment = useMutation(commentAPI.updateComment, {
     onSuccess: (data) => {
       queryClient.invalidateQueries(['comments', postId]);
-      handleUpdate();
+      handleUpdateStateChange();
     },
   });
 
-  const changeContnet = (e) => {
+  const handleContnetChange = (e) => {
     setContent(e.target.value);
   };
 
-  const handleUpdateBtn = () => {
+  const handleCommentUpdate = () => {
     const payload = {
       content,
     };
-    console.log(payload);
     updateComment.mutate({ payload, id: commentInfo._id });
   };
 
@@ -41,13 +40,13 @@ const CommentUpdater = ({ commentInfo, handleUpdate }) => {
         autoComplete="off"
         value={content}
         className="comment-input"
-        onChange={changeContnet}
+        onChange={handleContnetChange}
       />
       <ButtonWraper>
-        <StyledButton cherry responsive onClick={handleUpdateBtn}>
+        <StyledButton cherry responsive onClick={handleCommentUpdate}>
           수정
         </StyledButton>
-        <StyledButton responsive onClick={handleUpdate}>
+        <StyledButton responsive onClick={handleUpdateStateChange}>
           취소
         </StyledButton>
       </ButtonWraper>

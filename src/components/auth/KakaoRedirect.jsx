@@ -1,17 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import * as userAPI from 'api/user';
-
-import Spinner from 'components/auth/Spinner';
 import { useQuery, useQueryClient } from 'react-query';
 
+import * as userAPI from 'api/user';
+import useCurrentQuery from 'hooks/useCurrentQuery';
+import Spinner from 'components/auth/Spinner';
+
 const KakaoRedirect = () => {
+  const { searchParams } = useCurrentQuery();
+  const { code } = searchParams;
   const navigate = useNavigate();
-
   const queryClient = useQueryClient();
-
-  const code = new URL(window.location.href).searchParams.get('code');
 
   useQuery(
     ['kakaoCallback'],
@@ -22,9 +22,7 @@ const KakaoRedirect = () => {
       onSuccess: (data) => {
         if (data.accessToken) {
           localStorage.setItem('accessToken', data.accessToken);
-
           queryClient.removeQueries('kakaoCallback');
-
           navigate('/');
         } else {
           localStorage.setItem('kakaoToken', data.kakaoToken);

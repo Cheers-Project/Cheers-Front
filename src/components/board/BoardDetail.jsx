@@ -1,24 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useMutation, useQueryClient } from 'react-query';
 
+import * as boardAPI from 'api/board';
 import useOwnedQuery from 'hooks/useOwnedQuery';
+import useBoardQuery from 'hooks/useBoardQuery';
 import UserInfo from 'components/board/UserInfo';
 import DateInfo from 'components/board/DateInfo';
-import DeleteBtn from 'components/board/DeleteBtn';
-import LikeBtn from './LikeBtn';
-import useBoardQuery from 'hooks/useBoardQuery';
-import BoardViewer from './BoardViewer';
+import LikeBtn from 'components/board/LikeBtn';
+import BoardViewer from 'components/board/BoardViewer';
 import CommentList from 'components/comment/CommentList';
 
 const BoardDetail = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { id } = useParams();
 
   const { boardInfo, isSuccess } = useBoardQuery('detail');
   const { isOwned, userId } = useOwnedQuery(boardInfo?.writer._id);
+  const deleteBoard = useMutation(boardAPI.deleteBoard, {
+    onSuccess: (data, id) => {
+      queryClient.invalidateQueries(['boards']);
+    },
+  });
 
-  const handleRoute = () => {
-    navigate(`/board/write/${boardInfo?._id}`);
+  const handleDeleteBoard = () => {
+    deleteBoard.mutate(id);
+    navigate('/board?sort=recent&page=1');
   };
 
   return (
@@ -30,8 +39,12 @@ const BoardDetail = () => {
               <Title className="board-title">{boardInfo.title}</Title>
               {isOwned && (
                 <UpdateWrapper>
-                  <button onClick={handleRoute}>수정</button>
-                  <DeleteBtn />
+                  <Link to={`/board/write/${boardInfo?._id}`}>
+                    <button className="btn">수정</button>
+                  </Link>
+                  <button className="btn" onClick={handleDeleteBoard}>
+                    삭제
+                  </button>
                 </UpdateWrapper>
               )}
             </TopBoardInfoWrapper>
@@ -43,7 +56,7 @@ const BoardDetail = () => {
               </SubInto>
             </BottomBoardInfoWrapper>
           </BoardInfo>
-          <BoardViewer />
+          <BoardViewer boardInfo={boardInfo} />
           <LikeBtn boardInfo={boardInfo} userId={userId} />
           <CommentList />
         </BoardDetailWrapper>
@@ -106,7 +119,7 @@ const SubInto = styled.div`
 const UpdateWrapper = styled.div`
   display: flex;
   gap: 1rem;
-  button {
+  .btn {
     color: ${({ theme }) => theme.color.darkGray};
     font-size: ${({ theme }) => theme.fontSize.md};
     transition: 0.2s;

@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-import useBoardQuery from 'hooks/useBoardQuery';
+
 import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
 import styled from 'styled-components';
 
-const BoardViewer = () => {
-  const { boardInfo } = useBoardQuery('detail');
-
+const BoardViewer = ({ boardInfo }) => {
   useEffect(() => {
     if (boardInfo) {
       const el = document.getElementById('viewer');
