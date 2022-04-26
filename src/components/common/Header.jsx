@@ -40,7 +40,9 @@ const Header = ({ black }) => {
       setIsScrolled(true);
     }
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [handleScroll]);
 
   return (
