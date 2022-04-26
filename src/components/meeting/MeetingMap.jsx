@@ -4,11 +4,12 @@ import styled from 'styled-components';
 
 import { changeLocation } from 'redux/modules/meeting';
 import useMeetingQuery from 'hooks/useMeetingQuery';
+import useCurrentLocation from 'hooks/useCurrentLocation';
 
 const MeetingMap = ({ keyword }) => {
-  const { meetingInfo } = useMeetingQuery();
-
   const dispatch = useDispatch();
+  const { meetingInfo } = useMeetingQuery();
+  const { location, loading, error } = useCurrentLocation();
 
   useEffect(() => {
     const { kakao } = window;
@@ -94,6 +95,7 @@ const MeetingMap = ({ keyword }) => {
 
       // 검색어가 존재하지 않으면 현재 위치를 보여줌
       if (!keyword) return;
+      console.log('키워드로 검색');
       ps.keywordSearch(keyword, handleSearchCallback);
     };
 
@@ -108,21 +110,23 @@ const MeetingMap = ({ keyword }) => {
       handleKakaoMapCreate(position);
     } else {
       // 위치 정보가 허용 되어있으면 현재 위치, 아니면 서울 시청을 보여줌
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          handleKakaoMapCreate(position);
-        },
-        (error) => {
-          handleKakaoMapCreate({
-            coords: {
-              longitude: '126.9784147',
-              latitude: '37.5666805',
-            },
-          });
-        },
-      );
+      if (!loading && location) {
+        handleKakaoMapCreate({
+          coords: {
+            longitude: location.lon,
+            latitude: location.lat,
+          },
+        });
+      } else if (error) {
+        handleKakaoMapCreate({
+          coords: {
+            longitude: '126.9784147',
+            latitude: '37.5666805',
+          },
+        });
+      }
     }
-  }, [keyword, dispatch, meetingInfo]);
+  }, [keyword, dispatch, meetingInfo, loading, location, error]);
 
   return <MapWrapper id="map"></MapWrapper>;
 };
