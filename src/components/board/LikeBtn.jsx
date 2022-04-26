@@ -7,9 +7,9 @@ import * as boardAPI from 'api/board';
 import { useMutation, useQueryClient } from 'react-query';
 import useLikeQuery from 'hooks/useLikeQuery';
 import { openUserModal, toggleModal } from 'redux/modules/modal';
-import ModalWrapper from 'components/common/ModalWrapper';
 import StyledButton from 'components/common/StyledButton';
 import UserModal from 'components/user/UserModal';
+import AlarmModal from 'components/common/AlarmModal';
 
 const LikeBtn = ({ boardInfo }) => {
   const { alarmModal } = useSelector(({ modal }) => modal);
@@ -52,16 +52,14 @@ const LikeBtn = ({ boardInfo }) => {
         <p className="like-cnt">{boardInfo.like}</p>
       </LikeWrapper>
       {alarmModal && (
-        <ModalWrapper>
-          <AlarmWrapper>
-            <p className="alarm-msg">로그인이 필요합니다.</p>
-            <div className="btn-wrapper">
-              <StyledButton cherry responsive onClick={handleLoginModalVisible}>
-                로그인
-              </StyledButton>
-            </div>
-          </AlarmWrapper>
-        </ModalWrapper>
+        <AlarmModal>
+          <p className="notice-text">로그인이 필요합니다.</p>
+          <div className="confirm-btn">
+            <StyledButton cherry responsive onClick={handleLoginModalVisible}>
+              로그인
+            </StyledButton>
+          </div>
+        </AlarmModal>
       )}
       {userModal && <UserModal />}
     </>
