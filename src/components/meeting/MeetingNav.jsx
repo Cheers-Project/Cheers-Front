@@ -13,23 +13,26 @@ import AlarmModal from 'components/common/AlarmModal';
 const MeetingNav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { alarmModal } = useSelector(({ modal }) => modal);
+  const { alarmModal } = useSelector(({ modal }) => modal.alarmModal);
   const { location, error, loading } = useCurrentLocation();
   const { searchParams } = useCurrentQuery();
 
   const { sort } = searchParams;
 
-  const handleNearbyMeetingNavigate = () => {
-    if (!location || error) {
+  const handleLocationCheck = () => {
+    if (!location || error || loading) {
       dispatch(toggleModal({ target: 'alarmModal', visible: true }));
-      return;
+      return false;
     }
-    if (loading) {
-      dispatch(toggleModal({ target: 'alarmModal', visible: true }));
-      return;
-    }
+    return true;
+  };
 
-    navigate(`/meeting?sort=near&lon=${location?.lon}&lat=${location?.lat}`);
+  const handleNearbyMeetingNavigate = () => {
+    const locationData = handleLocationCheck();
+
+    if (locationData) {
+      navigate(`/meeting?sort=near&lon=${location?.lon}&lat=${location?.lat}`);
+    }
   };
 
   const handleModalClose = () => {
