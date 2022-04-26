@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -35,6 +35,12 @@ const MeetingNav = () => {
   const handleModalClose = () => {
     dispatch(toggleModal({ target: 'alarmModal', visible: false }));
   };
+
+  useEffect(() => {
+    if (!loading && location) {
+      dispatch(toggleModal({ target: 'alarmModal', visible: false }));
+    }
+  }, [location, loading, dispatch]);
 
   return (
     <MeetingNavWrapper>
