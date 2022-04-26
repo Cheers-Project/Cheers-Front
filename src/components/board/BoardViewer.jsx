@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
+import styled from 'styled-components';
 
 import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
-import styled from 'styled-components';
 
 const BoardViewer = ({ boardInfo }) => {
   useEffect(() => {

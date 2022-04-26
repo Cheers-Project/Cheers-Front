@@ -69,7 +69,8 @@ const MeetingMap = ({ keyword }) => {
     marker.setMap(kakaoMap);
     infowindow.open(kakaoMap, marker);
     kakaoMap.setCenter(meetingLocation);
-  }, [meetingInfo]);
+    return () => setKakaoMap(null);
+  }, [meetingInfo, kakaoMap]);
 
   useEffect(() => {
     if (!kakaoMap || !keyword) return;
