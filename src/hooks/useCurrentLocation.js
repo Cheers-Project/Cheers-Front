@@ -15,7 +15,7 @@ const useCurrentLocation = () => {
       setLocation({ lon, lat });
       setError(null);
       setLoading(false);
-      dispatch(toggleModal({ target: 'alarmModal', visible: false }));
+      // dispatch(toggleModal({ target: 'alarmModal', visible: false }));
     };
 
     const handleLoadLocationFailure = (e) => {
