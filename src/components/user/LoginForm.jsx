@@ -57,12 +57,12 @@ const LoginForm = () => {
       onSubmit={handleSubmit(handleLoginFormSubmit)}
     >
       <div className="input-container">
-        <label className="over-text" htmlFor="idInput">
+        <label className="over-text" htmlFor="inputId">
           이메일(아이디)
         </label>
         <StyledInput
           {...register('userId')}
-          id="idInput"
+          id="inputId"
           name="userId"
           type="text"
           placeholder="아이디를 입력해 주세요."
@@ -71,12 +71,12 @@ const LoginForm = () => {
         <ErrorMessage>{errors.userId && '아이디를 확인해주세요'}</ErrorMessage>
       </div>
       <div className="input-container">
-        <label className="over-text" htmlFor="pwInput">
+        <label className="over-text" htmlFor="inputPw">
           비밀번호
         </label>
         <StyledInput
           {...register('userPw')}
-          id="pwInput"
+          id="inputPw"
           name="userPw"
           type="password"
           placeholder="비밀번호를 입력해 주세요."

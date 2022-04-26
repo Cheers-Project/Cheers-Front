@@ -3,20 +3,24 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { Editor } from '@toast-ui/react-editor';
 import { useMutation, useQueryClient } from 'react-query';
+import { useDispatch, useSelector } from 'react-redux';
 
 import * as boardAPI from 'api/board';
 import StyledInput from 'components/common/StyledInput';
 import useBoardQuery from 'hooks/useBoardQuery';
 import StyledButton from 'components/common/StyledButton';
+import AlarmModal from 'components/common/AlarmModal';
+import { toggleModal } from 'redux/modules/modal';
 
 const BoardEditor = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const editor = useRef(null);
-
   const [title, setTitle] = useState('');
   const [imgKeys, setImgKeys] = useState([]);
-
+  const [error, setError] = useState('');
+  const alarmModal = useSelector(({ modal }) => modal.alarmModal);
   const { boardInfo } = useBoardQuery('update');
 
   const writeBoard = useMutation(boardAPI.writeBoard, {
@@ -34,14 +38,19 @@ const BoardEditor = () => {
     },
   });
 
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  };
-
   const handleBoardSubmit = () => {
     const contents = editor.current.getInstance().getHTML();
+    const markdown = editor.current.getInstance().getMarkdown();
+
     if (!title) {
-      alert('제목을 입력해주세요');
+      setError('게시물 제목을 입력해주세요');
+      dispatch(toggleModal({ target: 'alarmModal', visible: true }));
+      return;
+    }
+
+    if (!markdown) {
+      setError('게시물 내용을 입력해주세요');
+      dispatch(toggleModal({ target: 'alarmModal', visible: true }));
       return;
     }
 
@@ -55,6 +64,14 @@ const BoardEditor = () => {
       return;
     }
     writeBoard.mutate(payload);
+  };
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const handleModalClose = () => {
+    dispatch(toggleModal({ target: 'alarmModal', visible: false }));
   };
 
   useEffect(() => {
@@ -80,40 +97,54 @@ const BoardEditor = () => {
   }, [boardInfo]);
 
   return (
-    <BoardEditorWrapper>
-      <Input
-        id="boardTitle"
-        type="text"
-        placeholder="제목을 입력하세요."
-        onChange={handleTitleChange}
-        defaultValue={boardInfo && boardInfo.title}
-      />
-      <div className="editor-wrapper">
-        <Editor
-          className="editor"
-          height="100%"
-          previewStyle={false}
-          toolbarItems={[
-            ['heading', 'bold', 'italic', 'strike'],
-            ['hr', 'quote'],
-            ['ul', 'ol', 'indent', 'outdent'],
-            ['image', 'link'],
-          ]}
-          previewHighlight={false}
-          initialEditType="wysiwyg"
-          placeholder="여러분의 이야기를 자유롭게 적으세요."
-          ref={editor}
+    <>
+      <BoardEditorWrapper>
+        <Input
+          id="boardTitle"
+          type="text"
+          placeholder="제목을 입력하세요."
+          onChange={handleTitleChange}
+          defaultValue={boardInfo && boardInfo.title}
         />
-      </div>
-      <ButtonWrapper>
-        <StyledButton cherry onClick={handleBoardSubmit}>
-          {!boardInfo ? '업로드' : '수정'}
-        </StyledButton>
-        <StyledButton to={-1} className="cancle-btn">
-          취소
-        </StyledButton>
-      </ButtonWrapper>
-    </BoardEditorWrapper>
+        <div className="editor-wrapper">
+          <Editor
+            className="editor"
+            height="100%"
+            previewStyle={false}
+            toolbarItems={[
+              ['heading', 'bold', 'italic', 'strike'],
+              ['hr', 'quote'],
+              ['ul', 'ol', 'indent', 'outdent'],
+              ['image', 'link'],
+            ]}
+            previewHighlight={false}
+            initialEditType="wysiwyg"
+            placeholder="여러분의 이야기를 자유롭게 적으세요."
+            ref={editor}
+          />
+        </div>
+        <ButtonWrapper>
+          <StyledButton cherry onClick={handleBoardSubmit}>
+            {!boardInfo ? '업로드' : '수정'}
+          </StyledButton>
+          <StyledButton to={-1} className="cancle-btn">
+            취소
+          </StyledButton>
+        </ButtonWrapper>
+      </BoardEditorWrapper>
+      {alarmModal && (
+        <AlarmModal>
+          <p className="notice-text">{error}</p>
+          <StyledButton
+            onClick={handleModalClose}
+            className="confirm-btn"
+            cherry
+          >
+            확인
+          </StyledButton>
+        </AlarmModal>
+      )}
+    </>
   );
 };
 

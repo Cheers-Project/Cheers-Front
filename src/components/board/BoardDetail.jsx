@@ -1,35 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useMutation, useQueryClient } from 'react-query';
 
-import * as boardAPI from 'api/board';
 import useOwnedQuery from 'hooks/useOwnedQuery';
 import useBoardQuery from 'hooks/useBoardQuery';
 import UserInfo from 'components/board/UserInfo';
 import DateInfo from 'components/board/DateInfo';
-import LikeBtn from 'components/board/LikeBtn';
 import BoardViewer from 'components/board/BoardViewer';
-import CommentList from 'components/comment/CommentList';
+import BoardAction from './BoardAction';
+import LikeBtn from './LikeBtn';
 
 const BoardDetail = () => {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const { id } = useParams();
-
   const { boardInfo, isSuccess } = useBoardQuery('detail');
   const { isOwned, userId } = useOwnedQuery(boardInfo?.writer._id);
-
-  const deleteBoard = useMutation(boardAPI.deleteBoard, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['boards']);
-    },
-  });
-
-  const handleDeleteBoard = () => {
-    deleteBoard.mutate(id);
-    navigate('/board?sort=recent&page=1');
-  };
 
   return (
     <>
@@ -38,16 +20,7 @@ const BoardDetail = () => {
           <BoardInfo>
             <TopBoardInfoWrapper>
               <Title className="board-title">{boardInfo.title}</Title>
-              {isOwned && (
-                <UpdateWrapper>
-                  <Link to={`/board/write/${boardInfo?._id}`}>
-                    <button className="btn">수정</button>
-                  </Link>
-                  <button className="btn" onClick={handleDeleteBoard}>
-                    삭제
-                  </button>
-                </UpdateWrapper>
-              )}
+              {isOwned && <BoardAction boardInfo={boardInfo} />}
             </TopBoardInfoWrapper>
             <BottomBoardInfoWrapper>
               <UserInfo boardInfo={boardInfo} />
@@ -58,8 +31,7 @@ const BoardDetail = () => {
             </BottomBoardInfoWrapper>
           </BoardInfo>
           <BoardViewer boardInfo={boardInfo} />
-          <LikeBtn boardInfo={boardInfo} userId={userId} />
-          <CommentList />
+          <LikeBtn userId={userId} />
         </BoardDetailWrapper>
       )}
     </>
@@ -117,16 +89,4 @@ const SubInto = styled.div`
   }
 `;
 
-const UpdateWrapper = styled.div`
-  display: flex;
-  gap: 1rem;
-  .btn {
-    color: ${({ theme }) => theme.color.darkGray};
-    font-size: ${({ theme }) => theme.fontSize.md};
-    transition: 0.2s;
-    &:hover {
-      color: ${({ theme }) => theme.color.lightCherry};
-    }
-  }
-`;
 export default BoardDetail;
