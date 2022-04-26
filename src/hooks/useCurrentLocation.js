@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { toggleModal } from 'redux/modules/modal';
-
 const useCurrentLocation = () => {
   const dispatch = useDispatch();
   const [location, setLocation] = useState();
@@ -36,6 +34,8 @@ const useCurrentLocation = () => {
     };
     // 현재 디바이스의 경도, 위도를 가져옴
     handleLoadLocation();
+
+    return () => handleLoadLocation();
   }, [dispatch]);
 
   return { location, error, loading };
