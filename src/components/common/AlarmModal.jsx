@@ -26,10 +26,6 @@ const AlarmWrapper = styled.div`
     text-align: center;
     padding-bottom: 2rem;
   }
-  .confirm-btn {
-    align-self: flex-end;
-    margin-top: 2rem;
-  }
 
   @keyframes fadeIn {
     from {
