@@ -1,10 +1,11 @@
-import useOwnedQuery from 'hooks/useOwnedQuery';
 import React from 'react';
+import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
 import { toggleModal } from 'redux/modules/modal';
-import styled from 'styled-components';
 import DeleteBoardAlarm from './DeleteBoardAlarm';
+import useOwnedQuery from 'hooks/useOwnedQuery';
 
 const BoardAction = ({ boardInfo }) => {
   const dispatch = useDispatch();

@@ -27,21 +27,20 @@ const Header = ({ black }) => {
     dispatch(toggleModal({ target: 'menuModal', visible: !menuModal }));
   };
 
-  const handleScroll = throttle(() => {
-    if (window.scrollY > 20) {
-      setIsScrolled(true);
-    } else {
-      setIsScrolled(false);
-    }
-  }, 200);
-
   useEffect(() => {
+    const handleScroll = throttle(() => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    }, 200);
     if (window.scrollY > 20) {
       setIsScrolled(true);
     }
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
+  }, [isScrolled]);
 
   return (
     <>
