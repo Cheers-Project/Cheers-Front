@@ -13,7 +13,7 @@ import AlarmModal from 'components/common/AlarmModal';
 const MeetingNav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { alarmModal } = useSelector(({ modal }) => modal.alarmModal);
+  const alarmModal = useSelector(({ modal }) => modal.alarmModal);
   const { location, error, loading } = useCurrentLocation();
   const { searchParams } = useCurrentQuery();
 
@@ -107,6 +107,7 @@ const MeetingNavWrapper = styled.div`
   display: flex;
   padding: 3rem 0;
   margin-left: 1rem;
+
   .nav-list {
     display: flex;
     align-items: center;
@@ -145,6 +146,18 @@ const MeetingNavWrapper = styled.div`
 const NoticeWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
+  .notice-text {
+    width: 100%;
+    font-size: ${({ theme }) => theme.fontSize.md};
+    font-weight: 600;
+    text-align: center;
+    padding-bottom: 2rem;
+  }
+  .confirm-btn {
+    align-self: flex-end;
+    margin-top: 2rem;
+  }
   .loading-wrapper {
     align-self: center;
     margin-top: 2rem;

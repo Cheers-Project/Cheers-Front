@@ -35,7 +35,7 @@ const useCurrentLocation = () => {
     // 현재 디바이스의 경도, 위도를 가져옴
     handleLoadLocation();
 
-    return handleLoadLocation;
+    return () => handleLoadLocation();
   }, [dispatch]);
 
   return { location, error, loading };
