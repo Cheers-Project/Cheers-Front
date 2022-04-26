@@ -14,6 +14,7 @@ const CommentList = () => {
     <CommentListOuter>
       <CommentInfo>
         {comments && <h3>댓글 ( {comments.length} )</h3>}
+        {!userId && <p>로그인후 이용 가능합니다.</p>}
       </CommentInfo>
       {userId && <CommentWriter />}
       <CommentListWrapper>
@@ -32,9 +33,16 @@ const CommentListOuter = styled.div`
 
 const CommentInfo = styled.div`
   padding: 2rem 0;
+  display: flex;
+  align-items: flex-end;
+  gap: 2rem;
   h3 {
-    font-size: ${({ theme }) => theme.fontSize.mdTitle};
+    font-size: ${({ theme }) => theme.fontSize.smTitle};
     font-weight: 600;
+  }
+  p {
+    font-size: ${({ theme }) => theme.fontSize.md};
+    color: ${({ theme }) => theme.color.darkGray};
   }
 `;
 
