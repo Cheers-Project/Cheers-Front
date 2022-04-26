@@ -2,16 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { LikeFilled } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useMutation, useQueryClient } from 'react-query';
 
 import * as boardAPI from 'api/board';
-import { useMutation, useQueryClient } from 'react-query';
 import useLikeQuery from 'hooks/useLikeQuery';
-import { openUserModal, toggleModal } from 'redux/modules/modal';
+import { toggleModal } from 'redux/modules/modal';
 import StyledButton from 'components/common/StyledButton';
 import AlarmModal from 'components/common/AlarmModal';
-import { useParams } from 'react-router-dom';
-import UserModal from 'components/user/UserModal';
-import useOwnedQuery from 'hooks/useOwnedQuery';
 
 const LikeBtn = ({ userId }) => {
   const dispatch = useDispatch();
@@ -19,9 +17,7 @@ const LikeBtn = ({ userId }) => {
   const queryClient = useQueryClient();
   const { board: boardInfo } = queryClient.getQueryData(['board', id]);
   const alarmModal = useSelector(({ modal }) => modal.alarmModal);
-  const userModal = useSelector(({ modal }) => {
-    return modal.userModal.isOpen;
-  });
+
   const isLiked = useLikeQuery(boardInfo.likeUsers);
 
   const updateLike = useMutation(['like', boardInfo._id], boardAPI.updateLike, {
@@ -31,9 +27,8 @@ const LikeBtn = ({ userId }) => {
     },
   });
 
-  const handleLoginModalVisible = () => {
+  const handleAlarmModalClose = () => {
     dispatch(toggleModal({ target: 'alarmModal', visible: false }));
-    dispatch(openUserModal({ modal: 'loginModal' }));
   };
 
   const handleLikeChange = () => {
@@ -56,15 +51,16 @@ const LikeBtn = ({ userId }) => {
       </LikeWrapper>
       {alarmModal && !userId && (
         <AlarmModal>
-          <p className="notice-text">로그인이 필요합니다.</p>
+          <AlarmText className="notice-text">
+            로그인 후 이용 가능합니다.
+          </AlarmText>
           <ButtonWrapper>
-            <StyledButton cherry responsive onClick={handleLoginModalVisible}>
-              로그인
+            <StyledButton cherry responsive onClick={handleAlarmModalClose}>
+              확인
             </StyledButton>
           </ButtonWrapper>
         </AlarmModal>
       )}
-      {userModal && !userId && <UserModal />}
     </>
   );
 };
@@ -95,6 +91,14 @@ const ButtonWrapper = styled.div`
   display: flex;
   align-self: flex-end;
   margin-top: 2rem;
+`;
+
+const AlarmText = styled.p`
+  width: 100%;
+  font-size: ${({ theme }) => theme.fontSize.md};
+  font-weight: 600;
+  text-align: center;
+  padding-bottom: 2rem;
 `;
 
 export default LikeBtn;
