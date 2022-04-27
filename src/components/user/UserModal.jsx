@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { CloseOutlined } from '@ant-design/icons';
 
-import ModalWrapper from 'components/common/ModalWrapper';
+import ModalOverlay from 'components/common/ModalOverlay';
 import LoginForm from 'components/user/LoginForm';
 import RegistForm from 'components/user/RegistForm';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,7 +19,7 @@ const UserModal = () => {
   };
 
   return (
-    <ModalWrapper>
+    <ModalOverlay>
       <ModalContentWrapper>
         <CloseOutlined className="close-btn" onClick={handleModalInitial} />
         {userModal.loginModal && (
@@ -36,7 +36,7 @@ const UserModal = () => {
           </>
         )}
       </ModalContentWrapper>
-    </ModalWrapper>
+    </ModalOverlay>
   );
 };
 

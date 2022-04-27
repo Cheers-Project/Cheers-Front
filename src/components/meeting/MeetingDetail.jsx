@@ -2,7 +2,6 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
-import { EyeFilled } from '@ant-design/icons';
 import { format } from 'date-fns';
 
 import useMeetingQuery from 'hooks/useMeetingQuery';
@@ -68,7 +67,7 @@ const MeetingDetail = () => {
           <MeetingTitleWrapper>
             <h2 className="meeting-title">{meetingInfo?.title}</h2>
             <div className="meeting-view">
-              <EyeFilled />
+              <p className="view-text">조회수</p>
               <div>{meetingInfo?.view}</div>
             </div>
           </MeetingTitleWrapper>
@@ -162,7 +161,7 @@ const MeetingDetailWrapper = styled.div`
 
 const MeetingTitleWrapper = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   .meeting-title {
     font-size: ${({ theme }) => theme.fontSize.lgTitle};
@@ -172,7 +171,7 @@ const MeetingTitleWrapper = styled.div`
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: ${({ theme }) => theme.fontSize.sm};
+    font-size: ${({ theme }) => theme.fontSize.md};
     color: ${({ theme }) => theme.color.darkGray};
   }
 `;
@@ -192,10 +191,10 @@ const MeetingSubInfoWrapper = styled.div`
     .user-nickname {
       font-size: ${({ theme }) => theme.fontSize.md};
       font-weight: 600;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.5rem;
     }
     .created-date {
-      font-size: ${({ theme }) => theme.fontSize.sm};
+      font-size: ${({ theme }) => theme.fontSize.md};
       color: ${({ theme }) => theme.color.darkGray};
     }
   }
