@@ -66,26 +66,6 @@ const MeetingDetail = () => {
         <MeetingDetailWrapper>
           <MeetingTitleWrapper>
             <h2 className="meeting-title">{meetingInfo?.title}</h2>
-            <div className="meeting-view">
-              <p className="view-text">조회수</p>
-              <div>{meetingInfo?.view}</div>
-            </div>
-          </MeetingTitleWrapper>
-          <MeetingSubInfoWrapper>
-            <div className="sub-info-inner">
-              <img
-                className="user-profile"
-                src={meetingInfo?.writer.profileImg}
-                alt="유저 프로필"
-              />
-              <div>
-                <p className="user-nickname">{meetingInfo?.writer.nickname}</p>
-                <div className="created-date">
-                  {meetingInfo &&
-                    format(new Date(meetingInfo.createdDate), 'yyyy-MM-dd')}
-                </div>
-              </div>
-            </div>
             {isOwned && (
               <div className="setting-btn-wrapper">
                 <button
@@ -99,7 +79,29 @@ const MeetingDetail = () => {
                 </button>
               </div>
             )}
-          </MeetingSubInfoWrapper>
+            <MeetingSubInfoWrapper>
+              <div className="sub-info-inner">
+                <img
+                  className="user-profile"
+                  src={meetingInfo?.writer.profileImg}
+                  alt="유저 프로필"
+                />
+                <div>
+                  <p className="user-nickname">
+                    {meetingInfo?.writer.nickname}
+                  </p>
+                  <div className="created-date">
+                    {meetingInfo &&
+                      format(new Date(meetingInfo.createdDate), 'yyyy-MM-dd')}
+                  </div>
+                </div>
+              </div>
+              <div className="meeting-view">
+                <p className="view-text">조회수</p>
+                <div>{meetingInfo?.view}</div>
+              </div>
+            </MeetingSubInfoWrapper>
+          </MeetingTitleWrapper>
           <MeetingContentsWrapper>
             <div className="meeting-contents">{meetingInfo?.contents}</div>
           </MeetingContentsWrapper>
@@ -161,8 +163,9 @@ const MeetingDetailWrapper = styled.div`
 
 const MeetingTitleWrapper = styled.div`
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
+  flex-direction: column;
+  gap: 2rem;
   .meeting-title {
     font-size: ${({ theme }) => theme.fontSize.lgTitle};
     font-weight: 600;
@@ -174,14 +177,28 @@ const MeetingTitleWrapper = styled.div`
     font-size: ${({ theme }) => theme.fontSize.md};
     color: ${({ theme }) => theme.color.darkGray};
   }
+  .setting-btn-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  .setting-btn {
+    font-size: ${({ theme }) => theme.fontSize.md};
+    color: ${({ theme }) => theme.color.darkGray};
+    transition: 0.5s;
+    &:hover {
+      color: ${({ theme }) => theme.color.darkCherry};
+    }
+  }
 `;
 
 const MeetingSubInfoWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   .sub-info-inner {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     gap: 1rem;
     .user-profile {
       width: 4rem;
@@ -196,21 +213,6 @@ const MeetingSubInfoWrapper = styled.div`
     .created-date {
       font-size: ${({ theme }) => theme.fontSize.md};
       color: ${({ theme }) => theme.color.darkGray};
-    }
-  }
-  .setting-btn-wrapper {
-    display: flex;
-    justify-content: flex-end;
-    gap: 2rem;
-  }
-  .setting-btn {
-    display: flex;
-    align-items: flex-end;
-    font-size: ${({ theme }) => theme.fontSize.md};
-    color: ${({ theme }) => theme.color.darkGray};
-    transition: 0.5s;
-    &:hover {
-      color: ${({ theme }) => theme.color.darkCherry};
     }
   }
 `;
