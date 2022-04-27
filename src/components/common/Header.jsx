@@ -209,6 +209,7 @@ const MidNav = styled.nav`
     display: flex;
     flex-direction: column;
     position: relative;
+    cursor: pointer;
   }
   .mid-nav-btn {
     padding: 1rem;

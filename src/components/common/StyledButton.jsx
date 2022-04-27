@@ -29,6 +29,7 @@ const buttonStyle = css`
   border-radius: 0.5rem;
   transition: 0.2s background-color;
   background-color: ${({ theme }) => theme.color.lightGray};
+  cursor: pointer;
   &:hover {
     background-color: ${({ theme }) => theme.color.darkGray};
   }
