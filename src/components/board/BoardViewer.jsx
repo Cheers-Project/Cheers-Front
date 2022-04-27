@@ -21,7 +21,7 @@ const ViewerWrapper = styled.div`
   .toastui-editor-contents {
     width: 100%;
     background-color: ${({ theme }) => theme.color.white};
-    font-size: ${({ theme }) => theme.fontSize.md};
+    font-size: ${({ theme }) => theme.fontSize.sm};
     padding: 2rem 1rem;
     p {
       margin: 0;

@@ -3,25 +3,23 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { Editor } from '@toast-ui/react-editor';
 import { useMutation, useQueryClient } from 'react-query';
-import { useDispatch, useSelector } from 'react-redux';
 
 import * as boardAPI from 'api/board';
 import StyledInput from 'components/common/StyledInput';
 import useBoardQuery from 'hooks/useBoardQuery';
 import StyledButton from 'components/common/StyledButton';
 import AlarmModal from 'components/common/AlarmModal';
-import { toggleModal } from 'redux/modules/modal';
+import useError from 'hooks/useError';
+import AlarmContent from 'components/common/AlarmContent';
 
 const BoardEditor = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const editor = useRef(null);
   const [title, setTitle] = useState('');
   const [imgKeys, setImgKeys] = useState([]);
-  const [error, setError] = useState('');
-  const alarmModal = useSelector(({ modal }) => modal.alarmModal);
   const { boardInfo } = useBoardQuery('update');
+  const { error, setError } = useError();
 
   const writeBoard = useMutation(boardAPI.writeBoard, {
     mutationKey: ['boards'],
@@ -44,13 +42,11 @@ const BoardEditor = () => {
 
     if (!title) {
       setError('게시물 제목을 입력해주세요');
-      dispatch(toggleModal({ target: 'alarmModal', visible: true }));
       return;
     }
 
     if (!markdown) {
       setError('게시물 내용을 입력해주세요');
-      dispatch(toggleModal({ target: 'alarmModal', visible: true }));
       return;
     }
 
@@ -68,10 +64,6 @@ const BoardEditor = () => {
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
-  };
-
-  const handleModalClose = () => {
-    dispatch(toggleModal({ target: 'alarmModal', visible: false }));
   };
 
   useEffect(() => {
@@ -132,16 +124,9 @@ const BoardEditor = () => {
           </StyledButton>
         </ButtonWrapper>
       </BoardEditorWrapper>
-      {alarmModal && (
+      {error && (
         <AlarmModal>
-          <p className="notice-text">{error}</p>
-          <StyledButton
-            onClick={handleModalClose}
-            className="confirm-btn"
-            cherry
-          >
-            확인
-          </StyledButton>
+          <AlarmContent error={error} />
         </AlarmModal>
       )}
     </>

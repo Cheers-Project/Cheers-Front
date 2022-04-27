@@ -37,11 +37,12 @@ const BoardAction = ({ boardInfo }) => {
 };
 const BoardActionWrapper = styled.div`
   display: flex;
+  justify-content: flex-end;
   gap: 1rem;
   .btn {
     color: ${({ theme }) => theme.color.darkGray};
     font-size: ${({ theme }) => theme.fontSize.md};
-    transition: 0.2s;
+    transition: 0.5s;
     &:hover {
       color: ${({ theme }) => theme.color.lightCherry};
     }
