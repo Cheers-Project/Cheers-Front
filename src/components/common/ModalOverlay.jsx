@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { initializeModal } from 'redux/modules/modal';
 import Modal from 'components/common/Modal';
 
-const ModalWrapper = ({ children }) => {
+const ModalOverlay = ({ children }) => {
   const dispatch = useDispatch();
 
   const closeModal = (e) => {
@@ -39,4 +39,4 @@ const Overlay = styled.div`
   }
 `;
 
-export default ModalWrapper;
+export default ModalOverlay;

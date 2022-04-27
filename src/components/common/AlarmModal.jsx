@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import ModalWrapper from 'components/common/ModalWrapper';
+import ModalOverlay from 'components/common/ModalOverlay';
 
 const AlarmModal = ({ children }) => {
   return (
-    <ModalWrapper>
+    <ModalOverlay>
       <AlarmWrapper>{children}</AlarmWrapper>;
-    </ModalWrapper>
+    </ModalOverlay>
   );
 };
 

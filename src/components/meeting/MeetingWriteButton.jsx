@@ -8,13 +8,14 @@ import * as meetingAPI from 'api/meeting';
 import StyledButton from 'components/common/StyledButton';
 import useError from 'hooks/useError';
 import AlarmModal from 'components/common/AlarmModal';
+import AlarmContent from 'components/common/AlarmContent';
 
 const MeetingWriteButton = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const meeting = useSelector(({ meeting }) => meeting);
   const queryClient = useQueryClient();
-  const { error, alarmModal, setError } = useError();
+  const { error, setError } = useError();
 
   const postMutation = useMutation(meetingAPI.createMeeting, {
     mutationKey: ['meeting'],
@@ -80,10 +81,7 @@ const MeetingWriteButton = () => {
       </StyledButton>
       {error && (
         <AlarmModal>
-          <NoticeWrapper>
-            <p className="notice-text">{error}</p>
-            <LoadingBar />
-          </NoticeWrapper>
+          <AlarmContent error={error} />
         </AlarmModal>
       )}
     </ButtonWrapper>
@@ -95,37 +93,6 @@ const ButtonWrapper = styled.div`
   justify-content: flex-end;
   gap: 3rem;
   padding-bottom: 3rem;
-`;
-
-const NoticeWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  .notice-text {
-    width: 100%;
-    font-size: ${({ theme }) => theme.fontSize.md};
-    font-weight: 600;
-    text-align: center;
-    padding-bottom: 2rem;
-  }
-`;
-
-const LoadingBar = styled.div`
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 0.2rem;
-  background-color: ${({ theme }) => theme.color.lightCherry};
-  animation: fill 1s ease-in-out;
-  @keyframes fill {
-    from {
-      width: 0%;
-    }
-    to {
-      width: 100%;
-    }
-  }
 `;
 
 export default MeetingWriteButton;
