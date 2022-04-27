@@ -30,13 +30,18 @@ const FooterInner = styled.footer`
   font-size: ${({ theme }) => theme.fontSize.md};
   background-color: #fff;
   text-align: center;
+  line-height: 2rem;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  display: flex;
+  gap: 1rem;
 
   @media screen and (min-width: 768px) {
     max-width: 1024px;
     padding: 2rem 5rem;
+    flex-direction: row;
+    font-size: ${({ theme }) => theme.fontSize.lg};
   }
 
   @media screen and (min-width: 1024px) {
@@ -50,7 +55,10 @@ const FooterInner = styled.footer`
     gap: 2rem;
   }
   .git-logo {
-    font-size: 3rem;
+    font-size: ${({ theme }) => theme.fontSize.mdTitle};
+    @media screen and (min-width: 768px) {
+      font-size: ${({ theme }) => theme.fontSize.lgTitle};
+    }
   }
 `;
 

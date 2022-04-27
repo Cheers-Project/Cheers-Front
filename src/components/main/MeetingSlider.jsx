@@ -62,9 +62,12 @@ const MeetingSliderWrapper = styled.section`
   position: relative;
   padding: 3rem 0 6rem 0;
   .sub-title {
-    font-size: ${({ theme }) => theme.fontSize.smTitle};
+    font-size: ${({ theme }) => theme.fontSize.lg};
     font-weight: 600;
     margin: 0 0 1.5rem 1rem;
+    @media screen and (min-width: 768px) {
+      font-size: ${({ theme }) => theme.fontSize.smTitle};
+    }
   }
 `;
 

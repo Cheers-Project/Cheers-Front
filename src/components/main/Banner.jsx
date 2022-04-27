@@ -22,17 +22,17 @@ const BannerWrapper = styled.div`
 
 const BannerText = styled.p`
   color: #fff;
-  font-size: ${({ theme }) => theme.fontSize.smTitle};
+  font-size: ${({ theme }) => theme.fontSize.md};
   font-weight: 600;
   line-height: 1.6;
   text-align: center;
 
   @media screen and (min-width: 768px) {
-    font-size: ${({ theme }) => theme.fontSize.lgTitle};
+    font-size: ${({ theme }) => theme.fontSize.mdTitle};
   }
 
   @media screen and (min-width: 1024px) {
-    font-size: 3rem;
+    font-size: ${({ theme }) => theme.fontSize.lgTitle};
   }
 `;
 
