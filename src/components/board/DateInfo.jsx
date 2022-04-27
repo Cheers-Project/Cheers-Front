@@ -15,9 +15,7 @@ const DateInfo = ({ boardInfo, flex }) => {
 const DateInfoWrapper = styled.div`
   display: flex;
   justify-content: ${({ flex }) => flex};
-  font-size: ${({ theme }) => theme.fontSize.xsm};
-  @media screen and (min-width: 768px) {
-    font-size: ${({ theme }) => theme.fontSize.md};
-  }
+  font-size: ${({ theme }) => theme.fontSize.md};
+  color: ${({ theme }) => theme.color.darkGray};
 `;
 export default DateInfo;

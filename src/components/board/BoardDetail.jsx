@@ -3,8 +3,7 @@ import styled from 'styled-components';
 
 import useOwnedQuery from 'hooks/useOwnedQuery';
 import useBoardQuery from 'hooks/useBoardQuery';
-import UserInfo from 'components/board/UserInfo';
-import DateInfo from 'components/board/DateInfo';
+import BoardSubInfo from 'components/board/BoardSubInfo';
 import BoardViewer from 'components/board/BoardViewer';
 import BoardAction from './BoardAction';
 import LikeBtn from './LikeBtn';
@@ -17,19 +16,17 @@ const BoardDetail = () => {
     <>
       {isSuccess && (
         <BoardDetailWrapper>
-          <BoardInfo>
-            <TopBoardInfoWrapper>
-              <Title className="board-title">{boardInfo.title}</Title>
-              {isOwned && <BoardAction boardInfo={boardInfo} />}
-            </TopBoardInfoWrapper>
-            <BottomBoardInfoWrapper>
-              <UserInfo boardInfo={boardInfo} />
-              <SubInto>
-                <ViewWrapper>조회수 {boardInfo.view}</ViewWrapper>
-                <DateInfo boardInfo={boardInfo} />
-              </SubInto>
-            </BottomBoardInfoWrapper>
-          </BoardInfo>
+          <BoardInfoWrapper>
+            <Title className="board-title">{boardInfo.title}</Title>
+            {isOwned && <BoardAction boardInfo={boardInfo} />}
+            <SubIntoWrapper>
+              <BoardSubInfo boardInfo={boardInfo} />
+              <View>
+                <p>조회수</p>
+                <div>{boardInfo.view}</div>
+              </View>
+            </SubIntoWrapper>
+          </BoardInfoWrapper>
           <BoardViewer boardInfo={boardInfo} />
           <LikeBtn userId={userId} />
         </BoardDetailWrapper>
@@ -39,25 +36,17 @@ const BoardDetail = () => {
 };
 
 const BoardDetailWrapper = styled.section`
+  padding-top: 3rem;
   display: flex;
   flex-direction: column;
-  padding: 2rem 0;
+  gap: 3rem;
 `;
 
-const BoardInfo = styled.div`
-  padding: 2rem 1rem;
+const BoardInfoWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.color.white};
-`;
-
-const TopBoardInfoWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 600;
-  padding: 1rem 0;
+  gap: 2rem;
 `;
 
 const Title = styled.h2`
@@ -65,28 +54,18 @@ const Title = styled.h2`
   font-weight: 600;
 `;
 
-const BottomBoardInfoWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0;
-`;
-
-const ViewWrapper = styled.div`
+const View = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-size: ${({ theme }) => theme.fontSize.md};
+  color: ${({ theme }) => theme.color.darkGray};
 `;
 
-const SubInto = styled.div`
+const SubIntoWrapper = styled.div`
   display: flex;
-  align-items: center;
-  gap: 2rem;
-  color: ${({ theme }) => theme.color.darkGray};
-  font-size: ${({ theme }) => theme.fontSize.xsm};
-  @media screen and (min-width: 768px) {
-    font-size: ${({ theme }) => theme.fontSize.md};
-  }
+  justify-content: space-between;
+  align-items: flex-end;
 `;
 
 export default BoardDetail;

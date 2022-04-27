@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { EyeFilled, LikeFilled, CommentOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
-import UserInfo from 'components/board/UserInfo';
 import DateInfo from 'components/board/DateInfo';
 
 const BoardItem = ({ boardInfo }) => {
@@ -16,11 +15,8 @@ const BoardItem = ({ boardInfo }) => {
 
   return (
     <BoardItemWrapper onClick={handleBoardDetailRoute}>
-      <LeftWrapper>
+      <ToptWrapper>
         <Title>{boardInfo.title}</Title>
-        <UserInfo boardInfo={boardInfo} />
-      </LeftWrapper>
-      <RightWrapper>
         <BoardSubInfoWrapper>
           <div className="subinfo-item">
             <LikeFilled />
@@ -35,8 +31,20 @@ const BoardItem = ({ boardInfo }) => {
             <p>{boardInfo.comment}</p>
           </div>
         </BoardSubInfoWrapper>
+      </ToptWrapper>
+      <BottomWrapper>
+        <UserInfo>
+          <img
+            className="user-profile-img"
+            src={boardInfo.writer.profileImg}
+            alt="user-profileImg"
+          />
+          <div>
+            <p className="user-profile-nickname">{boardInfo.writer.nickname}</p>
+          </div>
+        </UserInfo>
         <DateInfo boardInfo={boardInfo} flex="flex-end" />
-      </RightWrapper>
+      </BottomWrapper>
     </BoardItemWrapper>
   );
 };
@@ -44,39 +52,51 @@ const BoardItemWrapper = styled.li`
   padding: 1rem;
   background-color: ${({ theme }) => theme.color.white};
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 0.5rem;
   cursor: pointer;
 `;
 
-const LeftWrapper = styled.div`
-  width: 50%;
+const ToptWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  @media screen and (min-width: 768px) {
-    width: 70%;
-  }
+  justify-content: space-between;
+  align-items: flex-start;
 `;
 
 const Title = styled.h2`
+  width: 50%;
   font-size: ${({ theme }) => theme.fontSize.lg};
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   @media screen and (min-width: 768px) {
+    width: 70%;
     font-size: ${({ theme }) => theme.fontSize.mdTitle};
   }
 `;
 
-const RightWrapper = styled.div`
-  width: 30%;
+const UserInfo = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  @media screen and (min-width: 768px) {
-    width: 30%;
+  align-items: flex-end;
+  gap: 0.5rem;
+  .user-profile-img {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
   }
+  .user-profile-nickname {
+    font-size: ${({ theme }) => theme.fontSize.xsm};
+    font-weight: 600;
+    @media screen and (min-width: 768px) {
+      font-size: ${({ theme }) => theme.fontSize.md};
+    }
+  }
+`;
+
+const BottomWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 `;
 
 const BoardSubInfoWrapper = styled.div`

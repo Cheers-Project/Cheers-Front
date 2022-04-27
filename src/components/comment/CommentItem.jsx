@@ -83,34 +83,32 @@ const CommentInfoWrapper = styled.div`
   display: flex;
   align-items: center;
   .user-profile-img {
-    width: 5rem;
-    height: 5rem;
+    width: 3rem;
+    height: 3rem;
     border-radius: 50%;
   }
   .comment-sub-info {
     margin-left: 1.5rem;
     .user-profile-nickname {
-      font-size: ${({ theme }) => theme.fontSize.xsm};
+      font-size: ${({ theme }) => theme.fontSize.sm};
       font-weight: 600;
-      @media screen and (min-width: 768px) {
-        font-size: ${({ theme }) => theme.fontSize.md};
-      }
     }
     .comment-time {
       color: ${({ theme }) => theme.color.darkGray};
       font-size: ${({ theme }) => theme.fontSize.sm};
-      margin-top: 0.8rem;
+      margin-top: 0.5rem;
     }
   }
 `;
 
 const UpdateWrapper = styled.div`
+  display: flex;
   gap: 1rem;
+  align-items: flex-start;
   button {
     color: ${({ theme }) => theme.color.darkGray};
     font-size: ${({ theme }) => theme.fontSize.sm};
     transition: 0.2s;
-    padding-left: 1rem;
     &:hover {
       color: ${({ theme }) => theme.color.lightCherry};
     }
@@ -119,7 +117,7 @@ const UpdateWrapper = styled.div`
 
 const ContentWrapper = styled.div`
   padding: 2rem 0 0 0;
-  font-size: ${({ theme }) => theme.fontSize.md};
+  font-size: ${({ theme }) => theme.fontSize.sm};
 `;
 
 export default React.memo(CommentItem);

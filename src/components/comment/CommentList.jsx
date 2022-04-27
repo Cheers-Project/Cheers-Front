@@ -28,7 +28,7 @@ const CommentList = () => {
 };
 
 const CommentListOuter = styled.div`
-  padding: 3rem 0;
+  padding-bottom: 3rem;
 `;
 
 const CommentInfo = styled.div`

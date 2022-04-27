@@ -1,22 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { LikeFilled } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 
 import * as boardAPI from 'api/board';
 import useLikeQuery from 'hooks/useLikeQuery';
-import { toggleModal } from 'redux/modules/modal';
-import StyledButton from 'components/common/StyledButton';
 import AlarmModal from 'components/common/AlarmModal';
+import useError from 'hooks/useError';
+import AlarmContent from 'components/common/AlarmContent';
 
 const LikeBtn = ({ userId }) => {
-  const dispatch = useDispatch();
   const { id } = useParams();
   const queryClient = useQueryClient();
   const { board: boardInfo } = queryClient.getQueryData(['board', id]);
-  const alarmModal = useSelector(({ modal }) => modal.alarmModal);
+  const { error, setError } = useError();
 
   const isLiked = useLikeQuery(boardInfo.likeUsers);
 
@@ -27,14 +25,10 @@ const LikeBtn = ({ userId }) => {
     },
   });
 
-  const handleAlarmModalClose = () => {
-    dispatch(toggleModal({ target: 'alarmModal', visible: false }));
-  };
-
   const handleLikeChange = () => {
     const token = localStorage.getItem('accessToken');
     if (!token) {
-      dispatch(toggleModal({ target: 'alarmModal', visible: true }));
+      setError('로그인 후 이용 가능합니다.');
       return;
     }
     updateLike.mutate(boardInfo._id);
@@ -49,16 +43,9 @@ const LikeBtn = ({ userId }) => {
         />
         <p className="like-cnt">{boardInfo.like}</p>
       </LikeWrapper>
-      {alarmModal && !userId && (
+      {error && !userId && (
         <AlarmModal>
-          <AlarmText className="notice-text">
-            로그인 후 이용 가능합니다.
-          </AlarmText>
-          <ButtonWrapper>
-            <StyledButton cherry responsive onClick={handleAlarmModalClose}>
-              확인
-            </StyledButton>
-          </ButtonWrapper>
+          <AlarmContent error={error} />
         </AlarmModal>
       )}
     </>
@@ -85,20 +72,6 @@ const LikeWrapper = styled.div`
   .like-cnt {
     font-size: ${({ theme }) => theme.fontSize.md};
   }
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  align-self: flex-end;
-  margin-top: 2rem;
-`;
-
-const AlarmText = styled.p`
-  width: 100%;
-  font-size: ${({ theme }) => theme.fontSize.md};
-  font-weight: 600;
-  text-align: center;
-  padding-bottom: 2rem;
 `;
 
 export default LikeBtn;

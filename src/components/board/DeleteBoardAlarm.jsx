@@ -32,7 +32,7 @@ const DeleteBoardAlarm = () => {
   };
   return (
     <AlarmModal>
-      <p className="notice-text">게시물을 삭제하시겠습니까?</p>
+      <AlarmText className="notice-text">게시물을 삭제하시겠습니까?</AlarmText>
       <ButtonWrapper className="confirm-btn">
         <StyledButton cherry responsive onClick={handleBoardDelete}>
           삭제
@@ -50,6 +50,14 @@ const ButtonWrapper = styled.div`
   align-items: center;
   gap: 2rem;
   margin-top: 2rem;
+`;
+
+const AlarmText = styled.p`
+  width: 100%;
+  font-size: ${({ theme }) => theme.fontSize.md};
+  font-weight: 600;
+  text-align: center;
+  padding-bottom: 2rem;
 `;
 
 export default DeleteBoardAlarm;
