@@ -47,18 +47,21 @@ const Header = ({ black }) => {
       <HeaderOuter black={black} isScrolled={isScrolled}>
         <HeaderInner isScrolled={isScrolled}>
           <Logo>
-            <Link to={'/'}>
-              Cherry
-              <br /> Alcohol
-            </Link>
+            <Link to={'/'}>Cheers</Link>
           </Logo>
           <MidNav isScrolled={isScrolled} black={black}>
-            <Link to={'/board?sort=recent&page=1'} className="mid-nav-btn">
-              게시판
-            </Link>
-            <Link to={'/meeting?sort=recent'} className="mid-nav-btn">
-              모임
-            </Link>
+            <div className="btn-wrapper">
+              <Link to={'/board?sort=recent&page=1'} className="mid-nav-btn">
+                게시판
+              </Link>
+              <div className="underline" />
+            </div>
+            <div className="btn-wrapper">
+              <Link to={'/meeting?sort=recent'} className="mid-nav-btn">
+                모임
+              </Link>
+              <div className="underline" />
+            </div>
           </MidNav>
           <RightNav onClick={handleMenuModalVisible}>
             {data?.userInfo?.profileImg ? (
@@ -80,7 +83,7 @@ const Header = ({ black }) => {
 };
 
 const HeaderOuter = styled.div`
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.color.white};
   ${({ black }) =>
     black &&
     css`
@@ -90,7 +93,7 @@ const HeaderOuter = styled.div`
   ${({ isScrolled, black }) =>
     black && isScrolled
       ? css`
-          background-color: #fff;
+          background-color: ${({ theme }) => theme.color.white};
         `
       : null};
   ${({ isScrolled }) =>
@@ -128,30 +131,37 @@ const HeaderInner = styled.header`
 `;
 
 const Logo = styled.h1`
-  font-size: ${({ theme }) => theme.fontSize.smTitle};
-  color: #c22d77;
+  font-size: ${({ theme }) => theme.fontSize.lg};
+  color: ${({ theme }) => theme.color.lightCherry};
   font-weight: 600;
   letter-spacing: 0.2rem;
   cursor: pointer;
+  @media screen and (min-width: 768px) {
+    font-size: ${({ theme }) => theme.fontSize.mdTitle};
+  }
+  @media screen and (min-width: 1024px) {
+    font-size: ${({ theme }) => theme.fontSize.lgTitle};
+  }
 `;
 
 const RightNav = styled.nav`
   display: flex;
   align-items: center;
-  padding: 0.5rem 1rem;
-  border-radius: 1.2rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
   gap: 0.5rem;
-  color: #fff;
-  background-color: #c22d77;
+  color: ${({ theme }) => theme.color.white};
+  background-color: ${({ theme }) => theme.color.lightCherry};
   cursor: pointer;
   z-index: 300;
   font-size: ${({ theme }) => theme.fontSize.xsm};
   * {
     pointer-events: none;
   }
-  @media (min-width: 768px) {
-    display: flex;
+  @media screen and (min-width: 768px) {
+    padding: 0.5rem 1rem;
   }
+
   .user-icon {
     padding: 0.5rem;
     font-size: ${({ theme }) => theme.fontSize.xsm};
@@ -164,9 +174,13 @@ const RightNav = styled.nav`
   }
 
   .profileImg {
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
     border-radius: 50%;
+    @media screen and (min-width: 768px) {
+      width: 3rem;
+      height: 3rem;
+    }
   }
 `;
 
@@ -188,30 +202,43 @@ const MidNav = styled.nav`
       color: #000;
     `}
   
-
   @media screen and (min-width: 768px) {
     gap: 10rem;
+  }
+  .btn-wrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
   }
   .mid-nav-btn {
     padding: 1rem;
     font-size: ${({ theme }) => theme.fontSize.sm};
     font-weight: 500;
     letter-spacing: 0.1rem;
-    &::after {
-      display: block;
-      transition: 0.2s;
-      margin-top: 0.5rem;
-      width: 0;
-      content: '';
-      height: 2px;
-      background-color: #c22d77;
+    @keyframes fill {
+      from {
+        width: 0%;
+      }
+      to {
+        width: calc(100% - 2rem);
+      }
     }
-    &:hover::after {
-      width: 100%;
+    transition: 0.3s;
+    &:hover + .underline {
+      background-color: ${({ theme }) => theme.color.lightCherry};
+      animation: fill 0.3s ease-in-out;
     }
     @media screen and (min-width: 768px) {
       font-size: ${({ theme }) => theme.fontSize.md};
     }
+  }
+  .underline {
+    position: absolute;
+    left: 1rem;
+    bottom: 0;
+    width: calc(100% - 2rem);
+    height: 2px;
+    background-color: inherit;
   }
 `;
 

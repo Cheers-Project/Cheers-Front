@@ -44,11 +44,13 @@ const Outer = styled.div`
 
   .sub-title {
     margin-bottom: 2rem;
-    font-size: ${({ theme }) => theme.fontSize.smTitle};
+    font-size: ${({ theme }) => theme.fontSize.md};
     font-weight: 600;
     color: #fff;
-
     position: relative;
+    @media screen and (min-width: 768px) {
+      font-size: ${({ theme }) => theme.fontSize.smTitle};
+    }
   }
 `;
 
@@ -57,9 +59,7 @@ const Inner = styled.section`
   padding: 2.5rem;
   box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.1);
   border-radius: 1rem;
-
   min-height: 35rem;
-
   background-image: ${({ bg }) => `url(${bg})`};
   background-size: cover;
   background-repeat: no-repeat;
