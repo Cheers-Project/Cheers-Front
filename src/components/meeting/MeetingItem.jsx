@@ -75,11 +75,10 @@ const MeetingItemInner = styled.li`
   .meeting-contents {
     font-size: ${({ theme }) => theme.fontSize.sm};
     width: 100%;
-    height: 20rem;
-
+    height: 18rem;
     line-height: 2rem;
     display: -webkit-box;
-    -webkit-line-clamp: 10;
+    -webkit-line-clamp: 9;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
