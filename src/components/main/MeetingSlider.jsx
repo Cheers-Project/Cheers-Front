@@ -19,13 +19,11 @@ const MeetingSlider = () => {
   );
 
   const settings = {
-    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
     autoplay: true,
-    arrows: false,
     responsive: [
       {
         breakpoint: 1024,
@@ -92,10 +90,22 @@ const StyledSlider = styled(Slider)`
       flex: 1;
     }
   }
-
-  .slick-dots button::before,
-  .slick-dots .slick-active button::before {
-    color: #c22d77;
+  .slick-prev {
+    left: unset;
+    right: 5rem;
+    top: -1rem;
+  }
+  .slick-next {
+    right: 1rem;
+    top: -1rem;
+  }
+  .slick-prev:before,
+  .slick-next:before {
+    font-size: ${({ theme }) => theme.fontSize.mdTitle};
+    color: ${({ theme }) => theme.color.lightCherry};
+    @media screen and (min-width: 768px) {
+      font-size: ${({ theme }) => theme.fontSize.lgTitle};
+    }
   }
 `;
 
