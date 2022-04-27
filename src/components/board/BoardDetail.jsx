@@ -5,8 +5,8 @@ import useOwnedQuery from 'hooks/useOwnedQuery';
 import useBoardQuery from 'hooks/useBoardQuery';
 import BoardSubInfo from 'components/board/BoardSubInfo';
 import BoardViewer from 'components/board/BoardViewer';
-import BoardAction from './BoardAction';
-import LikeBtn from './LikeBtn';
+import BoardAction from 'components/board/BoardAction';
+import LikeBtn from 'components/board/LikeBtn';
 
 const BoardDetail = () => {
   const { boardInfo, isSuccess } = useBoardQuery('detail');

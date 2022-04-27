@@ -49,7 +49,8 @@ const BoardItem = ({ boardInfo }) => {
   );
 };
 const BoardItemWrapper = styled.li`
-  padding: 1rem;
+  margin: 0 1rem;
+  padding: 0.5rem 1rem;
   background-color: ${({ theme }) => theme.color.white};
   display: flex;
   flex-direction: column;
