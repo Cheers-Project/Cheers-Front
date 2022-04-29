@@ -16,9 +16,6 @@ const BoardList = () => {
     ['boards', query],
     () => boardAPI.getBoards(query),
     {
-      onError: () => {
-        navigate(-1);
-      },
       refetchOnWindowFocus: false,
       cacheTime: 0,
       retry: 0,
