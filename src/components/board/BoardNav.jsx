@@ -29,7 +29,7 @@ const BoardNav = () => {
         <li className="nav-item">
           <Link
             to={`/board?sort=like&page=1`}
-            className={sort === 'like' ? 'nav-item active' : 'nav-link'}
+            className={sort === 'like' ? 'nav-link active' : 'nav-link'}
           >
             인기순
           </Link>
