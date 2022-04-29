@@ -71,7 +71,9 @@ const Header = ({ black }) => {
                 className="profileImg"
               />
             ) : (
-              <UserOutlined className="user-icon" />
+              <div className="user-wrapper">
+                <UserOutlined className="user-icon" />
+              </div>
             )}
           </RightNav>
           {menuModal && <MenuList userInfo={data?.userInfo} />}
@@ -131,6 +133,7 @@ const HeaderInner = styled.header`
 `;
 
 const Logo = styled.h1`
+  width: 30%;
   font-size: ${({ theme }) => theme.fontSize.lg};
   color: ${({ theme }) => theme.color.lightCherry};
   font-weight: 600;
@@ -144,48 +147,10 @@ const Logo = styled.h1`
   }
 `;
 
-const RightNav = styled.nav`
-  display: flex;
-  align-items: center;
-  padding: 0.3rem 0.8rem;
-  border-radius: 1rem;
-  gap: 0.5rem;
-  color: ${({ theme }) => theme.color.white};
-  background-color: ${({ theme }) => theme.color.lightCherry};
-  cursor: pointer;
-  z-index: 300;
-  font-size: ${({ theme }) => theme.fontSize.xsm};
-  * {
-    pointer-events: none;
-  }
-  @media screen and (min-width: 768px) {
-    padding: 0.5rem 1rem;
-  }
-
-  .user-icon {
-    padding: 0.5rem;
-    font-size: ${({ theme }) => theme.fontSize.xsm};
-    color: #fff;
-    border-radius: 50%;
-    border: 1.5px solid #fff;
-    @media screen and (min-width: 768px) {
-      font-size: ${({ theme }) => theme.fontSize.smTitle};
-    }
-  }
-
-  .profileImg {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
-    @media screen and (min-width: 768px) {
-      width: 3rem;
-      height: 3rem;
-    }
-  }
-`;
-
 const MidNav = styled.nav`
+  width: 40%;
   display: flex;
+  justify-content: center;
   padding: 0.5rem 1rem;
   border-radius: 1.2rem;
   gap: 0.5rem;
@@ -240,6 +205,54 @@ const MidNav = styled.nav`
     width: calc(100% - 2rem);
     height: 2px;
     background-color: inherit;
+  }
+`;
+
+const RightNav = styled.nav`
+  width: 30%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+  gap: 0.5rem;
+  cursor: pointer;
+  z-index: 300;
+  font-size: ${({ theme }) => theme.fontSize.xsm};
+  * {
+    pointer-events: none;
+  }
+  @media screen and (min-width: 768px) {
+    padding: 0.5rem 1rem;
+  }
+
+  .user-wrapper {
+    padding: 0.5rem;
+    border-radius: 1rem;
+    color: ${({ theme }) => theme.color.white};
+    background-color: ${({ theme }) => theme.color.lightCherry};
+  }
+
+  .user-icon {
+    padding: 0.5rem;
+    font-size: ${({ theme }) => theme.fontSize.xsm};
+    color: #fff;
+    border-radius: 50%;
+    border: 1.5px solid #fff;
+
+    @media screen and (min-width: 768px) {
+      font-size: ${({ theme }) => theme.fontSize.smTitle};
+    }
+  }
+
+  .profileImg {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    @media screen and (min-width: 768px) {
+      width: 3rem;
+      height: 3rem;
+    }
   }
 `;
 
