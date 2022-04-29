@@ -66,9 +66,6 @@ ${reset}
     font-family: 'Roboto', sans-serif;
   }    
   
-  a, button {
-    all: unset;
-  }
 
   input,textarea {
     font-family: 'Roboto', sans-serif;
