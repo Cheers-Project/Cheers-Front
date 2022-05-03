@@ -64,17 +64,17 @@ const Header = ({ black }) => {
             </div>
           </MidNav>
           <RightNav onClick={handleMenuModalVisible}>
-            {data?.userInfo?.profileImg ? (
-              <img
-                src={data.userInfo.profileImg}
-                alt="프로필이미지"
-                className="profileImg"
-              />
-            ) : (
-              <div className="user-wrapper">
+            <div className="user-wrapper">
+              {data?.userInfo?.profileImg ? (
+                <img
+                  src={data.userInfo.profileImg}
+                  alt="프로필이미지"
+                  className="profileImg"
+                />
+              ) : (
                 <UserOutlined className="user-icon" />
-              </div>
-            )}
+              )}
+            </div>
           </RightNav>
           {menuModal && <MenuList userInfo={data?.userInfo} />}
         </HeaderInner>
@@ -231,6 +231,9 @@ const RightNav = styled.nav`
     border-radius: 1rem;
     color: ${({ theme }) => theme.color.white};
     background-color: ${({ theme }) => theme.color.lightCherry};
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .user-icon {
