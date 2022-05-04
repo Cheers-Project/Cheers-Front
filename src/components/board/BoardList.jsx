@@ -1,7 +1,6 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 
 import * as boardAPI from 'api/board';
 import BoardItem from 'components/board/BoardItem';
@@ -9,7 +8,6 @@ import Pagination from 'components/board/Pagination';
 import useCurrentQuery from 'hooks/useCurrentQuery';
 
 const BoardList = () => {
-  const navigate = useNavigate();
   const { query } = useCurrentQuery();
 
   const { data: BoardsData } = useQuery(
