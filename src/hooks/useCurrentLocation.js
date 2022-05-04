@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 
 const useCurrentLocation = () => {
-  const dispatch = useDispatch();
   const [location, setLocation] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -36,7 +34,7 @@ const useCurrentLocation = () => {
     handleLoadLocation();
 
     return () => handleLoadLocation();
-  }, [dispatch]);
+  }, []);
 
   return { location, error, loading };
 };
