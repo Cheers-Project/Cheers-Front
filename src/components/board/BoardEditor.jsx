@@ -96,7 +96,7 @@ const BoardEditor = () => {
           type="text"
           placeholder="제목을 입력하세요."
           onChange={handleTitleChange}
-          defaultValue={boardInfo && boardInfo.title}
+          defaultValue={title}
         />
         <div className="editor-wrapper">
           <Editor
