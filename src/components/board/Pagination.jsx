@@ -1,17 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import {
-  CaretLeftFilled,
-  CaretLeftOutlined,
-  CaretRightFilled,
-  CaretRightOutlined,
-} from '@ant-design/icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { CaretLeftFilled, CaretRightFilled } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 import useCurrentQuery from 'hooks/useCurrentQuery';
 
 const Pagination = ({ maxPage, pageNums }) => {
-  const navigate = useNavigate();
   const { searchParams } = useCurrentQuery();
   const { sort, page } = searchParams;
 
