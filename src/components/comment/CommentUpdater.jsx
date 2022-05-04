@@ -13,7 +13,7 @@ const CommentUpdater = ({ commentInfo, handleUpdateStateChange }) => {
   const [content, setContent] = useState(commentInfo.content);
 
   const updateComment = useMutation(commentAPI.updateComment, {
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['comments', postId]);
       handleUpdateStateChange();
     },
@@ -23,7 +23,8 @@ const CommentUpdater = ({ commentInfo, handleUpdateStateChange }) => {
     setContent(e.target.value);
   };
 
-  const handleCommentUpdate = () => {
+  const handleCommentUpdate = (e) => {
+    e.preventDefault();
     const payload = {
       content,
     };
@@ -31,7 +32,7 @@ const CommentUpdater = ({ commentInfo, handleUpdateStateChange }) => {
   };
 
   return (
-    <CommentUpdaterWrapper>
+    <CommentUpdaterWrapper onSubmit={handleCommentUpdate}>
       <StyledInput
         id="commentInput"
         name="comment"
@@ -43,7 +44,7 @@ const CommentUpdater = ({ commentInfo, handleUpdateStateChange }) => {
         onChange={handleContnetChange}
       />
       <ButtonWraper>
-        <StyledButton cherry responsive onClick={handleCommentUpdate}>
+        <StyledButton type="submit" cherry responsive>
           수정
         </StyledButton>
         <StyledButton responsive onClick={handleUpdateStateChange}>
@@ -54,7 +55,7 @@ const CommentUpdater = ({ commentInfo, handleUpdateStateChange }) => {
   );
 };
 
-const CommentUpdaterWrapper = styled.div`
+const CommentUpdaterWrapper = styled.form`
   padding: 2rem 0 0 0;
   .comment-input {
     font-size: ${({ theme }) => theme.fontSize.md};
