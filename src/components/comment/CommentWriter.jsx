@@ -24,7 +24,8 @@ const CommentWriter = () => {
     setContent(e.target.value);
   };
 
-  const handleCommentSubmit = () => {
+  const handleCommentSubmit = (e) => {
+    e.preventDefault();
     const payload = {
       postId,
       content,
@@ -33,7 +34,7 @@ const CommentWriter = () => {
   };
 
   return (
-    <CommentWriterWrapper>
+    <CommentWriterWrapper onSubmit={handleCommentSubmit}>
       <StyledInput
         id="commentInput"
         name="comment"
@@ -44,14 +45,14 @@ const CommentWriter = () => {
         value={content}
         className="comment-input"
       />
-      <StyledButton onClick={handleCommentSubmit} cherry responsive>
+      <StyledButton type="submit" cherry responsive>
         작성
       </StyledButton>
     </CommentWriterWrapper>
   );
 };
 
-const CommentWriterWrapper = styled.div`
+const CommentWriterWrapper = styled.form`
   width: 100%;
   padding: 2rem 0;
   background-color: ${({ theme }) => theme.color.white};
