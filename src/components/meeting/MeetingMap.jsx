@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { changeLocation } from 'redux/modules/meeting';
 import useMeetingQuery from 'hooks/useMeetingQuery';
 import useCurrentLocation from 'hooks/useCurrentLocation';
+import { useParams } from 'react-router-dom';
 
 const { kakao } = window;
 
@@ -13,12 +14,25 @@ const MeetingMap = ({ keyword }) => {
   const { meetingInfo } = useMeetingQuery();
   const { location, loading } = useCurrentLocation();
   const [kakaoMap, setKakaoMap] = useState(null);
+  const [markerList, setMarkerList] = useState([]);
+  const [selectedInfowindow, setSelectedInfowindow] = useState(null);
+  const { id } = useParams();
   const container = useRef();
+
+  const handleRemoveMarkers = () => {
+    if (!markerList.length) return;
+
+    markerList.forEach((marker) => {
+      marker.setMap(null);
+    });
+    setMarkerList([]);
+  };
 
   // 위치 서비스 정보에 따라 지도 생성
   useEffect(() => {
     // 위치 서비스를 가져오는 중이라면 실행하지 않음
-    if (loading) return;
+
+    if (loading || !location) return;
 
     const options = {
       center: location
@@ -33,7 +47,7 @@ const MeetingMap = ({ keyword }) => {
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
     setKakaoMap(map);
-  }, [location, loading]);
+  }, [location, loading, id]);
 
   // 모임 위치에 따라 지도 중심위치 이동 및 마커, 인포윈도우 생성
   useEffect(() => {
@@ -70,11 +84,15 @@ const MeetingMap = ({ keyword }) => {
     infowindow.open(kakaoMap, marker);
     kakaoMap.setCenter(meetingLocation);
 
-    return () => setKakaoMap(null);
-  }, [meetingInfo, kakaoMap]);
+    setSelectedInfowindow(infowindow);
+    setMarkerList([...markerList, marker]);
+  }, [meetingInfo]);
 
   useEffect(() => {
     if (!kakaoMap || !keyword) return;
+
+    selectedInfowindow && selectedInfowindow.close();
+    handleRemoveMarkers();
 
     const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
     const selectedImgSrc =
@@ -86,23 +104,20 @@ const MeetingMap = ({ keyword }) => {
     );
     let selectedMarker = null;
 
-    const handleMarkerHover = (marker, place) => {
-      // 마커에 호버 시 인포 윈도우 디스플레이
-      kakao.maps.event.addListener(marker, 'mouseover', () => {
+    // 선택된 마커의 이미지를 변경하고 정보를 얻는 함수
+    const handleGetMarkerData = (marker, place) => {
+      kakao.maps.event.addListener(marker, 'click', () => {
         infowindow.setContent(
           `<div style="padding:3px;font-size:12px;">${place.place_name}</div>`,
         );
         infowindow.open(kakaoMap, marker);
-      });
-    };
+        setSelectedInfowindow(infowindow);
 
-    // 선택된 마커의 이미지를 변경하고 정보를 얻는 함수
-    const handleGetMarkerData = (marker, place) => {
-      kakao.maps.event.addListener(marker, 'click', () => {
         if (!selectedMarker || selectedMarker !== marker) {
           selectedMarker && selectedMarker.setImage(selectedMarker.normalImage);
           marker.setImage(selectedMarkerImg);
         }
+
         selectedMarker = marker;
 
         const location = {
@@ -123,8 +138,8 @@ const MeetingMap = ({ keyword }) => {
       });
 
       marker.setMap(kakaoMap);
+      setMarkerList((before) => [...before, marker]);
 
-      handleMarkerHover(marker, place);
       handleGetMarkerData(marker, place);
     };
 
@@ -142,8 +157,6 @@ const MeetingMap = ({ keyword }) => {
 
     const ps = new kakao.maps.services.Places();
     ps.keywordSearch(keyword, handleSearchCallback);
-
-    // return () => handleMarkerDisplay;
   }, [keyword, dispatch]);
 
   return <MapWrapper id="map" ref={container}></MapWrapper>;

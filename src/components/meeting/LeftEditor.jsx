@@ -24,7 +24,7 @@ const LeftEditor = () => {
       <div className="title-container">
         <input
           onChange={handleTitleInput}
-          defaultValue={meetingInfo?.title}
+          value={meetingInfo ? meetingInfo.title : ''}
           className="title-input"
           type="text"
           placeholder="제목을 입력하세요"
@@ -32,7 +32,7 @@ const LeftEditor = () => {
       </div>
       <div className="contents-container">
         <textarea
-          defaultValue={meetingInfo?.contents}
+          value={meetingInfo ? meetingInfo.contents : ''}
           onChange={handleContentsInput}
           className="contents-input"
           placeholder="내용을 입력하세요"

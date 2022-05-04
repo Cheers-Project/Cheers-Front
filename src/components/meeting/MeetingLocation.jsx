@@ -22,11 +22,6 @@ const MeetingLocation = () => {
 
   useEffect(() => {
     setSearchInputValue(meetingInfo ? meetingInfo.location.placeName : '');
-    setSearchKeyword(
-      meetingInfo
-        ? `${meetingInfo.location.addressName}${meetingInfo.location.placeName}`
-        : '',
-    );
   }, [meetingInfo]);
 
   return (

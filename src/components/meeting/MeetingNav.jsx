@@ -122,6 +122,7 @@ const MeetingNavWrapper = styled.div`
   }
   .nav-link {
     all: unset;
+    cursor: pointer;
     font-size: ${({ theme }) => theme.fontSize.sm};
     padding: 0.8rem;
     background-color: ${({ theme }) => theme.color.white};
