@@ -20,7 +20,7 @@ const MeetingTime = () => {
         <div className="info-text">모임 시간을 선택하세요</div>
         <input
           onChange={handleMeetingTime}
-          defaultValue={meetingInfo?.meetingTime}
+          value={meetingInfo ? meetingInfo.meetingTime : ''}
           className="time-input"
           type="time"
         />
