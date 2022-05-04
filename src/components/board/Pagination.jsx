@@ -1,7 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CaretLeftOutlined, CaretRightOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import {
+  CaretLeftFilled,
+  CaretLeftOutlined,
+  CaretRightFilled,
+  CaretRightOutlined,
+} from '@ant-design/icons';
+import { Link, useNavigate } from 'react-router-dom';
 
 import useCurrentQuery from 'hooks/useCurrentQuery';
 
@@ -10,45 +15,28 @@ const Pagination = ({ maxPage, pageNums }) => {
   const { searchParams } = useCurrentQuery();
   const { sort, page } = searchParams;
 
-  const handlePageChange = (e) => {
-    if (!e.target.value) return;
-    navigate(`/board?sort=${sort}&page=${e.target.value}`);
-  };
-
-  const handlePrevPageRoute = () => {
-    if (page === '1') return;
-    navigate(`/board?sort=${sort}&page=${+page - 1}`);
-  };
-
-  const handleNextPageRoute = () => {
-    if (page > maxPage) return;
-    navigate(`/board?sort=${sort}&page=${+page + 1}`);
-  };
-
   return (
     <PaginationWrapper>
-      <button
-        onClick={handlePrevPageRoute}
+      <StyledLink
+        to={`/board?sort=${sort}&page=${+page - 1}`}
         className={page === '1' ? 'btn prev-btn hide' : 'btn prev-btn'}
       >
-        <CaretLeftOutlined />
-      </button>
-      <PageNumberList onClick={handlePageChange}>
-        {pageNums.map((pageNum, i) => {
-          if (maxPage < pageNum) return null;
-          return (
-            <PageNumber key={i} page={page} value={pageNum}>
-              {pageNum}
-            </PageNumber>
-          );
-        })}
-      </PageNumberList>
-      <button
-        onClick={handleNextPageRoute}
+        <CaretLeftFilled />
+      </StyledLink>
+      {pageNums.map((pageNum, i) => {
+        if (maxPage < pageNum) return null;
+        return (
+          <StyledLink key={i} to={`/board?sort=${sort}&page=${pageNum}`}>
+            {pageNum}
+          </StyledLink>
+        );
+      })}
+      <StyledLink
+        to={`/board?sort=${sort}&page=${+page + 1}`}
         className={page === `${maxPage}` ? 'btn next-btn hide' : 'btn next-btn'}
       >
-        <CaretRightOutlined />
-      </button>
+        <CaretRightFilled />
+      </StyledLink>
     </PaginationWrapper>
   );
 };
@@ -58,18 +46,19 @@ const PaginationWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: ${({ theme }) => theme.fontSize.lg};
+  color: ${({ theme }) => theme.color.black};
+  font-size: ${({ theme }) => theme.fontSize.md};
   position: relative;
   .btn {
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    padding: 0 0.5rem;
+    vertical-align: super;
     cursor: pointer;
     transition: 0.2s;
     &:hover {
       color: ${({ theme }) => theme.color.lightCherry};
+    }
+    &::after {
+      content: ◀︎;
     }
   }
   .hide {
@@ -78,15 +67,9 @@ const PaginationWrapper = styled.div`
   }
 `;
 
-const PageNumberList = styled.ul`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-`;
-
-const PageNumber = styled.button`
-  font-size: ${({ theme }) => theme.fontSize.md};
+const StyledLink = styled(Link)`
+  line-height: initial;
+  padding: 0 1rem;
   cursor: pointer;
   transition: 0.2s;
   color: ${({ theme, page, value }) => {
@@ -96,5 +79,4 @@ const PageNumber = styled.button`
     color: ${({ theme }) => theme.color.lightCherry};
   }
 `;
-
 export default Pagination;
