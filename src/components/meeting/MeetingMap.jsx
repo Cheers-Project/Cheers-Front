@@ -32,7 +32,7 @@ const MeetingMap = ({ keyword }) => {
   useEffect(() => {
     // 위치 서비스를 가져오는 중이라면 실행하지 않음
 
-    if (loading || !location) return;
+    if (loading) return;
 
     const options = {
       center: location
