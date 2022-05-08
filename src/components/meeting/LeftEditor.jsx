@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { changeTitle, changeContents } from 'redux/modules/meeting';
 import MeetingTime from 'components/meeting/MeetingTime';
 import MemberCounter from 'components/meeting/MemberCounter';
-import useMeetingQuery from 'hooks/useMeetingQuery';
 
 const LeftEditor = () => {
   const dispatch = useDispatch();
-  const { meetingInfo } = useMeetingQuery();
+  const meetingTitle = useSelector(({ meeting }) => meeting.title);
+  const meetingContents = useSelector(({ meeting }) => meeting.contents);
 
   const handleTitleInput = (e) => {
     dispatch(changeTitle(e.target.value));
@@ -24,7 +24,7 @@ const LeftEditor = () => {
       <div className="title-container">
         <input
           onChange={handleTitleInput}
-          value={meetingInfo ? meetingInfo.title : ''}
+          value={meetingTitle}
           className="title-input"
           type="text"
           placeholder="제목을 입력하세요"
@@ -32,7 +32,7 @@ const LeftEditor = () => {
       </div>
       <div className="contents-container">
         <textarea
-          value={meetingInfo ? meetingInfo.contents : ''}
+          value={meetingContents}
           onChange={handleContentsInput}
           className="contents-input"
           placeholder="내용을 입력하세요"
