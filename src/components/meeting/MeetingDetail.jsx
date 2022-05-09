@@ -43,21 +43,21 @@ const MeetingDetail = () => {
   };
 
   const handleMeetingJoin = () => {
-    const payload = {
+    const meeting = {
       ...meetingInfo,
       attendMember: [...meetingInfo.attendMember, userId],
     };
 
-    editMutation.mutate({ id, payload });
+    editMutation.mutate({ id, meeting });
   };
 
   const handleMeetingCancel = () => {
-    const payload = {
+    const meeting = {
       ...meetingInfo,
       attendMember: meetingInfo.attendMember.filter((data) => data !== userId),
     };
 
-    editMutation.mutate({ id, payload });
+    editMutation.mutate({ id, meeting });
   };
 
   return (
