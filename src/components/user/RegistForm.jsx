@@ -87,12 +87,16 @@ const RegistForm = () => {
             style={{ position: 'relative' }}
             {...register('userPw')}
             id="pwInput"
-            className="regist-input"
+            className="regist-input password-input"
             name="userPw"
             type={visible ? 'text' : 'password'}
             placeholder="비밀번호"
           />
-          <button onClick={handlePasswordVisible} className="toggle-btn">
+          <button
+            onClick={handlePasswordVisible}
+            className="toggle-btn"
+            type="button"
+          >
             {visible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
           </button>
         </div>
@@ -177,14 +181,17 @@ const RegistFormWrapper = styled.form`
   }
 
   .password-container {
-    position: relative;
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+  }
+  .password-input {
+    flex-grow: 1;
+    border: none;
   }
 
   .toggle-btn {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
+    padding: 0 0.5rem;
     font-size: ${({ theme }) => theme.fontSize.md};
     color: #ccc;
     background-color: inherit;
