@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useInfiniteQuery } from 'react-query';
 
@@ -11,7 +11,7 @@ const MeetingList = () => {
   const { query } = useCurrentQuery();
   const target = useRef();
 
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
+  const { refetch, data, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ['meeting', query],
     meetingAPI.fetchMeeting,
     {
@@ -21,6 +21,10 @@ const MeetingList = () => {
       refetchOnWindowFocus: false,
     },
   );
+
+  useEffect(() => {
+    refetch({ refetchPage: (page, index) => index === 0 });
+  }, [refetch]);
 
   useInterSectionObserver({
     target,
