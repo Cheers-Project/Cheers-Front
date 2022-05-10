@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import { format } from 'date-fns';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useMeetingQuery from 'hooks/useMeetingQuery';
 import useOwnedQuery from 'hooks/useOwnedQuery';
@@ -10,20 +11,17 @@ import * as meetingAPI from 'api/meeting';
 import MeetingMap from 'components/meeting/MeetingMap';
 import StyledButton from 'components/common/StyledButton';
 import CommentList from 'components/comment/CommentList';
+import { toggleModal } from 'redux/modules/modal';
+import DeleteMeetingAlarm from './DeleteMeetingAlarm';
 
 const MeetingDetail = () => {
+  const dispatch = useDispatch();
   const { id } = useParams();
+  const alarmModal = useSelector(({ modal }) => modal.alarmModal);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { meetingInfo, isClosed, isSuccess } = useMeetingQuery();
   const { userId, isOwned } = useOwnedQuery(meetingInfo?.writer._id);
-
-  const removeMutation = useMutation(meetingAPI.removeMeeting, {
-    mutationKey: ['meeting', id],
-    onSuccess: () => {
-      navigate(`/meeting?sort=recent`);
-    },
-  });
 
   const editMutation = useMutation(meetingAPI.editMeeting, {
     mutationKey: ['meeting', id],
@@ -38,8 +36,8 @@ const MeetingDetail = () => {
     navigate(`/meeting/write/${id}`);
   };
 
-  const handleMeetingRemove = () => {
-    removeMutation.mutate(id);
+  const handleDeleteAlarmVisible = () => {
+    dispatch(toggleModal({ target: 'alarmModal', visible: true }));
   };
 
   const handleMeetingJoin = () => {
@@ -74,7 +72,10 @@ const MeetingDetail = () => {
                 >
                   수정
                 </button>
-                <button onClick={handleMeetingRemove} className="setting-btn">
+                <button
+                  onClick={handleDeleteAlarmVisible}
+                  className="setting-btn"
+                >
                   삭제
                 </button>
               </div>
@@ -149,6 +150,7 @@ const MeetingDetail = () => {
           {meetingInfo?.attendMember.includes(userId) && <CommentList />}
         </MeetingDetailWrapper>
       )}
+      {alarmModal && <DeleteMeetingAlarm />}
     </section>
   );
 };
