@@ -27,12 +27,12 @@ const BoardList = () => {
           <BoardItem key={board._id} boardInfo={board} className="board-item" />
         ))}
       </BoardListWrapper>
-      {BoardsData?.maxPage && (
+      {BoardsData?.maxPage ? (
         <Pagination
           maxPage={BoardsData.maxPage}
           pageNums={BoardsData.pageNums}
         />
-      )}
+      ) : null}
     </BoardListOuter>
   );
 };
