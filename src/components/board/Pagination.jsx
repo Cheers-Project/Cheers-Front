@@ -51,9 +51,6 @@ const PaginationWrapper = styled.div`
     &:hover {
       color: ${({ theme }) => theme.color.lightCherry};
     }
-    &::after {
-      content: ◀︎;
-    }
   }
   .hide {
     opacity: 0;
