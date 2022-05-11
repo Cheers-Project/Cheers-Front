@@ -23,7 +23,8 @@ const CommentItem = ({ commentInfo }) => {
   });
 
   const handleCommentDelete = () => {
-    deleteComment.mutate(commentInfo._id);
+    const payload = { id: commentInfo._id, postId };
+    deleteComment.mutate(payload);
   };
 
   const handleUpdateStateChange = () => {
