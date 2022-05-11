@@ -15,7 +15,7 @@ const BoardItem = ({ boardInfo }) => {
 
   return (
     <BoardItemWrapper onClick={handleBoardDetailRoute}>
-      <ToptWrapper>
+      <TopWrapper>
         <Title>{boardInfo.title}</Title>
         <BoardSubInfoWrapper>
           <div className="subinfo-item">
@@ -31,7 +31,7 @@ const BoardItem = ({ boardInfo }) => {
             <p>{boardInfo.comment}</p>
           </div>
         </BoardSubInfoWrapper>
-      </ToptWrapper>
+      </TopWrapper>
       <BottomWrapper>
         <UserInfo>
           <img
@@ -58,7 +58,7 @@ const BoardItemWrapper = styled.li`
   cursor: pointer;
 `;
 
-const ToptWrapper = styled.div`
+const TopWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
