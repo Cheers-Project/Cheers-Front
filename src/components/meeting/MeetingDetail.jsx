@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import { format } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
+import { WarningOutlined } from '@ant-design/icons';
 
 import useMeetingQuery from 'hooks/useMeetingQuery';
 import useOwnedQuery from 'hooks/useOwnedQuery';
@@ -12,7 +13,7 @@ import MeetingMap from 'components/meeting/MeetingMap';
 import StyledButton from 'components/common/StyledButton';
 import CommentList from 'components/comment/CommentList';
 import { toggleModal } from 'redux/modules/modal';
-import DeleteMeetingAlarm from './DeleteMeetingAlarm';
+import DeleteMeetingAlarm from 'components/meeting/DeleteMeetingAlarm';
 
 const MeetingDetail = () => {
   const dispatch = useDispatch();
@@ -63,6 +64,12 @@ const MeetingDetail = () => {
       {isSuccess && (
         <MeetingDetailWrapper>
           <MeetingTitleWrapper>
+            {isClosed && (
+              <div className="notice-wrapper">
+                <WarningOutlined />
+                <p className="notice-text">마감된 모임입니다</p>
+              </div>
+            )}
             <h2 className="meeting-title">{meetingInfo?.title}</h2>
             {isOwned && (
               <div className="setting-btn-wrapper">
@@ -168,9 +175,19 @@ const MeetingTitleWrapper = styled.div`
   justify-content: space-between;
   flex-direction: column;
   gap: 2rem;
+  .notice-wrapper {
+    display: flex;
+    font-size: ${({ theme }) => theme.fontSize.lgTitle};
+    font-weight: 600;
+    color: ${({ theme }) => theme.color.lightCherry};
+    .notice-text {
+      margin-left: 1rem;
+    }
+  }
   .meeting-title {
     font-size: ${({ theme }) => theme.fontSize.lgTitle};
     font-weight: 600;
+    line-height: 3rem;
   }
   .meeting-view {
     display: flex;
