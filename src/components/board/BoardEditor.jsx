@@ -83,9 +83,11 @@ const BoardEditor = () => {
   }, [editor]);
 
   useEffect(() => {
-    setTitle(boardInfo?.title);
-    setImgKeys(boardInfo?.imgKeys);
-    editor.current.getInstance().setHTML(boardInfo?.contents);
+    if (boardInfo) {
+      setTitle(boardInfo?.title);
+      setImgKeys(boardInfo?.imgKeys);
+      editor.current.getInstance().setHTML(boardInfo?.contents);
+    }
   }, [boardInfo]);
 
   return (
