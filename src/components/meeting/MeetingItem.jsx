@@ -23,6 +23,10 @@ const MeetingItem = ({ meeting }) => {
         <span>모임 날짜 &#58;</span>
         <p className="meeting-text">{meeting.meetingDate}</p>
       </div>
+      <div className="meeting-time">
+        <span>모임 시간 &#58;</span>
+        <p className="meeting-text">{meeting.meetingTime}</p>
+      </div>
       <div className="meeting-member">
         <span>모임 인원 &#58;</span>
         <p className="meeting-text">
@@ -59,7 +63,6 @@ const MeetingItemInner = styled.li`
     font-size: ${({ theme }) => theme.fontSize.md};
     font-weight: 600;
     max-height: 3.6rem;
-
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.7rem;
@@ -75,29 +78,29 @@ const MeetingItemInner = styled.li`
   .meeting-contents {
     font-size: ${({ theme }) => theme.fontSize.sm};
     width: 100%;
-    height: 18rem;
-    line-height: 2rem;
+    height: 8.8rem;
+    margin: 1rem 0;
+    line-height: 2.2rem;
     display: -webkit-box;
-    -webkit-line-clamp: 9;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
   }
   .meeting-location,
   .meeting-date,
+  .meeting-time,
   .meeting-member,
   .meeting-writer {
     font-size: ${({ theme }) => theme.fontSize.sm};
     display: flex;
     align-items: center;
   }
-
   .meeting-sub-info {
     font-size: ${({ theme }) => theme.fontSize.sm};
     display: flex;
     justify-content: space-between;
   }
-
   .meeting-text {
     display: flex;
     align-items: center;
