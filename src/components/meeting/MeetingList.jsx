@@ -23,7 +23,7 @@ const MeetingList = () => {
   );
 
   useEffect(() => {
-    refetch({ refetchPage: (page, index) => index === 0 });
+    refetch({ refetchPage: (page, index) => page === 0 });
   }, [refetch]);
 
   useInterSectionObserver({
