@@ -90,7 +90,6 @@ const MeetingItemInner = styled.li`
     font-size: ${({ theme }) => theme.fontSize.sm};
     display: flex;
     align-items: center;
-    gap: 1rem;
   }
 
   .meeting-sub-info {
@@ -100,8 +99,12 @@ const MeetingItemInner = styled.li`
   }
 
   .meeting-text {
+    display: flex;
+    align-items: center;
     flex: 1;
+    padding-left: 1rem;
     width: 100%;
+    line-height: 2rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
