@@ -50,7 +50,7 @@ const BoardItem = ({ boardInfo }) => {
 };
 const BoardItemWrapper = styled.li`
   margin: 0 1rem;
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   background-color: ${({ theme }) => theme.color.white};
   display: flex;
   flex-direction: column;
@@ -78,7 +78,7 @@ const Title = styled.h2`
 
 const UserInfo = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: 0.5rem;
   .user-profile-img {
     width: 2rem;
