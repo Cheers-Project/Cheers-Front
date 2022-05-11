@@ -6,10 +6,10 @@ const Footer = () => {
   return (
     <FooterOuter>
       <FooterInner>
-        <p>Copyright ⓒ2022 CherryAlcohol. All rights reserved.</p>
+        <p>Copyright ⓒ2022 Cheers. All rights reserved.</p>
         <div className="github-wrapper">
           <p>Github</p>
-          <a href={'https://github.com/LemonAlcohol'}>
+          <a href={'https://github.com/Cheers-Project'}>
             <GithubOutlined className="git-logo" />
           </a>
         </div>
