@@ -14,12 +14,16 @@ import { openUserModal } from 'redux/modules/modal';
 
 const RegistForm = () => {
   const dispatch = useDispatch();
+  const [errorMsg, setErrorMsg] = useState('');
   const [visible, setVisible] = useState(false);
 
   const mutation = useMutation(userAPI.regist, {
     mutationKey: ['user'],
     onSuccess: () => {
       handleModalVisible();
+    },
+    onError: (e) => {
+      setErrorMsg(e.response.data.msg);
     },
   });
 
@@ -122,7 +126,7 @@ const RegistForm = () => {
         </ErrorMessage>
       </div>
       <button className="regist-btn">회원가입</button>
-      <ErrorMessage></ErrorMessage>
+      <ErrorMessage>{errorMsg}</ErrorMessage>
       <div className="guide-container">
         <p>
           계정이 있으신가요?{' '}
