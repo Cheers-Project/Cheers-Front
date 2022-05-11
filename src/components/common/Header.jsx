@@ -133,7 +133,7 @@ const HeaderInner = styled.header`
 `;
 
 const Logo = styled.h1`
-  width: 30%;
+  width: 20%;
   font-size: ${({ theme }) => theme.fontSize.lg};
   color: ${({ theme }) => theme.color.lightCherry};
   font-weight: 600;
@@ -148,7 +148,7 @@ const Logo = styled.h1`
 `;
 
 const MidNav = styled.nav`
-  width: 40%;
+  width: 60%;
   display: flex;
   justify-content: center;
   padding: 0.5rem 1rem;
@@ -209,7 +209,7 @@ const MidNav = styled.nav`
 `;
 
 const RightNav = styled.nav`
-  width: 30%;
+  width: 20%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
