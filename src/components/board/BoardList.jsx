@@ -10,7 +10,7 @@ import useCurrentQuery from 'hooks/useCurrentQuery';
 const BoardList = () => {
   const { query } = useCurrentQuery();
 
-  const { data: BoardsData } = useQuery(
+  const { data: boardData } = useQuery(
     ['boards', query],
     () => boardAPI.getBoards(query),
     {
@@ -23,15 +23,12 @@ const BoardList = () => {
   return (
     <BoardListOuter>
       <BoardListWrapper>
-        {BoardsData?.boards.map((board) => (
+        {boardData?.boards.map((board) => (
           <BoardItem key={board._id} boardInfo={board} className="board-item" />
         ))}
       </BoardListWrapper>
-      {BoardsData?.maxPage ? (
-        <Pagination
-          maxPage={BoardsData.maxPage}
-          pageNums={BoardsData.pageNums}
-        />
+      {boardData?.maxPage ? (
+        <Pagination maxPage={boardData.maxPage} pageNums={boardData.pageNums} />
       ) : null}
     </BoardListOuter>
   );

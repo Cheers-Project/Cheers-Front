@@ -20,7 +20,11 @@ const Pagination = ({ maxPage, pageNums }) => {
       {pageNums.map((pageNum, i) => {
         if (maxPage < pageNum) return null;
         return (
-          <StyledLink key={i} to={`/board?sort=${sort}&page=${pageNum}`}>
+          <StyledLink
+            key={i}
+            to={`/board?sort=${sort}&page=${pageNum}`}
+            className={+page === pageNum ? 'active' : ''}
+          >
             {pageNum}
           </StyledLink>
         );
@@ -55,6 +59,9 @@ const PaginationWrapper = styled.div`
   .hide {
     opacity: 0;
     cursor: unset;
+  }
+  .active {
+    color: ${({ theme }) => theme.color.lightCherry};
   }
 `;
 
