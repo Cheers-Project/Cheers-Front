@@ -102,15 +102,14 @@ const MeetingItemInner = styled.li`
     justify-content: space-between;
   }
   .meeting-text {
-    display: flex;
-    align-items: center;
     flex: 1;
     padding-left: 1rem;
-    width: 100%;
     line-height: 2rem;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
   }
   .meeting-user-profile {
     width: 2rem;
