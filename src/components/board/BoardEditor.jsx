@@ -154,6 +154,7 @@ const BoardEditorWrapper = styled.section`
   }
   .ProseMirror {
     background-color: ${({ theme }) => theme.color.white};
+    height: 100%;
   }
 
   .toastui-editor-dropdown-toolbar {
