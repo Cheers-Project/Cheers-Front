@@ -1,7 +1,9 @@
 import React from 'react';
-import useCurrentQuery from 'hooks/useCurrentQuery';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+
+import useCurrentQuery from 'hooks/useCurrentQuery';
+import WriteButton from 'components/common/WriteButton';
 
 const BoardNav = () => {
   const { searchParams } = useCurrentQuery();
@@ -35,14 +37,17 @@ const BoardNav = () => {
           </Link>
         </li>
       </NavList>
+      <WriteButton route={'/board/write'} />
     </BoardNavWrapper>
   );
 };
 
 const BoardNavWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 3rem 0;
-  margin-left: 1rem;
+  margin: 0 1rem;
 `;
 
 const NavList = styled.ul`
