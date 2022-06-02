@@ -53,7 +53,6 @@ const MeetingSection = styled.section`
     padding-bottom: 3rem;
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
   }
 `;
 
@@ -64,15 +63,25 @@ const MeetingItemOuter = styled.div`
   background-color: #fff;
   box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.1);
   border-radius: 1rem;
-  margin: 0 1rem;
+  margin: 0 1rem 2rem 1rem;
   padding: 0.5rem 1rem;
   cursor: pointer;
 
   @media screen and (min-width: 768px) {
+    margin: 0 3rem 2rem 1rem;
+    &:nth-child(2n) {
+      margin-right: 1rem;
+    }
     width: calc(50% - 3rem);
   }
   @media screen and (min-width: 1024px) {
-    width: calc(33.333% - 4rem);
+    &:nth-child(2n) {
+      margin-right: 3rem;
+    }
+    &:nth-child(3n) {
+      margin-right: 1rem;
+    }
+    width: calc(33.333% - 3.33333rem);
   }
 `;
 
