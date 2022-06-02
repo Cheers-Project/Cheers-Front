@@ -104,7 +104,7 @@ const BoardEditor = () => {
           <Editor
             className="editor"
             height="100%"
-            previewStyle={false}
+            previewStyle="tab"
             toolbarItems={[
               ['heading', 'bold', 'italic', 'strike'],
               ['hr', 'quote'],
@@ -170,6 +170,9 @@ const BoardEditorWrapper = styled.section`
   }
   .toastui-editor-popup {
     left: 50% !important;
+  }
+  .toastui-editor-md-preview {
+    background-color: #f6f9fc;
   }
 `;
 
