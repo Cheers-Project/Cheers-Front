@@ -9,12 +9,14 @@ import { toggleModal } from 'redux/modules/modal';
 import StyledButton from 'components/common/StyledButton';
 import Spinner from 'components/auth/Spinner';
 import AlarmModal from 'components/common/AlarmModal';
+import WriteButton from 'components/common/WriteButton';
 
 const MeetingNav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const alarmModal = useSelector(({ modal }) => modal.alarmModal);
   const { location, error, loading } = useCurrentLocation();
+
   const { searchParams } = useCurrentQuery();
 
   const { sort } = searchParams;
@@ -73,6 +75,7 @@ const MeetingNav = () => {
           </button>
         </li>
       </ul>
+      <WriteButton route={'/meeting/write'} />
       {alarmModal && (
         <AlarmModal>
           <NoticeWrapper>
@@ -99,15 +102,21 @@ const MeetingNav = () => {
           </NoticeWrapper>
         </AlarmModal>
       )}
+      {/* {user && (
+        <button onClick={handleRoute} className="write-btn">
+          <EditOutlined />
+        </button>
+      )} */}
     </MeetingNavWrapper>
   );
 };
 
 const MeetingNavWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 3rem 0;
-  margin-left: 1rem;
-
+  margin: 0 1rem;
   .nav-list {
     display: flex;
     align-items: center;
