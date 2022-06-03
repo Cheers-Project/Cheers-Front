@@ -16,6 +16,7 @@
 ## 프로젝트 링크
 
 배포 주소 : https://cheers-kr.com
+
 노션 주소 : https://cheers-kr.notion.site/Cheers-8b8541e794c04119bcfb9470f20c8218
 
 ## 프로젝트 진행 기간
