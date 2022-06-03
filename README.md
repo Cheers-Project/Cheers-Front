@@ -2,6 +2,8 @@
 
 술에 대해 이야기 하고 다양한 모임을 만들거나 참여할 수 있는 커뮤니티 사이트
 
+모바일, 태블릿, 데스크탑 3가지 뷰포트를 지원하는 반응형으로 제작
+
 ## 기술 스택
 
 ![react](https://img.shields.io/badge/-React-61DAFB?logo=React&logoColor=white&style=for-the-badge)
@@ -14,6 +16,7 @@
 ## 프로젝트 링크
 
 배포 주소 : https://cheers-kr.com
+노션 주소 : https://cheers-kr.notion.site/Cheers-8b8541e794c04119bcfb9470f20c8218
 
 ## 프로젝트 진행 기간
 
